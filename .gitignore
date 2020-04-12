@@ -1,28 +1,31 @@
-*.class
-
-#package
-*.war
-*.ear
-
-#maven
+HELP.md
 target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
 
-#idea
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
 .idea
-/idea/
-*.ipr
-*.iml
 *.iws
+*.iml
+*.ipr
 
-#temp file
-*.log
-*.cache
-*.diff
-*.patch
-*.tmp
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
 
-#system
-*.DS_Store
-Thumbs.db
-
-
+### VS Code ###
+.vscode/
