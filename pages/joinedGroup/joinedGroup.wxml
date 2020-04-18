@@ -1,0 +1,9 @@
+<!--pages/joinedGroup/joinedGroup.wxml-->
+<cu-custom bgColor="bg-gradual-red" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">一体化工程（组名）</view>
+</cu-custom>
+<text class="text-xl">我加入的组页面</text>
+<navigator url="/pages/paperDetails/paperDetails">试卷详情页面</navigator>
+
+

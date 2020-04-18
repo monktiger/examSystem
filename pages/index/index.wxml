@@ -1,0 +1,8 @@
+  <cu-custom bgImage="" bgColor="bg-gradual-blue">
+  	<view slot="content" class="index-title">随测</view>
+  </cu-custom>
+  <scroll-view scroll-y class="scrollPage">
+</scroll-view>
+<text class="text-xl">主页面</text>
+<navigator url="/pages/manageGroup/manageGroup">我创建的组</navigator>
+<navigator url="/pages/joinedGroup/joinedGroup">我加入的组</navigator>

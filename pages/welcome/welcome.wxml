@@ -1,0 +1,5 @@
+<!--pages/welcome/welcome.wxml-->
+<view class="welcome_box">
+	<image src="/image/logo.jpg" mode="aspectFill" class="welcome_img"></image>
+	<text class="welcome_text">随时随地，想测就测</text>
+</view>

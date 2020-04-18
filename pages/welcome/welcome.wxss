@@ -1,0 +1,20 @@
+/* pages/welcome/welcome.wxss */
+.welcome_box{
+  height: 100vh;
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items: center;
+  background-color: rgb(240, 248, 255);
+}
+.welcome_img {
+  margin-top: -100px;
+  width: 314px;
+}
+.welcome_text{
+  margin-top: 20px;
+  display: block;
+  letter-spacing:10px;
+  font-size: large;
+  color: #4b93c4;
+}

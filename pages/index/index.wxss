@@ -1,0 +1,5 @@
+.index-title{
+  letter-spacing:10px;
+  font-size: large;
+  color:white;
+}

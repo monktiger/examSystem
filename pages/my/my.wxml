@@ -1,0 +1,12 @@
+<view class="UCenter-bg">
+	<image src="/image/bg.jpg">
+		<image src="/image/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+	</image>
+	<view class="content">
+		<image src="/image/logo.jpg" class="png" mode="widthFix"></image>
+		<view class="text-xl margin-top" >ID:雨山</view>
+	</view>
+</view>
+<view class="list">
+
+</view>

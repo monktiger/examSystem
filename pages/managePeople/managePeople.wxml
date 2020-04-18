@@ -1,0 +1,5 @@
+<!--pages/managePeople/managePeople.wxml-->
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">成员管理</view>
+</cu-custom>

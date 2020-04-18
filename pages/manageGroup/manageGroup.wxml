@@ -1,0 +1,10 @@
+<!--pages/manageGroup/manageGroup.wxml-->
+<cu-custom bgColor="bg-gradual-red" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">一体化工程（组名）</view>
+</cu-custom>
+<view class="text-xl">我创建的组页面</view>
+<navigator url="/pages/managePeople/managePeople">成员管理</navigator>
+<navigator url="/pages/paperCreate/paperCreate">创建试题</navigator>
+<navigator url="/pages/groupSetting/groupSetting">设置</navigator>
+<navigator url="/pages/manageScore/manageScore">成绩管理</navigator>

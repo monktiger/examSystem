@@ -1,0 +1,6 @@
+<!--pages/paper/paper.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">试卷</view>
+</cu-custom>
+<text class="text-xl">试卷页面</text>

@@ -1,0 +1,107 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false,
+		"coverView": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.11.0",
+	"appid": "wx44735e1dcba5d758",
+	"projectname": "little-test",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -2,
+					"name": "my",
+					"pathName": "pages/my/my",
+					"query": ""
+				},
+				{
+					"id": -3,
+					"name": "groupSetting",
+					"pathName": "pages/groupSetting/groupSetting",
+					"query": ""
+				},
+				{
+					"id": -4,
+					"name": "joinedGroup",
+					"pathName": "pages/joinedGroup/joinedGroup",
+					"query": ""
+				},
+				{
+					"id": -5,
+					"name": "manageGroup",
+					"pathName": "pages/manageGroup/manageGroup",
+					"query": ""
+				},
+				{
+					"id": -6,
+					"name": "managePeople",
+					"pathName": "pages/managePeople/managePeople",
+					"query": ""
+				},
+				{
+					"id": -7,
+					"name": "manageScore",
+					"pathName": "pages/manageScore/manageScore",
+					"query": ""
+				},
+				{
+					"id": -8,
+					"name": "paper",
+					"pathName": "pages/paper/paper",
+					"query": ""
+				},
+				{
+					"id": -9,
+					"name": "paperCreate",
+					"pathName": "pages/paperCreate/paperCreate",
+					"query": ""
+				},			
+				{
+					"id": -10,
+					"name": "paperDetails",
+					"pathName": "pages/paperDetails/paperDetails",
+					"query": ""
+				}
+			]
+		}
+	}
+}
