@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.monktiger.examsystem.mapper.CopyMapper">
+  <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.Copy">
+    <id column="copy_id" jdbcType="INTEGER" property="copyId" />
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="exam_id" jdbcType="INTEGER" property="examId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="judge" jdbcType="VARCHAR" property="judge" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    copy_id, group_id, exam_id, open_id, `status`, judge, score
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_copy
+    where copy_id = #{copyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_copy
+    where copy_id = #{copyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.monktiger.examsystem.entity.Copy">
+    insert into tb_copy (copy_id, group_id, exam_id, 
+      open_id, `status`, judge, 
+      score)
+    values (#{copyId,jdbcType=INTEGER}, #{groupId,jdbcType=VARCHAR}, #{examId,jdbcType=INTEGER}, 
+      #{openId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{judge,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.Copy">
+    insert into tb_copy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="copyId != null">
+        copy_id,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="examId != null">
+        exam_id,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="judge != null">
+        judge,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="copyId != null">
+        #{copyId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="examId != null">
+        #{examId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="judge != null">
+        #{judge,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.monktiger.examsystem.entity.Copy">
+    update tb_copy
+    <set>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="examId != null">
+        exam_id = #{examId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="judge != null">
+        judge = #{judge,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where copy_id = #{copyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Copy">
+    update tb_copy
+    set group_id = #{groupId,jdbcType=VARCHAR},
+      exam_id = #{examId,jdbcType=INTEGER},
+      open_id = #{openId,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      judge = #{judge,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER}
+    where copy_id = #{copyId,jdbcType=INTEGER}
+  </update>
+</mapper>
