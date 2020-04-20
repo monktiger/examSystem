@@ -1,6 +1,6 @@
 # examSystem
 
-an online exam system
+## 随测app
 
 该项目前端是基于微信小程序，后端基于springboot的云服务的考试系统
 
