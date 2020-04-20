@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.monktiger.examsystem.mapper.CopyToQuetionMapper">
+  <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.CopyToQuetion">
+    <id column="copy_id" jdbcType="INTEGER" property="copyId" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="already" jdbcType="BIT" property="already" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    copy_id, id, score, answer, already
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuetion" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_copy_to_quetion
+    where copy_id = #{copyId,jdbcType=INTEGER}
+      and id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+    delete from tb_copy_to_quetion
+    where copy_id = #{copyId,jdbcType=INTEGER}
+      and id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+    insert into tb_copy_to_quetion (copy_id, id, score, 
+      answer, already)
+    values (#{copyId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 
+      #{answer,jdbcType=VARCHAR}, #{already,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+    insert into tb_copy_to_quetion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="copyId != null">
+        copy_id,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="already != null">
+        already,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="copyId != null">
+        #{copyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="already != null">
+        #{already,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+    update tb_copy_to_quetion
+    <set>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="already != null">
+        already = #{already,jdbcType=BIT},
+      </if>
+    </set>
+    where copy_id = #{copyId,jdbcType=INTEGER}
+      and id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+    update tb_copy_to_quetion
+    set score = #{score,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=VARCHAR},
+      already = #{already,jdbcType=BIT}
+    where copy_id = #{copyId,jdbcType=INTEGER}
+      and id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

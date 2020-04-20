@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.monktiger.examsystem.mapper.QuestionMapper">
+  <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.Question">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="current" jdbcType="VARCHAR" property="current" />
+    <result column="answer_A" jdbcType="VARCHAR" property="answerA" />
+    <result column="answer_B" jdbcType="VARCHAR" property="answerB" />
+    <result column="answer_C" jdbcType="VARCHAR" property="answerC" />
+    <result column="answer_D" jdbcType="VARCHAR" property="answerD" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, `type`, category, `current`, answer_A, answer_B, answer_C, answer_D, open_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.monktiger.examsystem.entity.Question">
+    insert into tb_question (id, title, `type`, 
+      category, `current`, answer_A, 
+      answer_B, answer_C, answer_D, 
+      open_id)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{category,jdbcType=VARCHAR}, #{current,jdbcType=VARCHAR}, #{answerA,jdbcType=VARCHAR}, 
+      #{answerB,jdbcType=VARCHAR}, #{answerC,jdbcType=VARCHAR}, #{answerD,jdbcType=VARCHAR}, 
+      #{openId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.Question">
+    insert into tb_question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="current != null">
+        `current`,
+      </if>
+      <if test="answerA != null">
+        answer_A,
+      </if>
+      <if test="answerB != null">
+        answer_B,
+      </if>
+      <if test="answerC != null">
+        answer_C,
+      </if>
+      <if test="answerD != null">
+        answer_D,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="current != null">
+        #{current,jdbcType=VARCHAR},
+      </if>
+      <if test="answerA != null">
+        #{answerA,jdbcType=VARCHAR},
+      </if>
+      <if test="answerB != null">
+        #{answerB,jdbcType=VARCHAR},
+      </if>
+      <if test="answerC != null">
+        #{answerC,jdbcType=VARCHAR},
+      </if>
+      <if test="answerD != null">
+        #{answerD,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.monktiger.examsystem.entity.Question">
+    update tb_question
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="current != null">
+        `current` = #{current,jdbcType=VARCHAR},
+      </if>
+      <if test="answerA != null">
+        answer_A = #{answerA,jdbcType=VARCHAR},
+      </if>
+      <if test="answerB != null">
+        answer_B = #{answerB,jdbcType=VARCHAR},
+      </if>
+      <if test="answerC != null">
+        answer_C = #{answerC,jdbcType=VARCHAR},
+      </if>
+      <if test="answerD != null">
+        answer_D = #{answerD,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Question">
+    update tb_question
+    set title = #{title,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
+      category = #{category,jdbcType=VARCHAR},
+      `current` = #{current,jdbcType=VARCHAR},
+      answer_A = #{answerA,jdbcType=VARCHAR},
+      answer_B = #{answerB,jdbcType=VARCHAR},
+      answer_C = #{answerC,jdbcType=VARCHAR},
+      answer_D = #{answerD,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
