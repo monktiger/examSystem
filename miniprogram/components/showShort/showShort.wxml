@@ -1,0 +1,3 @@
+<!--components/showShort/showShort.wxml-->
+<showQue-cmp />
+<shortQue-cmp />

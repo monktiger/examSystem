@@ -94,7 +94,7 @@
 					"name": "paperCreate",
 					"pathName": "pages/paperCreate/paperCreate",
 					"query": ""
-				},			
+				},
 				{
 					"id": -10,
 					"name": "paperDetails",

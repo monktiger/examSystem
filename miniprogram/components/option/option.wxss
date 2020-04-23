@@ -1,0 +1,12 @@
+/* components/option/option.wxss */
+
+.radio-group {
+  background-color: #fff;
+  padding: 0 30rpx 30rpx;
+  font-size: 34rpx;
+  color: #666;
+}
+.radio-group radio{
+  display: block;
+  transform:scale(0.7);
+}

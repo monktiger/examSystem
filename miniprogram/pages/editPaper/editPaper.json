@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "showShort-cmp": "/components/showShort/showShort",
+    "optionQue-cmp": "/components/optionQue/optionQue"
+  }
+}

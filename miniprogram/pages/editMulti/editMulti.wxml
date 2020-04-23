@@ -1,0 +1,7 @@
+<!--pages/editMulti/editMulti.wxml-->
+<view>
+  <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">编辑多选题</view>
+  </cu-custom>
+</view>

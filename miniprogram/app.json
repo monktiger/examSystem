@@ -10,7 +10,10 @@
     "pages/paperCreate/paperCreate",
     "pages/paperDetails/paperDetails",
     "pages/managePeople/managePeople",
-    "pages/groupSetting/groupSetting"
+    "pages/groupSetting/groupSetting",
+    "pages/editShort/editShort",
+    "pages/editMulti/editMulti",
+    "pages/editSingle/editSingle"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F6F6F6",

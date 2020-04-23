@@ -1,0 +1,7 @@
+<!--components/optionQue/optionQue.wxml-->
+<optionQue-cmp>
+  <view>
+    <showQue-cmp />
+    <option-cmp />
+  </view>
+</optionQue-cmp>

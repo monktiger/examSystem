@@ -1,0 +1,7 @@
+<!--pages/editSingle/editSingle.wxml-->
+<view>
+  <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">编辑单选题</view>
+  </cu-custom>
+</view>

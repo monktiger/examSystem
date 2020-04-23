@@ -1,0 +1,13 @@
+<!--pages/editPaper/editPaper.wxml-->
+<view>
+  <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">编辑试卷</view>
+  </cu-custom>
+</view>
+<navigator url="/pages/editSingle/editSingle">创建单选题</navigator>
+<navigator url="/pages/editMulti/editMulti">创建多选题</navigator>
+<navigator url="/pages/editShort/editShort">创建简答题</navigator>
+
+<showShort-cmp />
+<optionQue-cmp />

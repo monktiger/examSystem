@@ -3,3 +3,4 @@
   <view slot="backText">返回</view>
   <view slot="content">新建试题</view>
 </cu-custom>
+<navigator url="/pages/editPaper/editPaper">创建考试</navigator>
