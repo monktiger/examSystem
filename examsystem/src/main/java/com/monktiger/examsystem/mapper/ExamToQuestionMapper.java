@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 /**
  * TbExamToQuestionDAO继承基类
  */
+
+@Repository
 @Mapper
 public interface ExamToQuestionMapper  {
 }

@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
  * TbQuestionDAO继承基类
  */
 @Mapper
+@Repository
 public interface QuestionMapper {
 }

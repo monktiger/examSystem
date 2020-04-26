@@ -15,16 +15,16 @@ public class User implements Serializable {
 
     private String avatarurl;
 
-    private Boolean availble;
+    private Boolean available;
 
     private static final long serialVersionUID = 1L;
 
-    public User(String openId,String nickname,String name,String avatarurl, boolean availble){
+    public User(String openId,String nickname,String name,String avatarurl, boolean available){
         this.openId = openId;
         this.nickname = nickname;
         this.name = name;
         this.avatarurl = avatarurl;
-        this.availble = availble;
+        this.available = available;
     }
 
     public String getOpenId() {
@@ -59,12 +59,12 @@ public class User implements Serializable {
         this.avatarurl = avatarurl;
     }
 
-    public Boolean getAvailble() {
-        return availble;
+    public Boolean getAvailable() {
+        return available;
     }
 
-    public void setAvailble(Boolean availble) {
-        this.availble = availble;
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class User implements Serializable {
             && (this.getNickname() == null ? other.getNickname() == null : this.getNickname().equals(other.getNickname()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getAvatarurl() == null ? other.getAvatarurl() == null : this.getAvatarurl().equals(other.getAvatarurl()))
-            && (this.getAvailble() == null ? other.getAvailble() == null : this.getAvailble().equals(other.getAvailble()));
+            && (this.getAvailable() == null ? other.getAvailable() == null : this.getAvailable().equals(other.getAvailable()));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class User implements Serializable {
         result = prime * result + ((getNickname() == null) ? 0 : getNickname().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getAvatarurl() == null) ? 0 : getAvatarurl().hashCode());
-        result = prime * result + ((getAvailble() == null) ? 0 : getAvailble().hashCode());
+        result = prime * result + ((getAvailable() == null) ? 0 : getAvailable().hashCode());
         return result;
     }
 
@@ -108,7 +108,7 @@ public class User implements Serializable {
         sb.append(", nickname=").append(nickname);
         sb.append(", name=").append(name);
         sb.append(", avatarurl=").append(avatarurl);
-        sb.append(", availble=").append(availble);
+        sb.append(", availble=").append(available);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

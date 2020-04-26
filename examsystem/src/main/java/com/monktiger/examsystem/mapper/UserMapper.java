@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
  * TbUserDAO继承基类
  */
 @Mapper
+@Repository
 public interface UserMapper {
     User selectByPrimaryKey(String openId);
 
