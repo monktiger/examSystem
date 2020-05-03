@@ -1,5 +1,6 @@
 package com.monktiger.examsystem.mapper;
 
+import com.monktiger.examsystem.entity.Exam;
 import com.monktiger.examsystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -8,15 +9,14 @@ import org.springframework.stereotype.Repository;
  * TbExamDAO继承基类
  */
 @Mapper
-@Repository
 public interface ExamMapper  {
-    User selectByPrimaryKey(String openId);
+    User selectByPrimaryKey(String Id);
 
-    int deleteByPrimaryKey(String openId);
+    int deleteByPrimaryKey(String Id);
 
-    int insert(User user);
+    int insert(Exam exam);
 
-    int insertSelective(User user);
+    int insertSelective(Exam exam);
 
-    int updateByPrimaryKey(User user);
+    int updateByPrimaryKey(Exam exam);
 }

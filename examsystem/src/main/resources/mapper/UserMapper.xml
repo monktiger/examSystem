@@ -6,10 +6,10 @@
     <result column="nickName" jdbcType="VARCHAR" property="nickname" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="avatarUrl" jdbcType="VARCHAR" property="avatarurl" />
-    <result column="availble" jdbcType="BIT" property="availble" />
+    <result column="available" jdbcType="BIT" property="available" />
   </resultMap>
   <sql id="Base_Column_List">
-    open_id, nickName, `name`, avatarUrl, availble
+    open_id, nickName, `name`, avatarUrl, available
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -23,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.monktiger.examsystem.entity.User">
     insert into tb_user (open_id, nickName, `name`, 
-      avatarUrl, availble)
+      avatarUrl, available)
     values (#{openId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{avatarurl,jdbcType=VARCHAR}, #{availble,jdbcType=BIT})
+      #{avatarurl,jdbcType=VARCHAR}, #{available,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.User">
     insert into tb_user
@@ -42,8 +42,8 @@
       <if test="avatarurl != null">
         avatarUrl,
       </if>
-      <if test="availble != null">
-        availble,
+      <if test="available != null">
+        available,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -59,8 +59,8 @@
       <if test="avatarurl != null">
         #{avatarurl,jdbcType=VARCHAR},
       </if>
-      <if test="availble != null">
-        #{availble,jdbcType=BIT},
+      <if test="available != null">
+        #{available,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -76,8 +76,8 @@
       <if test="avatarurl != null">
         avatarUrl = #{avatarurl,jdbcType=VARCHAR},
       </if>
-      <if test="availble != null">
-        availble = #{availble,jdbcType=BIT},
+      <if test="available != null">
+        available = #{available,jdbcType=BIT},
       </if>
     </set>
     where open_id = #{openId,jdbcType=VARCHAR}
@@ -87,7 +87,7 @@
     set nickName = #{nickname,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
       avatarUrl = #{avatarurl,jdbcType=VARCHAR},
-      availble = #{availble,jdbcType=BIT}
+      available = #{available,jdbcType=BIT}
     where open_id = #{openId,jdbcType=VARCHAR}
   </update>
 </mapper>

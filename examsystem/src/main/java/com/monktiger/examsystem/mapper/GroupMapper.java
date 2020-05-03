@@ -1,22 +1,34 @@
 package com.monktiger.examsystem.mapper;
 
+import com.monktiger.examsystem.entity.Group;
 import com.monktiger.examsystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * TbGroupDAO继承基类
  */
-@Repository
 @Mapper
 public interface GroupMapper  {
-    User selectByPrimaryKey(String openId);
+    Group selectByPrimaryKey(String openId,String groupId);
 
-    int deleteByPrimaryKey(String openId);
+    List<Group> selectByKeyState(String groupId,int status);
 
-    int insert(User user);
+    List<Group> fuzzySelectByGroupName(String name);
 
-    int insertSelective(User user);
+    List<Group> selectSelfGroup(String openId);
 
-    int updateByPrimaryKey(User user);
+    int deleteByPrimaryKey(String openId,String groupId);
+
+    int dissolveByGroupId(String groupId);
+
+    int insert(Group group);
+
+    int insertSelective(Group group);
+
+    int updateByPrimaryKey(Group group);
+
+    int updatePermission(String openId,String groupId);
 }

@@ -1,15 +1,15 @@
 package com.monktiger.examsystem.mapper;
 
-import com.monktiger.examsystem.entity.Copy;
+import com.monktiger.examsystem.entity.CopyToQuetion;
 import com.monktiger.examsystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
- * TbCopyDAO继承基类
+ * TbCopyToQuetionDAO继承基类
  */
 @Mapper
-public interface CopyMapper{
+public interface CopyToQuestionMapper {
     User selectByPrimaryKey(String openId);
 
     int deleteByPrimaryKey(String openId);

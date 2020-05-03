@@ -15,12 +15,12 @@ public class UserTest {
     public void testAdd() throws Exception {
 
         System.out.println("add");
-        User user = new User("open_ids","nick_name","name","avaturl",true);
+        User user = new User("open_i","nick_name","name","avaturl",true);
         userService.insertUser(user);
     }
 
     @Test
-    public void testDelete(){
+    public void testDelete() throws Exception {
         System.out.println("delete");
     }
 
@@ -30,7 +30,9 @@ public class UserTest {
     }
 
     @Test
-    public void testSelect(){
+    public void testSelect() throws Exception {
         System.out.println("select");
+        User user = userService.selectUserByKey("open_ids");
+        System.out.println(user);
     }
 }

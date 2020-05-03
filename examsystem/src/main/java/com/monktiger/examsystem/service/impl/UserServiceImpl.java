@@ -12,6 +12,23 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
 
+    /**
+     *  注册 登录
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public User login(User user) throws Exception {
+        User msg = userMapper.selectByPrimaryKey(user.getOpenId());
+        return msg;
+    }
+
+    @Override
+    public int register(User user)throws Exception{
+        return userMapper.insert(user);
+    }
+
     @Override
     public int insertUser(User user) throws Exception {
         userMapper.insert(user);

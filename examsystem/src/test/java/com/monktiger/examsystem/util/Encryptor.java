@@ -13,6 +13,8 @@ public class Encryptor {
         String url = textEncryptor.encrypt("jdbc:mysql://120.27.145.98/db_examsystem?autoReconnect=true&useSSL=false&characterEncoding=utf-8");
         String name = textEncryptor.encrypt("root");
         String password = textEncryptor.encrypt("VIGO123123");
+        String appId = textEncryptor.encrypt("wx44735e1dcba5d758");
+        String appSecret = textEncryptor.encrypt("d220ad3dc1015c5f126014084f376eb2");
 
 //解密内容
 //        String url = textEncryptor.decrypt("");
@@ -23,6 +25,8 @@ public class Encryptor {
         System.out.println("url:"+url);
         System.out.println("name:"+name);
         System.out.println("password:"+password);
+        System.out.println("appId:"+appId);
+        System.out.println("appSecret:"+appSecret);
         Assert.assertTrue(name.length() > 0);
         Assert.assertTrue(password.length() > 0);
     }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * tb_group
- * @author 
+ * @author  tangwj
  */
 public class Group implements Serializable {
     private String groupId;
@@ -13,9 +13,31 @@ public class Group implements Serializable {
 
     private String name;
 
-    private Boolean status;
+    private int status;
 
     private static final long serialVersionUID = 1L;
+
+    public Group(){ }
+
+    public Group(String name){ this.name = name; }
+
+    public Group(String groupId,String openId){this.groupId=groupId;this.openId=openId;}
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
 
     public String getName() {
         return name;
@@ -25,11 +47,11 @@ public class Group implements Serializable {
         this.name = name;
     }
 
-    public Boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

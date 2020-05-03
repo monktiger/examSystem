@@ -14,7 +14,6 @@ public class AdminServiceImpl implements AdminService {
     private ExamMapper examMapper;
     @Override
     public int adminLogin(String password, String username) {
-        adminMapper.
         return 0;
     }
 }

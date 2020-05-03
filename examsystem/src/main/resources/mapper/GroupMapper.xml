@@ -5,27 +5,54 @@
     <id column="group_id" jdbcType="VARCHAR" property="groupId" />
     <id column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     group_id, open_id, `name`, `status`
   </sql>
+  <sql id="Self_Group">
+    group_id, `name`, `status`
+  </sql>
   <select id="selectByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Group" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_group
     where group_id = #{groupId,jdbcType=VARCHAR}
       and open_id = #{openId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByKeyState" parameterType="com.monktiger.examsystem.entity.Group" resultMap="BaseResultMap">
+    select
+    group_id , 'name'
+    from tb_group
+    where group_id = #{groupId,jdbcType=VARCHAR}
+    and status = #{status}
+  </select>
+  <select id="selectSelfGroup" parameterType="com.monktiger.examsystem.entity.Group" resultMap="BaseResultMap">
+    select
+    <include refid="Self_Group"/>
+    from tb_group
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </select>
+  <select id="fuzzySelectByGroupName" parameterType="com.monktiger.examsystem.entity.Group" resultMap="BaseResultMap">
+    select
+    *
+    from tb_group
+    where `name` like "%"#{name,jdbcType=VARCHAR}"%"
+      and status = 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Group">
     delete from tb_group
     where group_id = #{groupId,jdbcType=VARCHAR}
       and open_id = #{openId,jdbcType=VARCHAR}
   </delete>
+  <delete id="dissolveByGroupId" parameterType="com.monktiger.examsystem.entity.Group">
+    delete from tb_group
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.monktiger.examsystem.entity.Group">
-    insert into tb_group (group_id, open_id, `name`, 
+    insert into tb_group (group_id, open_id, `name`,
       `status`)
-    values (#{groupId,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+    values (#{groupId,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{status,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.Group">
@@ -66,7 +93,7 @@
         `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        `status` = #{status,jdbcType=BIT},
+        `status` = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where group_id = #{groupId,jdbcType=VARCHAR}
@@ -75,8 +102,13 @@
   <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Group">
     update tb_group
     set `name` = #{name,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=BIT}
+      `status` = #{status,jdbcType=INTEGER}
     where group_id = #{groupId,jdbcType=VARCHAR}
       and open_id = #{openId,jdbcType=VARCHAR}
+  </update>
+  <update id="updatePermission" parameterType="com.monktiger.examsystem.entity.Group">
+    update tb_group
+    set 'status' = 0
+    where group_id = #{groupId,jdbcType=VARCHAR}
   </update>
 </mapper>

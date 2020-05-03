@@ -8,6 +8,18 @@ import org.springframework.stereotype.Repository;
  * TbQuestionDAO继承基类
  */
 @Mapper
-@Repository
 public interface QuestionMapper {
+
+  Question selectByPrimaryKey(Integer id);
+
+   int  deleteByPrimaryKey(Integer id);
+
+   int insert(Integer id);
+
+   int insertSelective(Question question);
+
+   int updateByPrimaryKeySelective(Question question);
+
+   int updateByPrimaryKey(Question question);
+
 }

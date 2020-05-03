@@ -19,6 +19,10 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public User(){
+
+    }
+
     public User(String openId,String nickname,String name,String avatarurl, boolean available){
         this.openId = openId;
         this.nickname = nickname;
@@ -108,7 +112,7 @@ public class User implements Serializable {
         sb.append(", nickname=").append(nickname);
         sb.append(", name=").append(name);
         sb.append(", avatarurl=").append(avatarurl);
-        sb.append(", availble=").append(available);
+        sb.append(", available=").append(available);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
