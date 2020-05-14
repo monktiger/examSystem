@@ -19,5 +19,7 @@ public interface ExamToQuestionMapper  {
 
     int insertSelective(ExamToQuestion examToQuestion);
 
+    int updateByPrimaryKeySelective();
+
     int updateByPrimaryKey(ExamToQuestion examToQuestion);
 }

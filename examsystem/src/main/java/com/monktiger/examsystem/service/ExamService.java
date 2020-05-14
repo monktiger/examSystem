@@ -1,15 +1,27 @@
 package com.monktiger.examsystem.service;
 
+import com.monktiger.examsystem.entity.Exam;
 import com.monktiger.examsystem.entity.User;
 
 public interface ExamService {
-    User selectByPrimaryKey(String openId);
+
+/***************************************************出题者角度***************************************************************/
+
+    Exam selectByPrimaryKey(String id);
 
     int deleteByPrimaryKey(String openId);
 
-    int insert(User user);
+    int insert(Exam exam);
 
-    int insertSelective(User user);
+    int insertSelective(Exam exam);
 
-    int updateByPrimaryKey(User user);
+    int updateByPrimaryKey(Exam exam);
+
+
+/******************************************************答题者角度************************************************************/
+
+   int insertAnswer(Exam exam);
+
+
+
 }

@@ -3,37 +3,40 @@
 <mapper namespace="com.monktiger.examsystem.mapper.ExamMapper">
   <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.Exam">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <id column="group_id" jdbcType="INTEGER" property="groupId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="BIT" property="type" />
     <result column="score" jdbcType="VARCHAR" property="score" />
-    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="publisher_id" jdbcType="INTEGER" property="publisherId" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, group_id, `name`, `type`, score, begin_time, end_time, publisher_id, `status`
+    id, `name`, `type`, score, publisher_id, `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Exam" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_exam
     where id = #{id,jdbcType=VARCHAR}
-      and group_id = #{groupId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Exam">
     delete from tb_exam
     where id = #{id,jdbcType=VARCHAR}
-      and group_id = #{groupId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteGroupExamByKey" parameterType="com.monktiger.examsystem.entity.Exam">
+    delete from tb_group_exam
+    where gid = #{groupId,jdbcType=VARCHAR}
+    and eid = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertGroupExam" parameterType="com.monktiger.examsystem.entity.Exam">
+    insert into tb_group_exam (gid,eid,begin_time,end_time)
+    values (#{gid,jdbcType=VARCHAR}, #{eid,jdbcType=VARCHAR},#{beginTime,jdbcType=VARCHAR},#{endTime,jdbcType=VARCHAR})
+  </insert>
   <insert id="insert" parameterType="com.monktiger.examsystem.entity.Exam">
-    insert into tb_exam (id, group_id, `name`, 
-      `type`, score, begin_time, 
-      end_time, publisher_id, `status`
+    insert into tb_exam (id, `name`,
+      `type`, score, publisher_id, `status`
       )
-    values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{type,jdbcType=BIT}, #{score,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR},  #{name,jdbcType=VARCHAR},
+      #{type,jdbcType=BIT}, #{score,jdbcType=VARCHAR},
       #{endTime,jdbcType=TIMESTAMP}, #{publisherId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
       )
   </insert>
@@ -43,9 +46,6 @@
       <if test="id != null">
         id,
       </if>
-      <if test="groupId != null">
-        group_id,
-      </if>
       <if test="name != null">
         `name`,
       </if>
@@ -54,12 +54,6 @@
       </if>
       <if test="score != null">
         score,
-      </if>
-      <if test="beginTime != null">
-        begin_time,
-      </if>
-      <if test="endTime != null">
-        end_time,
       </if>
       <if test="publisherId != null">
         publisher_id,
@@ -72,9 +66,6 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="groupId != null">
-        #{groupId,jdbcType=INTEGER},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -83,12 +74,6 @@
       </if>
       <if test="score != null">
         #{score,jdbcType=VARCHAR},
-      </if>
-      <if test="beginTime != null">
-        #{beginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="publisherId != null">
         #{publisherId,jdbcType=INTEGER},
@@ -110,12 +95,6 @@
       <if test="score != null">
         score = #{score,jdbcType=VARCHAR},
       </if>
-      <if test="beginTime != null">
-        begin_time = #{beginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="publisherId != null">
         publisher_id = #{publisherId,jdbcType=INTEGER},
       </if>
@@ -124,18 +103,14 @@
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
-      and group_id = #{groupId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Exam">
     update tb_exam
     set `name` = #{name,jdbcType=VARCHAR},
       `type` = #{type,jdbcType=BIT},
       score = #{score,jdbcType=VARCHAR},
-      begin_time = #{beginTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
       publisher_id = #{publisherId,jdbcType=INTEGER},
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
-      and group_id = #{groupId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -14,9 +14,15 @@ public interface ExamMapper  {
 
     int deleteByPrimaryKey(String Id);
 
+    int deleteGroupExamByKey(String id, String groupId);
+
     int insert(Exam exam);
 
     int insertSelective(Exam exam);
 
+    int insertGroupExam(String gid,String eid,String begin_time,String end_time);
+
     int updateByPrimaryKey(Exam exam);
+
+    int updateByPrimaryKeySelective(Exam exam);
 }
