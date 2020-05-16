@@ -22,6 +22,25 @@
     from tb_question
     where id = #{id,jdbcType=INTEGER}
   </select>
+    <select id="getTotalQuestion" resultType="java.lang.Integer">
+      select count(*)
+      from tb_question
+      <where>
+        <if test="type !=null">`type`=#{type}</if>
+        <if test="category !=null">and locate(#{category},category)>0</if>
+        <if test="search!=null">and locate(#{search},title)>0</if>
+      </where>
+    </select>
+  <select id="getQuestion" resultMap="BaseResultMap">
+    select *
+    from tb_user
+    <where>
+      <if test="type !=null">`type`=#{type}</if>
+      <if test="category !=null">and locate(#{category},category)>0</if>
+      <if test="search!=null">and locate(#{search},title)>0</if>
+    </where>
+    limit #{startIndex},#{pageSize};
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_question
     where id = #{id,jdbcType=INTEGER}

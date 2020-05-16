@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
  * TbCopyToQuetionDAO继承基类
  */
 @Mapper
+@Repository
 public interface CopyToQuestionMapper {
     User selectByPrimaryKey(String openId);
 

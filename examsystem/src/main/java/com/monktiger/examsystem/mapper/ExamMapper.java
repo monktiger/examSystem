@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
  * TbExamDAO继承基类
  */
 @Mapper
+@Repository
 public interface ExamMapper  {
     User selectByPrimaryKey(String Id);
 

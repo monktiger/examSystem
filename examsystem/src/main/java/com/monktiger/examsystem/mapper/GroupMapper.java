@@ -11,6 +11,7 @@ import java.util.List;
  * TbGroupDAO继承基类
  */
 @Mapper
+@Repository
 public interface GroupMapper  {
     Group selectByPrimaryKey(String openId,String groupId);
 
