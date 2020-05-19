@@ -20,6 +20,13 @@
     where group_id = #{groupId,jdbcType=VARCHAR}
       and open_id = #{openId,jdbcType=VARCHAR}
   </select>
+  <select id="checkGroup" parameterType="com.monktiger.examsystem.entity.Group" resultType="integer" >
+    select
+    count(*)
+    from tb_group
+    where group_id = #{groupId,jdbcType=VARCHAR}
+    and open_id = #{openId,jdbcType=VARCHAR}
+  </select>
   <select id="selectByKeyState" parameterType="com.monktiger.examsystem.entity.Group" resultMap="BaseResultMap">
     select
     group_id , 'name'

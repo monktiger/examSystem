@@ -15,6 +15,13 @@ import java.util.List;
 public interface GroupMapper  {
     Group selectByPrimaryKey(String openId,String groupId);
 
+    /**
+     * 判断用户是否在组内
+     * @param openId
+     * @param groupId
+     * @return
+     */
+     Integer checkGroup(String openId,String groupId);
     List<Group> selectByKeyState(String groupId,int status);
 
     List<Group> fuzzySelectByGroupName(String name);

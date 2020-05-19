@@ -33,6 +33,7 @@ public class GroupController {
         String openId = jedisUtil.STRINGS.get("openId");
         Group group = new Group(groupName);
         group.setOpenId(openId);
+        //groupId为6位字符组合所以我通过md5+时间戳生成6位随机值作为groupId
 
         if(groupService.insertGroup(group)==1){
             return new ResponseBean<>(true,"创建 group 成功", CommonErrorEnum.SUCCESS_OPTION);

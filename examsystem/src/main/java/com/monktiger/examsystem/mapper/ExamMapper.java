@@ -5,6 +5,8 @@ import com.monktiger.examsystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * TbExamDAO继承基类
  */
@@ -26,4 +28,11 @@ public interface ExamMapper  {
     int updateByPrimaryKey(Exam exam);
 
     int updateByPrimaryKeySelective(Exam exam);
+
+    /**
+     * selectExamInGroupView
+     * @param groupId
+     * @return
+     */
+    List<Exam> selectExamByGroup(String groupId);
 }

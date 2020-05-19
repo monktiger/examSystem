@@ -3,6 +3,8 @@ package com.monktiger.examsystem.service;
 import com.monktiger.examsystem.entity.Exam;
 import com.monktiger.examsystem.entity.User;
 
+import java.util.List;
+
 public interface ExamService {
 
 /***************************************************出题者角度***************************************************************/
@@ -22,6 +24,19 @@ public interface ExamService {
 
    int insertAnswer(Exam exam);
 
+    /**
+     * 处理用户与某张试卷的关系
+     * @param examId
+     * @param user
+     * @return
+     */
+    int solveUserAndExamAssociation(int examId,User user);
 
-
+    /**
+     * 生成特定用户在特定组的试卷列表
+     * @param groupId
+     * @param user
+     * @return
+     */
+    List<Exam> excuteExamList(String groupId,User user);
 }

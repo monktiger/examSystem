@@ -27,8 +27,8 @@
       from tb_question
       <where>
         <if test="type !=null">`type`=#{type}</if>
-        <if test="category !=null">and locate(#{category},category)>0</if>
-        <if test="search!=null">and locate(#{search},title)>0</if>
+        <if test="category !=null">and locate(#{category},category)&gt;0</if>
+        <if test="search!=null">and locate(#{search},title)&gt;0</if>
       </where>
     </select>
   <select id="getQuestion" resultMap="BaseResultMap">
@@ -36,8 +36,8 @@
     from tb_user
     <where>
       <if test="type !=null">`type`=#{type}</if>
-      <if test="category !=null">and locate(#{category},category)>0</if>
-      <if test="search!=null">and locate(#{search},title)>0</if>
+      <if test="category !=null">and locate(#{category},category)&gt;0</if>
+      <if test="search!=null">and locate(#{search},title)&gt;0</if>
     </where>
     limit #{startIndex},#{pageSize};
   </select>

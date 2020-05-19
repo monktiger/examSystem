@@ -58,7 +58,7 @@ public class QuestionBankController {
         String search = HttpServletRequestUtil.getString(request,"search");
         String category = HttpServletRequestUtil.getString(request,"category");
         Integer type = HttpServletRequestUtil.getInt(request,"type");
-        if(pageNum==null){
+        if(pageNum==0){
             pageNum = 1;
         }
         int total = questionMapper.getTotalQuestion(search,category,type);
