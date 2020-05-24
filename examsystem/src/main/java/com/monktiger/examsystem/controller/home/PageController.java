@@ -117,7 +117,17 @@ public class PageController {
 @RequestMapping(value = "/toCopy",method = RequestMethod.GET)
     public Map<String,Object> toCopy(@RequestParam("examId")int examId,HttpServletRequest request){
      Map<String,Object> modelMap = new HashMap<>();
+     String token = request.getHeader("token");
+    if(token!=null&&jedisUtilKeys.exists("token")){
+        String userStirng = jedisUtilStrings.get(token);
+        JSONObject userJson = JSON.parseObject(userStirng);
+        User user = userJson.toJavaObject(User.class);
 
+    }
+    else {
+        modelMap.put("status",0);
+        modelMap.put("msg","未登录");
+    }
     return modelMap;
 }
 @RequestMapping(value = "/toWrongBook" ,method = RequestMethod.GET)

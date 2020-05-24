@@ -4,27 +4,57 @@ import java.io.Serializable;
 
 /**
  * tb_question
- * @author 
+ * @author 唐伟嘉
  */
 public class Question implements Serializable {
+    /**
+     * 试题标识ID
+     */
     private Integer id;
 
+    /**
+     * 题目详情
+     */
     private String title;
 
+    /**
+     * 题目类型1 2 3 4 5{单选，多项，填空，判断,主观}
+     */
     private Integer type;
 
+    /**
+     * 题目所属学科
+     */
     private String category;
 
+    /**
+     * 答案
+     */
     private String current;
 
+    /**
+     * 选择题A选项
+     */
     private String answerA;
 
+    /**
+     * 选择题B选项
+     */
     private String answerB;
 
+    /**
+     * 选择题C选项
+     */
     private String answerC;
 
+    /**
+     * 选择题D选项
+     */
     private String answerD;
 
+    /**
+     * （出题者）用户微信唯一ID
+     */
     private String openId;
 
     private static final long serialVersionUID = 1L;

@@ -1,33 +1,21 @@
 package com.monktiger.examsystem.mapper;
 
 import com.monktiger.examsystem.entity.Exam;
-import com.monktiger.examsystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-/**
- * TbExamDAO继承基类
- */
-@Mapper
 @Repository
-public interface ExamMapper  {
-    Exam selectByPrimaryKey(Integer Id);
+@Mapper
+public interface ExamMapper {
+    int deleteByPrimaryKey(Integer id);
 
-    int deleteByPrimaryKey(String Id);
+    int insert(Exam record);
 
-    int deleteGroupExamByKey(String id, String groupId);
+    int insertSelective(Exam record);
 
-    int insert(Exam exam);
+    Exam selectByPrimaryKey(Integer id);
 
-    int insertSelective(Exam exam);
-
-    int insertGroupExam(String gid,String eid,String begin_time,String end_time);
-
-    int updateByPrimaryKey(Exam exam);
-
-    int updateByPrimaryKeySelective(Exam exam);
+    int updateByPrimaryKeySelective(Exam record);
 
     /**
      * selectExamInGroupView
@@ -42,4 +30,5 @@ public interface ExamMapper  {
      * @return
      */
     List<Exam> selectExamByGroupAndStatus(String groupId);
+    int updateByPrimaryKey(Exam record);
 }

@@ -1,26 +1,22 @@
 package com.monktiger.examsystem.mapper;
 
 import com.monktiger.examsystem.entity.ExamToQuestion;
-import com.monktiger.examsystem.entity.User;
+import com.monktiger.examsystem.entity.ExamToQuestionKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-/**
- * TbExamToQuestionDAO继承基类
- */
-
-@Mapper
 @Repository
-public interface ExamToQuestionMapper  {
-    User selectByPrimaryKey(String openId);
+@Mapper
+public interface ExamToQuestionMapper {
+    int deleteByPrimaryKey(ExamToQuestionKey key);
 
-    int deleteByPrimaryKey(String openId);
+    int insert(ExamToQuestion record);
 
-    int insert(ExamToQuestion examToQuestion);
+    int insertSelective(ExamToQuestion record);
 
-    int insertSelective(ExamToQuestion examToQuestion);
+    ExamToQuestion selectByPrimaryKey(ExamToQuestionKey key);
 
-    int updateByPrimaryKeySelective();
+    int updateByPrimaryKeySelective(ExamToQuestion record);
 
-    int updateByPrimaryKey(ExamToQuestion examToQuestion);
+    int updateByPrimaryKey(ExamToQuestion record);
 }
