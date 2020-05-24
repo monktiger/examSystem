@@ -7,7 +7,26 @@ Page({
   data: {
 
   },
-
+  goManagePeople(e) {
+    wx.navigateTo({
+      url: '/pages/managePeople/managePeople',
+    });
+  },
+  goPaperCreate(e) {
+    wx.navigateTo({
+      url: '/pages/paperCreate/paperCreate',
+    });
+  },
+  goSetting(e) {
+    wx.navigateTo({
+      url: '/pages/groupSetting/groupSetting',
+    });
+  },
+  goManageScore(e) {
+    wx.navigateTo({
+      url: '/pages/manageScore/manageScore'
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

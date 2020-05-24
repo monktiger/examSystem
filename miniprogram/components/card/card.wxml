@@ -1,0 +1,7 @@
+<view class='nav-list' wx:for="{{cardList}}" wx:key="index">
+    <view class="nav-li bg-{{item.color}}" bindtap="clickCard">
+        <view class="nav-title">{{item.title}}</view>
+        <view class="nav-name">{{item.name}}</view>
+        <text class='cuIcon-{{item.icon}}'></text>
+    </view>
+</view>

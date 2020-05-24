@@ -43,8 +43,8 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "index",
-					"pathName": "pages/index/index",
+					"name": "nav",
+					"pathName": "pages/nav/nav",
 					"query": ""
 				},
 				{

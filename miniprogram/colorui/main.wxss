@@ -17,12 +17,12 @@ page {
 	--orange: #f37b1d;
 	--yellow: #fbbd08;
 	--olive: #8dc63f;
-	--green: #39b54a;
+	--green: rgb(73,197,149);
 	--cyan: #1cbbb4;
-	--blue: #0081ff;
-	--purple: #6739b6;
+	--blue: #4b93c4;
+	--purple: rgb(167, 155, 238);
 	--mauve: #9c26b0;
-	--pink: #e03997;
+	--pink:rgb(220,162,151);
 	--brown: #a5673f;
 	--grey: #8799a3;
 	--black: #333333;

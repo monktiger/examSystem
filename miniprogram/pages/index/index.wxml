@@ -2,7 +2,44 @@
   	<view slot="content" class="index-title">随测</view>
   </cu-custom>
   <scroll-view scroll-y class="scrollPage">
-</scroll-view>
-<text class="text-xl">主页面</text>
-<navigator url="/pages/manageGroup/manageGroup">我创建的组</navigator>
-<navigator url="/pages/joinedGroup/joinedGroup">我加入的组</navigator>
+  </scroll-view>
+  <!-- <navigator url="/pages/manageGroup/manageGroup">我创建的组</navigator>
+<navigator url="/pages/joinedGroup/joinedGroup">我加入的组</navigator> -->
+  <scroll-view scroll-x class="bg-white nav padding-left solid-bottom" scroll-with-animation>
+  	<view class="cu-item {{index==TabCur?'text-blue cur text-lg':'text-grey text-df'}} margin-right-xl" wx:for="{{title}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+  		{{item}}
+    </view>
+    <view class="add text-xl">
+      	<text class="cuIcon-add text-blue" bindtap="showModal" data-target="bottomModal"></text>
+    </view>
+  </scroll-view>
+  <scroll-view scroll-y class="scrollPage bg-white padding-top-xl">
+  
+      <card cardList="{{elements}}" TabCur="{{TabCur}}" bind:clickCard="clickCard" ></card>
+
+  </scroll-view>
+  <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+  	<view class="cu-dialog modal ">
+  		<!-- <view class="cu-bar bg-white">
+  			<view class="action text-green">确定</view>
+  			<view class="action text-blue" bindtap="hideModal">取消</view>
+  		</view> -->
+  		<view class="cu-list menu text-center ">
+  			<view class="cu-item solids-bottom">
+  				<view class="content text-lg text-gray">
+  					加入课程
+  				</view>
+  			</view>
+  			<view class="cu-item">
+  				<view class="content text-lg text-gray">
+  					创建课程
+  				</view>
+  			</view>
+  			<view class="cu-item margin-top-sm">
+  				<view class="content text-lg text-gray" bindtap="hideModal">
+  					取消
+  				</view>
+  			</view>
+  		</view>
+  	</view>
+  </view>

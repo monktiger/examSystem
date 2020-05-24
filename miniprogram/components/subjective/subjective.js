@@ -1,4 +1,4 @@
-// components/my/my.js
+// components/subjective/subjective.js
 Component({
   /**
    * 组件的属性列表

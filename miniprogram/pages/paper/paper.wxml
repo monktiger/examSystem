@@ -1,6 +1,33 @@
-<!--pages/paper/paper.wxml-->
+<!-- pages/paper/paper.wxml -->
 <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">试卷</view>
 </cu-custom>
-<text class="text-xl">试卷页面</text>
+<!-- <text class="text-xl">试卷页面</text> -->
+<!-- 单选 -->
+<!-- <singleAnswer></singleAnswer> -->
+<!-- 多选 -->
+<!-- <multipleChoice></multipleChoice> -->
+<!-- 判断 -->
+<!-- <judge></judge> -->
+<!-- 填空 -->
+<view class="padding">
+  <view class="flex align-center justify-between">
+    <view class="title flex align-center">
+      <view class="text-lg">第四题</view>
+      <text class="cu-tag line-blue radius m-post-words-ifelec margin-left" selectable="false" space="false" decode="false">填空</text>
+    </view>
+    <view class="text-lg text-blue">(2分)</view>
+  </view>
+  <view class="padding-tb problem">
+    <view class="text-lg">
+      最常用的方法
+      <view class="fill"></view>
+      用来隐藏小的数据块，比如加密密钥和数字签名中所用的散列函数值。
+    </view>
+  </view>
+  <view class="  flex justify-center text-lg">
+    <textarea class="answer" maxlength="300" placeholder="请填写答案" cursor-spacing="10" class="comment-text padding" focus="{{focus}}" show-confirm-bar="{{false}}" bindinput="inputHd" value="{{commentContent}}"></textarea>
+  </view>
+</view>
+<!-- 主观 -->
