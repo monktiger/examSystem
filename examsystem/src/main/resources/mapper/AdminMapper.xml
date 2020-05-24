@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.monktiger.examsystem.mapper.AdminMapper">
-  <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.Admin">
+  <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.AdminKey">
     <id column="username" jdbcType="VARCHAR" property="username" />
     <id column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Admin">
+  <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.AdminKey">
     delete from tb_admin
     where username = #{username,jdbcType=VARCHAR}
       and `password` = #{password,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.monktiger.examsystem.entity.Admin">
+  <insert id="insert" parameterType="com.monktiger.examsystem.entity.AdminKey">
     insert into tb_admin (username, `password`)
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.Admin">
+  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.AdminKey">
     insert into tb_admin
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="username != null">

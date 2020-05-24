@@ -73,5 +73,4 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
     }
     return modelMap;
     }
-@RequestMapping
 }

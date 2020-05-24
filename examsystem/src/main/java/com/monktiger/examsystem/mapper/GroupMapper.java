@@ -1,7 +1,6 @@
 package com.monktiger.examsystem.mapper;
 
 import com.monktiger.examsystem.entity.Group;
-import com.monktiger.examsystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface GroupMapper  {
-    Group selectByPrimaryKey(String openId,String groupId);
+    Group selectByPrimaryKey(String openId, String groupId);
 
     /**
      * 判断用户是否在组内
@@ -21,14 +20,14 @@ public interface GroupMapper  {
      * @param groupId
      * @return
      */
-     Integer checkGroup(String openId,String groupId);
-    List<Group> selectByKeyState(String groupId,int status);
+     Integer checkGroup(String openId, String groupId);
+    List<Group> selectByKeyState(String groupId, int status);
 
     List<Group> fuzzySelectByGroupName(String name);
 
     List<Group> selectSelfGroup(String openId);
 
-    int deleteByPrimaryKey(String openId,String groupId);
+    int deleteByPrimaryKey(String openId, String groupId);
 
     int dissolveByGroupId(String groupId);
 
@@ -38,5 +37,5 @@ public interface GroupMapper  {
 
     int updateByPrimaryKey(Group group);
 
-    int updatePermission(String openId,String groupId);
+    int updatePermission(String openId, String groupId);
 }

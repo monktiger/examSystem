@@ -13,7 +13,6 @@ public class UserTest {
 
     @Test
     public void testAdd() throws Exception {
-
         System.out.println("add");
         User user = new User("open_i","nick_name","name","avaturl",true);
         userService.insertUser(user);

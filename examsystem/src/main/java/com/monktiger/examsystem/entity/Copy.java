@@ -4,21 +4,42 @@ import java.io.Serializable;
 
 /**
  * tb_copy
- * @author 
+ * @author  唐伟嘉
  */
 public class Copy implements Serializable {
+    /**
+     * 学生答卷id
+     */
     private Integer copyId;
 
+    /**
+     * 唯一组标识ID
+     */
     private String groupId;
 
+    /**
+     * 试卷id
+     */
     private Integer examId;
 
+    /**
+     * 用户id
+     */
     private String openId;
 
+    /**
+     * 答卷的情况，预备考试0，可以答题1，考试结束已经批改2，考试结束待批改3
+     */
     private Integer status;
 
+    /**
+     * 教师可以对试卷进行评价
+     */
     private String judge;
 
+    /**
+     * 答卷成绩
+     */
     private Integer score;
 
     private static final long serialVersionUID = 1L;

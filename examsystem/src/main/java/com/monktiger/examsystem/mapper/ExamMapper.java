@@ -1,38 +1,21 @@
 package com.monktiger.examsystem.mapper;
 
 import com.monktiger.examsystem.entity.Exam;
-import com.monktiger.examsystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-/**
- * TbExamDAO继承基类
- */
-@Mapper
 @Repository
-public interface ExamMapper  {
-    User selectByPrimaryKey(String Id);
+@Mapper
+public interface ExamMapper {
+    int deleteByPrimaryKey(Integer id);
 
-    int deleteByPrimaryKey(String Id);
+    int insert(Exam record);
 
-    int deleteGroupExamByKey(String id, String groupId);
+    int insertSelective(Exam record);
 
-    int insert(Exam exam);
+    Exam selectByPrimaryKey(Integer id);
 
-    int insertSelective(Exam exam);
+    int updateByPrimaryKeySelective(Exam record);
 
-    int insertGroupExam(String gid,String eid,String begin_time,String end_time);
-
-    int updateByPrimaryKey(Exam exam);
-
-    int updateByPrimaryKeySelective(Exam exam);
-
-    /**
-     * selectExamInGroupView
-     * @param groupId
-     * @return
-     */
-    List<Exam> selectExamByGroup(String groupId);
+    int updateByPrimaryKey(Exam record);
 }

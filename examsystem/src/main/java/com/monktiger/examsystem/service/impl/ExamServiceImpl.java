@@ -5,6 +5,8 @@ import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.service.ExamService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ExamServiceImpl implements ExamService {
     @Override
@@ -35,6 +37,16 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public int insertAnswer(Exam exam) {
         return 0;
+    }
+
+    @Override
+    public int solveUserAndExamAssociation(int examId, User user) {
+        return 0;
+    }
+
+    @Override
+    public List<Exam> excuteExamList(String groupId, User user) {
+        return null;
     }
 
 }
