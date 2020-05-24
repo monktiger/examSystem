@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ExamMapper  {
-    User selectByPrimaryKey(String Id);
+    Exam selectByPrimaryKey(Integer Id);
 
     int deleteByPrimaryKey(String Id);
 
@@ -35,4 +35,11 @@ public interface ExamMapper  {
      * @return
      */
     List<Exam> selectExamByGroup(String groupId);
+
+    /**
+     * 选择现在时间与考试开始时间<15min或者大于开始时间的考试
+     * @param groupId
+     * @return
+     */
+    List<Exam> selectExamByGroupAndStatus(String groupId);
 }

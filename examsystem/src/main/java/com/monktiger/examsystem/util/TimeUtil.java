@@ -19,6 +19,12 @@ public class TimeUtil {
         int hour =(int)((mill2-mill1)/1000/60/60);
         return hour;
     }
+    public static int BetweenMin(long mill1){
+        long mill2=System.currentTimeMillis();
+        int min =(int)(mill2-mill1)/1000/60;
+        return min;
+    }
+
     public static long BetweenCent(long mill1){
         long mill2=System.currentTimeMillis();
         long cent =(mill2-mill1)/1000;

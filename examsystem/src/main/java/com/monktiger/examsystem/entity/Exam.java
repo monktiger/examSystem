@@ -10,7 +10,7 @@ import java.util.Date;
 public class Exam  implements Serializable {
     private String name;
 
-    private String id;
+    private Integer id;
 
     private String groupId;
 
@@ -22,7 +22,7 @@ public class Exam  implements Serializable {
 
     private Date endTime;
 
-    private Integer publisherId;
+    private String publisherId;
 
     private Integer status;
 
@@ -68,12 +68,16 @@ public class Exam  implements Serializable {
         this.endTime = endTime;
     }
 
-    public Integer getPublisherId() {
+    public String getPublisherId() {
         return publisherId;
     }
 
-    public void setPublisherId(Integer publisherId) {
+    public void setPublisherId(String publisherId) {
         this.publisherId = publisherId;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getStatus() {
@@ -84,11 +88,11 @@ public class Exam  implements Serializable {
         this.status = status;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

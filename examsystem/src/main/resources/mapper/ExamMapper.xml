@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.monktiger.examsystem.mapper.ExamMapper">
   <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.Exam">
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="BIT" property="type" />
     <result column="score" jdbcType="VARCHAR" property="score" />
@@ -16,7 +16,7 @@
     select 
     <include refid="Base_Column_List" />
     from tb_exam
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Exam">
     delete from tb_exam

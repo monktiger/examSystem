@@ -33,7 +33,7 @@ public class QuestionBankController {
         Map<String,Object> modelMap = new HashMap<>();
         //token机制
         String token = request.getHeader("token");
-        if(token!=null) {
+        if(token!=null&&jedisUtilKeys.exists("token")) {
             JSONObject questionJSON = JSON.parseObject(jsonString);
             Question question = questionJSON.toJavaObject(Question.class);
            String userStirng = jedisUtilStrings.get(token);

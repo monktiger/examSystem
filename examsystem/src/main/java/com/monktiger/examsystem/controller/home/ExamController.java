@@ -1,12 +1,11 @@
 package com.monktiger.examsystem.controller.home;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.cache.JedisUtil;
-import com.monktiger.examsystem.entity.Exam;
-import com.monktiger.examsystem.entity.User;
-import com.monktiger.examsystem.mapper.ExamMapper;
-import com.monktiger.examsystem.mapper.GroupMapper;
+import com.monktiger.examsystem.entity.*;
+import com.monktiger.examsystem.mapper.*;
 import com.monktiger.examsystem.service.ExamService;
 import com.monktiger.examsystem.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +31,21 @@ public class ExamController {
     private ExamMapper examMapper;
     @Autowired
     private ExamService examService;
+    @Autowired
+    private CopyMapper copyMapper;
+    @Autowired
+    private CopyToQuestionMapper copyToQuestionMapper;
+    @Autowired
+    private ExamToQuestionMapper examToQuestionMapper;
     @RequestMapping(value = "/getExam",method = RequestMethod.GET)
 public Map<String,Object> getExam(@RequestParam("groupId") String groupId, HttpServletRequest request){
     Map<String,Object> modelMap = new HashMap<>();
     String token = request.getHeader("token");
-    if(token!=null){
+    if(token!=null&&jedisUtilKeys.exists("token")){
         String userStirng = jedisUtilStrings.get(token);
         JSONObject userJson = JSON.parseObject(userStirng);
         User user = userJson.toJavaObject(User.class);
-        if(groupMapper.checkGroup(user.getOpenId(),groupId)!=0){
+        if(groupMapper.selectByPrimaryKey(user.getOpenId(),groupId)!=null){
             List<Exam> examList =examService.excuteExamList(groupId,user);
             modelMap.put("examList",examList);
             modelMap.put("status",1);
@@ -59,13 +64,48 @@ public Map<String,Object> getExam(@RequestParam("groupId") String groupId, HttpS
 public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRequest request){
     Map<String,Object> modelMap = new HashMap<>();
     String token = request.getHeader("token");
-    if(token!=null){
+    if(token!=null&&jedisUtilKeys.exists("token")){
         String userStirng = jedisUtilStrings.get(token);
         JSONObject userJson = JSON.parseObject(userStirng);
         User user = userJson.toJavaObject(User.class);
         int status=examService.solveUserAndExamAssociation(examId,user);
         switch (status){
-            case 1:
+            case 0:
+                modelMap.put("status",-1);
+                modelMap.put("msg","内部出错");
+                break;
+            case 10001:
+                modelMap.put("status",10001);
+                modelMap.put("msg","跳转到试卷编辑页");
+                break;
+            case 10002:
+                modelMap.put("status",10002);
+                modelMap.put("msg","跳转到试卷查看页");
+                break;
+            case 10003:
+                modelMap.put("status",10003);
+                modelMap.put("msg","跳转到试卷查看页");
+                break;
+            case 10004:
+                modelMap.put("status",10004);
+                modelMap.put("msg","跳转到成绩排行页");
+                break;
+            case 20001:
+                modelMap.put("status",20001);
+                modelMap.put("msg","试卷还未开放，请等待");
+                break;
+            case 20002:
+                modelMap.put("status",20002);
+                modelMap.put("msg","跳转到作答页");
+                break;
+            case 20003:
+                modelMap.put("status",20003);
+                modelMap.put("msg","考试已经结束，可以查看成绩，跳转到错题查看页");
+                break;
+            case 20004:
+                modelMap.put("status",20004);
+                modelMap.put("msg","考试已经结束，等待老师批改");
+                break;
         }
     }else{
         modelMap.put("status",0);
@@ -73,5 +113,100 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
     }
     return modelMap;
     }
-@RequestMapping
+    @RequestMapping(value = "/answerSubmit",method = RequestMethod.GET)
+    public Map<String,Object> answerSubmit(@RequestParam("copyId")int copyId,
+                                           @RequestParam("id")int id,
+                                           HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
+        String answer = HttpServletRequestUtil.getString(request,"answer");
+        String token=request.getHeader("token");
+        if(token!=null&&jedisUtilKeys.exists("token")){
+            String userStirng = jedisUtilStrings.get(token);
+            JSONObject userJson = JSON.parseObject(userStirng);
+            User user = userJson.toJavaObject(User.class);
+            Copy copy=copyMapper.selectByPrimaryKey(copyId);
+            if(copy==null){
+                modelMap.put("status",-1);
+                modelMap.put("msg","你无该试卷");
+            }
+            else{
+                if(answer==null){
+                    modelMap.put("status",-3);
+                    modelMap.put("msg","提交答案为空");
+                    return modelMap;
+                }
+                CopyToQuetion ctq=copyToQuestionMapper.selectByPrimaryKey(copyId,id);
+                if(ctq==null){
+                    modelMap.put("status",-2);
+                    modelMap.put("msg","试卷中不存在该题");
+                }
+                ExamToQuestion etq=examToQuestionMapper.selectByPrimaryKey(copy.getExamId(),id);
+                if(etq.getType()!=5){
+                    if(etq.getCurrent().equals(answer)){
+                        ctq.setScore(etq.getScore());
+                    }else ctq.setScore(0);
+                }
+                ctq.setAnswer(answer);
+                ctq.setAlready(true);
+                copyToQuestionMapper.updateByPrimaryKey(ctq);
+                modelMap.put("status",1);
+                modelMap.put("msg","提交成功");
+            }
+        }else{
+            modelMap.put("status",0);
+            modelMap.put("msg","未登录");
+        }
+        return modelMap;
+    }
+    @RequestMapping(value = "/addQuestion",method = RequestMethod.POST)
+    public Map<String,Object> addQuestion(HttpServletRequest request,@RequestBody String questionString){
+        JSONObject questionJson = JSONObject.parseObject(questionString);
+        ExamToQuestion examToQuestion = questionJson.toJavaObject(ExamToQuestion.class);
+        Map<String,Object> modelMap  = new HashMap<>();
+        String token = request.getHeader("token");
+        if(token!=null&&jedisUtilKeys.exists("token")){
+            String userStirng = jedisUtilStrings.get(token);
+            JSONObject userJson = JSON.parseObject(userStirng);
+            User user = userJson.toJavaObject(User.class);
+            Exam exam =examMapper.selectByPrimaryKey(examToQuestion.getExamId());
+            if(exam==null){
+                modelMap.put("status",-1);
+                modelMap.put("msg","试卷不存在");
+            }
+            if (exam.getPublisherId()!=user.getOpenId()){
+                modelMap.put("status",-2);
+                modelMap.put("msg","权限不足");
+            }
+            if(examToQuestion.getId==0){
+                examToQuestionMapper.insertSelective(examToQuestion);
+            }else{
+                examToQuestionMapper.updateByPrimaryKeySelective(examToQuestion);
+            }
+            modelMap.put("status",1);
+            modelMap.put("msg","题目插入成功");
+        }else{
+            modelMap.put("status",0);
+            modelMap.put("msg","未登录");
+        }
+    }
+    @RequestMapping(value = "/createExam" ,method = RequestMethod.POST)
+    public Map<String,Object> createExam(HttpServletRequest request,@RequestBody String examString){
+        JSONObject examJSON = JSON.parseObject(examString);
+        JSONArray groupIdArray = examJSON.getJSONArray("groupId");
+        List<ExamToGroup> examToGroupList = groupIdArray.toJavaList(ExamToGroup.class);
+        examJSON.remove("groupId");
+        Exam exam = examJSON.toJavaObject(Exam.class);
+        Map<String,Object> modelMap = new HashMap<>();
+        String token = request.getHeader("token");
+        if(token!=null){
+            String userStirng = jedisUtilStrings.get(token);
+            JSONObject userJson = JSON.parseObject(userStirng);
+            User user = userJson.toJavaObject(User.class);
+
+        }
+        else{
+            modelMap.put("status",0);
+            modelMap.put("msg","未登录");
+        }
+    }
 }
