@@ -12,7 +12,6 @@ page{
 }
 /* 切换 */
 .nav .cu-item.cur {
-  /* color:rgb(49, 156, 218); */
   border-bottom: 4rpx solid;
 }
 .nav .cu-item {
@@ -30,4 +29,11 @@ page{
 .modal{
   border-top-right-radius: 30rpx !important;
   border-top-left-radius: 30rpx !important;
+}
+/* 写字的模态框 */
+.comment-modal{
+  height: 70%;
+  border-top-right-radius: 30rpx !important;
+  border-top-left-radius: 30rpx !important;
+  text-align: left;
 }

@@ -98,3 +98,15 @@
     text-align: center;
     line-height: 60rpx;
   }
+  .modal{
+    border-top-right-radius: 30rpx !important;
+    border-top-left-radius: 30rpx !important;
+  }
+  .middle-modal{
+    border-radius: 30rpx !important;
+  }
+  /* 按钮 */
+  .btn{
+    width: 150rpx !important;
+    background-color:#7aafd3;
+}

@@ -1,1 +1,26 @@
-/* components/fill/fill.wxss */
+@import "/colorui/icon.wxss";
+@import "/colorui/main.wxss";
+@import "/colorui/animation.wxss";
+.fill{
+    display: inline-block;
+    line-height: 40rpx;
+    width: 120rpx;
+    border: 1rpx solid #aaaa;
+    position: relative;
+    top: 8rpx;
+}
+.problem{
+    line-height: 40rpx;
+}
+.answer{
+    height: 100rpx !important;
+    width: 95%;
+    line-height: 40rpx;
+}
+.text{
+    width: 100%;
+    border: 1rpx solid #4b93c4;
+    line-height: 40rpx;
+    letter-spacing: 2rpx;
+    border-radius: 20rpx;
+}
