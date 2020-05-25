@@ -1,0 +1,22 @@
+<!--pages/myInfo/myInfo.wxml-->
+<view>
+  <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">编辑资料</view>
+  </cu-custom>
+</view>
+<view>
+  <view class="padding-sm text-grey">个人资料</view>
+  <view>
+    <view class="flex bg-white padding solid" catchtap="nickname">
+      <view class="flex-sub">昵称</view>
+      <view class="flex-treble" data-nickname="{{nickname}}">{{nickname}}</view>
+      <view class="cuIcon-right lg text-gray flex-sub text-right"></view>
+    </view>
+    <view class="flex bg-white padding" catchtap="name">
+      <view class="flex-sub">姓名</view>
+      <view class="flex-treble" data-name="{{name}}">{{name}}</view>
+      <view class="cuIcon-right lg text-gray flex-sub text-right"></view>
+    </view>
+  </view>
+</view>

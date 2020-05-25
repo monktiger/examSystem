@@ -1,66 +1,84 @@
 // pages/groupSetting/groupSetting.js
+var app = getApp();
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
 
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onLoad: function(options) {
+    var editGroupUrl = app.globalData.url + "group/nodify";
+    this.setData({
+      editGroupUrl: editGroupUrl,
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  // 获取组名
+  groupName: function(e) {
+    this.setData({
+      groupName: e.detail.value,
+    });
+    console.log("组名" + this.data.groupName);
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  // 设置组名
+  setGroupName(e) {
+    var that = this;
+    // 发起网络请求
+    wx.request({
+      url: that.data.editGroupUrl,
+      method: "get",
+      header: {
+        "content-type": ""
+      },
+      data: {
+        name: that.data.groupName,
+        groupId: "ASXERV" // ***组Id
+      },
+      success: function(res) {
+        if (res.status == 1) {
+          // 隐藏modal
+          that.setData({
+            modalName: null
+          })
+          // 弹窗成功
+          wx.showToast({
+            title: '修改成功！', // 标题
+            icon: 'success', // 图标类型，默认success
+            duration: 1500 // 提示窗停留时间，默认1500ms
+          })
+          // 刷新页面
+          that.onLoad();
+        }
+        else{
+          // 弹窗失败
+          wx.showToast({
+            title: '修改失败！', // 标题
+            icon: 'none', // 图标类型，默认success
+            duration: 1500 // 提示窗停留时间，默认1500ms
+          })
+          console.log("status:"+res.status+";msg:"+res.msg);
+        }
+      },
+      fail: function(error) {
+        console.log(error);
+      }
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
 
-  },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
 
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

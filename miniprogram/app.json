@@ -1,16 +1,25 @@
 {
   "pages": [
+    "pages/editPaper/editPaper",
+
     "pages/welcome/welcome",
-    "pages/index/index",
+    "pages/myInfo/myInfo",
     "pages/my/my",
+    "pages/index/index",
     "pages/joinedGroup/joinedGroup",
     "pages/paper/paper",
     "pages/manageGroup/manageGroup",
     "pages/manageScore/manageScore",
+    "pages/managePeople/managePeople",
     "pages/paperCreate/paperCreate",
     "pages/paperDetails/paperDetails",
-    "pages/managePeople/managePeople",
-    "pages/groupSetting/groupSetting"
+    "pages/groupSetting/groupSetting",
+    "pages/editMulti/editMulti",
+    "pages/editSingle/editSingle",
+    
+    "pages/editShort/editShort",
+    "pages/editNickName/editNickName",
+    "pages/editName/editName"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F6F6F6",

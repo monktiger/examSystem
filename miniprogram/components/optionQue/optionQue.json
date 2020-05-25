@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "option-cmp": "/components/option/option",
+    "showQue-cmp": "/components/showQue/showQue"
+  }
+}

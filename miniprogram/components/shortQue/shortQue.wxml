@@ -1,0 +1,6 @@
+<!--components/shortQue/shortQue.wxml-->
+<shortQue-cmp>
+  <view class="shortQue-container">
+    <text class="opt-txt">这里是简答题的题目</text>
+  </view>
+</shortQue-cmp>

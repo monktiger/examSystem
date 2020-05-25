@@ -1,0 +1,14 @@
+<!--pages/editNickName/editNickName.wxml-->
+<view>
+  <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">编辑昵称</view>
+  </cu-custom>
+</view>
+<view class="padding-tb-sm">
+  <view class="padding-left-sm">2-20个字符</view>
+  <view class="padding-xs bg-white">
+    <input type="text" bindinput="nickname" placeholder="gulf" />
+  </view>
+</view>
+<view class="confirm text-center" catchtap="confirm">确认修改</view>

@@ -1,0 +1,15 @@
+<!--components/showShort/showShort.wxml-->
+<showQue-cmp>
+  <view class="que-container">
+    <view>
+      <text>1</text>
+      <text>.</text>
+      <text>这是题目</text>
+    </view>
+    <view class="score-container">
+      <text>( 分值：</text>
+      <text class="score">5</text>
+      <text> )</text>
+    </view>
+  </view>
+</showQue-cmp>
