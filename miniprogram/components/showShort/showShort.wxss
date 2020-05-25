@@ -1,1 +1,25 @@
 /* components/showShort/showShort.wxss */
+.que-container{
+  margin-top: 10rpx;
+  padding: 30rpx 20rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+}
+.score-container{
+  margin-left: 10rpx;
+  vertical-align: middle;
+  font-size: 24rpx;
+  color: rgb(255, 208, 0);
+}
+.shortQue-container{
+  background-color: #fff;
+  padding: 0 30rpx 30rpx;
+  font-size: 26rpx;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+}
+.opt-txt{
+  margin-left: 20rpx;
+}

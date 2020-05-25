@@ -3,8 +3,11 @@
 .radio-group {
   background-color: #fff;
   padding: 0 30rpx 30rpx;
-  font-size: 34rpx;
+  font-size: 28rpx;
   color: #666;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .radio-group radio{
   display: block;

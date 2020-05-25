@@ -4,9 +4,28 @@
 	</image>
 	<view class="content">
 		<image src="/image/logo.jpg" class="png" mode="widthFix"></image>
-		<view class="text-xl margin-top" >ID:雨山</view>
+		<view class="text-xl margin-top" >微信昵称:<text>{{name}}</text></view>
 	</view>
 </view>
+<view class="list" catchtap="info">
+  <view class="flex flex-sub justify-start align-center margin-left-lg">
+    <view class="cuIcon-writefill text-xl text-cyan flex"></view> 
+    <view class="padding-xs margin-xs">编辑资料</view>
+  </view>
+  <view class="flex flex-sub justify-end">
+    <view class="padding-sm margin-xs">
+      <text class="cuIcon-right lg text-gray"></text>
+    </view>
+  </view>
+</view>
 <view class="list">
-
+  <view class="flex flex-sub justify-start align-center margin-left-lg">
+    <view class="cuIcon-questionfill text-xl text-blue flex"></view>
+    <view class="padding-xs margin-xs">帮助与反馈</view>
+  </view>
+  <view class="flex flex-sub justify-end">
+    <view class="padding-sm margin-xs">
+      <text class="cuIcon-right lg text-gray"></text>
+    </view>
+  </view>
 </view>

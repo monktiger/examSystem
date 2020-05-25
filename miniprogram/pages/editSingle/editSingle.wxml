@@ -5,3 +5,32 @@
     <view slot="content">编辑单选题</view>
   </cu-custom>
 </view>
+<que-cmp />
+<view class="ans-container">
+  <text class="ans-title">答案 选项</text>
+
+  <view class="option-container">
+    <radio-group class="radio-group">
+      <block wx:for="{{opt}}" wx:for-item="item" wx:for-index='idx'>
+        <view class="option-group">
+          <radio class="margin-right-sm" checked="{{checked}}" data-idx="{{idx}}"></radio>
+          <input class="basis-xl" placeholder="输入选项" bindinput="optDetail" data-idx="{{idx}}"></input>
+          <text class="cuIcon-roundclosefill lg text-pink" catchtap="deleteOpt"></text>
+        </view>
+      </block>
+    </radio-group>
+  </view>
+  <view class="add-option text-pink" catchtap="addOpt">
+    <text class="cuIcon-roundaddfill margin-right-sm lg"></text>
+    <text>添加选项</text>
+  </view>
+</view>
+<view class="cu-form-group margin-top">
+  <view class="title">题目分值</view>
+  <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+    <view class="picker">
+      {{index?picker[index]:'请选择'}}
+    </view>
+  </picker>
+</view>
+<button class="cu-btn block bg-pink shadow margin-tb-sm lg" catchtap="confirm">确认</button>

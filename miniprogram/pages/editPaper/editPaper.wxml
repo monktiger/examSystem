@@ -1,13 +1,37 @@
 <!--pages/editPaper/editPaper.wxml-->
 <view>
-  <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">编辑试卷</view>
-  </cu-custom>
+	<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+		<view slot="backText">返回</view>
+		<view slot="content">编辑试卷</view>
+	</cu-custom>
 </view>
-<navigator url="/pages/editSingle/editSingle">创建单选题</navigator>
-<navigator url="/pages/editMulti/editMulti">创建多选题</navigator>
-<navigator url="/pages/editShort/editShort">创建简答题</navigator>
 
-<showShort-cmp />
 <optionQue-cmp />
+<multiQue-cmp />
+<showShort-cmp />
+
+<view class="justify-center padding margin-top-sm">
+	<button class="cu-btn line-mauve round shadow flex" catchtap="showType">新增题目</button>
+</view>
+<view class="createButton" catchtap="create">创建试卷</view>
+
+<view class="qus-type justify-center text-center {{style?'hide':'show'}}" wx:if="{{show}}" catchtap="hideType">
+	<view class="margin-xl" catchtap="single">
+		<button class="cu-btn line-mauve round shadow flex">
+			<text class="cuIcon-radiobox lg margin-right-sm"></text>
+			<text>单选题</text>
+		</button>
+	</view>
+	<view class="margin-xl" catchtap="multi">
+		<button class="cu-btn line-mauve round shadow flex">
+			<text class="cuIcon-squarecheck lg margin-right-sm"></text>
+			<text>多选题</text>
+		</button>
+	</view>
+	<view class="margin-xl" catchtap="short">
+		<button class="cu-btn line-mauve round shadow flex">
+			<text class="cuIcon-edit lg margin-right-sm"></text>
+			<text>简答题</text>
+		</button>
+	</view>
+</view>

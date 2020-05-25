@@ -3,4 +3,44 @@
   <view slot="backText">返回</view>
   <view slot="content">新建试题</view>
 </cu-custom>
-<navigator url="/pages/editPaper/editPaper">创建考试</navigator>
+<view>
+  <view class="bg-white padding">
+    <text>试卷名称</text>
+    <view class="padding-sm margin-top-sm text-sm solid radius">
+      <textarea id="title" placeholder="请输入名称" maxlength="80" bindchange="examName"></textarea>
+    </view>
+  </view>
+  <view class="margin-top-sm bg-white padding">
+    <view>开始时间</view>
+    <view class="solid-bottom margin-bottom">
+      <view class="cu-form-group">
+        <view class="title">时间选择</view>
+        <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTapStart' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+          <view class="picker">
+            {{startDate}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="margin-top-sm">结束时间</view>
+    <view>
+      <view class="cu-form-group">
+        <view class="title">时间选择</view>
+        <picker class='time-picker' mode="multiSelector" bindchange="bindEndMultiPickerChange" bindtap='pickerTapEnd' bindcolumnchange="bindEndMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+          <view class="picker">
+            {{endDate}}
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <view class="margin-top-sm bg-white padding">
+    <text>试卷描述</text>
+    <view class="padding-sm margin-top-sm text-sm solid radius">
+      <textarea id="paper-detail" placeholder="请输入描述" bindchange="detail"></textarea>
+    </view>
+  </view>
+  <view class="justify-center padding margin-top-xs">
+    <button class="cu-btn line-mauve round shadow flex" catchtap="createPaper">创建考试</button>
+  </view>
+</view>

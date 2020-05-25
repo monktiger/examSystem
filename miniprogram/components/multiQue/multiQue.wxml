@@ -1,0 +1,7 @@
+<!--components/multiQue/multiQue.wxml-->
+<optionQue-cmp>
+  <view class="container">
+    <showQue-cmp />
+    <multi-cmp />
+  </view>
+</optionQue-cmp>

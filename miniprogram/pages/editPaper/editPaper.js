@@ -1,66 +1,75 @@
 // pages/editPaper/editPaper.js
+var app = getApp();
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    show:false,
+    style:false
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+  single(e){
+    wx.navigateTo({       
+      url: "/pages/editSingle/editSingle"
+    })
+  },
+
+  multi(e) {
+    wx.navigateTo({
+      url: "/pages/editMulti/editMulti"
+    })
+  },
+
+  short(e) {
+    wx.navigateTo({
+      url: "/pages/editShort/editShort"
+    })
+  },
+
+  showType(e){
+    this.setData({
+      show:true
+    })
+  },
+
+  hideType(e) {
+    this.setData({
+      show: false
+    })
+  },
+
   onLoad: function (options) {
+    var addQuestionUrl = app.globalData.url + "exam/addQuestion";
+    this.setData({
+      addQuestionUrl: addQuestionUrl,
+    });
+    // 获取简答题缓存
+    var shortQues = wx.getStorageSync('short_ques');
+    this.setData({
+      shortQues:shortQues
+    })
+    for(let i in shortQues){
 
+    }
+    // if(shortQues){
+      // 如果有缓存，则放进data内
+
+      console.log(shortQues);
+    // } 
+    // else {
+    //   //没有缓存则定义缓存数组？
+    //   shortQues=[];
+    //   wx.setStorageSync('short_ques', shortQues);
+    // }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  create:function(e){
+    wx.navigateTo({
+      url: "/pages/manageGroup/manageGroup"
+    })
+    wx.showToast({
+      title: '创建成功！', // 标题
+      icon: 'success', // 图标类型，默认success
+      duration: 1500 // 提示窗停留时间，默认1500ms
+    })
   }
 })

@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "multi-cmp": "/components/multi/multi",
+    "showQue-cmp": "/components/showQue/showQue"
+  }
+}

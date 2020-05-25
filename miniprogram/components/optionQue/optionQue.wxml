@@ -1,6 +1,6 @@
 <!--components/optionQue/optionQue.wxml-->
 <optionQue-cmp>
-  <view>
+  <view class="container">
     <showQue-cmp />
     <option-cmp />
   </view>

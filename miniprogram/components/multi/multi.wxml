@@ -1,0 +1,11 @@
+<!--components/multi/multi.wxml-->
+<multi-cmp>
+	<checkbox-group bindchange="checkboxChange">
+		<label class="checkbox-group" wx:for="{{items}}" wx:key="{{item.value}}">
+			<view>
+				<checkbox value="{{item.value}}" checked="{{item.checked}}" />
+			</view>
+			<view class="weui-cell__bd">{{item.name}}</view>
+		</label>
+	</checkbox-group>
+</multi-cmp>

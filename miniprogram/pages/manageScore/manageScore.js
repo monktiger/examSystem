@@ -1,66 +1,57 @@
 // pages/manageScore/manageScore.js
+var app = getApp();
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
 
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+    var scoreListUrl = app.globalData.url + "in/toScoreList";
+    this.setData({
+      scoreListUrl: scoreListUrl,
+    });
+    this.getScoreList(scoreListUrl);
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  getScoreList: function(url){
+    var that = this;
+    // 发起网络请求
+    wx.request({
+      url: url,
+      method: "get",
+      header: {
+        "content-type": ""
+      },
+      data: {
+        examId: "10086", // ***examId
+        groupId: "ASX123" // ***组Id
+      },
+      success: function (res) {
+        that.processScore(res.scoreList);
+      },
+      fail: function (error) {
+        console.log(error);
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  processScore: function(scoreList){
+    var scores = [];
+    for (var idx in scoreList) {
+      var subject = scoreList[idx];
+      var studentName = subject.studentName;
+      if (studentName.length >= 6) {
+        studentName = studentName.substring(0, 6) + "...";
+      }
+      var temp = {
+        studentName: studentName,
+        score: subject.score,
+      }
+      scores.push(temp);
+    }
+    this.setData({
+      scores: scores
+    });
   }
 })

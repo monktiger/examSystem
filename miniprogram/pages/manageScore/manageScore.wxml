@@ -3,5 +3,19 @@
   <view slot="backText">返回</view>
   <view slot="content">成绩管理</view>
 </cu-custom>
-<text class="text-xl">成绩管理页面</text>
-<navigator url="/pages/paperDetails/paperDetails">试卷分数详情</navigator>
+<view class="solids-bottom flex">
+  <view class="flex-sub text-center padding-sm margin-xs">名字</view>
+  <view class="flex-sub text-center padding-sm margin-xs">分数</view>
+  <view class="flex-sub text-center padding-sm margin-xs">查看详情</view>
+</view>
+<view class="bg-white">
+  <block wx:for="{{scores}}" wx:for-item="item">
+    <view class="solids-bottom flex">
+      <view class="flex-sub text-center padding-sm margin-xs">{{studentName}}</view>
+      <view class="flex-sub text-center padding-sm margin-xs">{{score}}</view>
+      <view class="flex-sub text-center padding-sm margin-xs cu-btn line-grey">
+        <navigator url="/pages/paperDetails/paperDetails">查看</navigator>
+      </view>
+    </view>
+  </block>
+</view>
