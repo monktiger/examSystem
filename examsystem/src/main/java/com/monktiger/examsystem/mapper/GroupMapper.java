@@ -21,11 +21,12 @@ public interface GroupMapper  {
      * @return
      */
      Integer checkGroup(String openId, String groupId);
+
     List<Group> selectByKeyState(String groupId, int status);
 
     List<Group> fuzzySelectByGroupName(String name);
 
-    List<Group> selectSelfGroup(String openId);
+    List<Group> selectSelfGroup(String openId,Integer status);
 
     int deleteByPrimaryKey(String openId, String groupId);
 

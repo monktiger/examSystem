@@ -6,7 +6,7 @@ import java.io.Serializable;
  * tb_copy_to_quetion
  * @author 唐伟嘉
  */
-public class CopyToQuetion extends CopyToQuetionKey implements Serializable {
+public class CopyToQuestion extends CopyToQuestionKey implements Serializable {
     /**
      * 试题得分
      */
@@ -23,6 +23,10 @@ public class CopyToQuetion extends CopyToQuetionKey implements Serializable {
     private Boolean already;
 
     private static final long serialVersionUID = 1L;
+
+    public CopyToQuestion(){}
+
+    public CopyToQuestion(int copyId,int id){super.setCopyId(copyId); super.setId(id);}
 
     public Integer getScore() {
         return score;
@@ -59,7 +63,7 @@ public class CopyToQuetion extends CopyToQuetionKey implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        CopyToQuetion other = (CopyToQuetion) that;
+        CopyToQuestion other = (CopyToQuestion) that;
         return (this.getCopyId() == null ? other.getCopyId() == null : this.getCopyId().equals(other.getCopyId()))
             && (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getScore() == null ? other.getScore() == null : this.getScore().equals(other.getScore()))

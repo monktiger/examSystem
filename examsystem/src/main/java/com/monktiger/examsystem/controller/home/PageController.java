@@ -120,6 +120,11 @@ public class PageController {
      String token = request.getHeader("token");
     if(token!=null&&jedisUtilKeys.exists("token")){
         String userStirng = jedisUtilStrings.get(token);
+
+
+
+
+
         JSONObject userJson = JSON.parseObject(userStirng);
         User user = userJson.toJavaObject(User.class);
 

@@ -4,6 +4,8 @@ import com.monktiger.examsystem.entity.Exam;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface ExamMapper {

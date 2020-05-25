@@ -6,7 +6,7 @@ import java.io.Serializable;
  * tb_copy_to_quetion
  * @author 唐伟嘉
  */
-public class CopyToQuetionKey implements Serializable {
+public class CopyToQuestionKey implements Serializable {
     /**
      * 学生答卷id
      */
@@ -46,7 +46,7 @@ public class CopyToQuetionKey implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        CopyToQuetionKey other = (CopyToQuetionKey) that;
+        CopyToQuestionKey other = (CopyToQuestionKey) that;
         return (this.getCopyId() == null ? other.getCopyId() == null : this.getCopyId().equals(other.getCopyId()))
             && (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()));
     }

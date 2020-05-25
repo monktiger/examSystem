@@ -9,7 +9,6 @@ import com.monktiger.examsystem.mapper.*;
 import com.monktiger.examsystem.service.ExamService;
 import com.monktiger.examsystem.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -135,7 +134,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                     modelMap.put("msg","提交答案为空");
                     return modelMap;
                 }
-                CopyToQuetion ctq=copyToQuestionMapper.selectByPrimaryKey(copyId,id);
+                CopyToQuestion ctq=copyToQuestionMapper.selectByPrimaryKey(copyId,id);
                 if(ctq==null){
                     modelMap.put("status",-2);
                     modelMap.put("msg","试卷中不存在该题");
@@ -177,7 +176,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 modelMap.put("status",-2);
                 modelMap.put("msg","权限不足");
             }
-            if(examToQuestion.getId==0){
+            if(examToQuestion.getId()==0){
                 examToQuestionMapper.insertSelective(examToQuestion);
             }else{
                 examToQuestionMapper.updateByPrimaryKeySelective(examToQuestion);
@@ -188,6 +187,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             modelMap.put("status",0);
             modelMap.put("msg","未登录");
         }
+        return modelMap;
     }
     @RequestMapping(value = "/createExam" ,method = RequestMethod.POST)
     public Map<String,Object> createExam(HttpServletRequest request,@RequestBody String examString){
@@ -208,5 +208,6 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             modelMap.put("status",0);
             modelMap.put("msg","未登录");
         }
+        return modelMap;
     }
 }

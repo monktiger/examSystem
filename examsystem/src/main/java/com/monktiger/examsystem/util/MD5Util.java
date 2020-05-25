@@ -2,6 +2,7 @@ package com.monktiger.examsystem.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public class MD5Util {
     public static String getMd5(String plainText,int length ) {

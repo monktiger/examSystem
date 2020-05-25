@@ -1,10 +1,12 @@
 package com.monktiger.examsystem.controller.home;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.cache.JedisUtil;
 import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.service.UserService;
 import com.monktiger.examsystem.service.impl.UserServiceImpl;
+import com.monktiger.examsystem.util.TokenUtil;
 import com.monktiger.examsystem.utils.resultHander.CommonErrorEnum;
 import com.monktiger.examsystem.utils.resultHander.ResponseBean;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -17,13 +19,13 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.Jedis;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 
 @RequestMapping("/user")
@@ -31,10 +33,10 @@ import java.net.URI;
 @CrossOrigin
 public class AuthenticateController {
 
-    @Value("wechat.appId")
+    @Value("${wechat.appId}")
     private String appId;
 
-    @Value("wecaht.appSecret")
+    @Value("${wechat.appSecret}")
     private String appSecret;
 
     private String openId;
@@ -43,11 +45,28 @@ public class AuthenticateController {
 
     private String accessToken;
 
+    private Map<String,Object> modelMap = new HashMap<>();
+
     @Autowired
     UserServiceImpl userService;
 
     @Autowired
-    JedisUtil jedisUtil;
+    private JedisUtil.Strings jedisUtilString;
+    @Autowired
+    private JedisUtil.Keys jedisUtilKey;
+
+
+
+    @RequestMapping("/testRedis")
+    public String testAdd(String test){
+        jedisUtilString.set("test",test);
+        return jedisUtilString.get("test");
+    }
+
+    @RequestMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
 
     /**
      * 修改个人信息
@@ -57,7 +76,7 @@ public class AuthenticateController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/nodify")
+    @RequestMapping(value= "/nodify" ,method = RequestMethod.POST)
     public Object nodify(String name,String nickname,String openId) throws Exception {
         User user = userService.selectUserByKey(openId);
         user.setName(name);
@@ -75,8 +94,8 @@ public class AuthenticateController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/login")
-    public Object login(String code)throws Exception{
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public Map<String,Object> login(String code, String headPic, String userName)throws Exception{
 
         /**
          * 创建 httpclient 对象
@@ -126,14 +145,23 @@ public class AuthenticateController {
          * 第一次使用的用户
          */
         if(user==null){
-            jedisUtil.STRINGS.set("openId",openId);
-            return new ResponseBean<>(false,"跳转至注册界面 并执行 授权接口",CommonErrorEnum.LOGIN_FIRST);
+            jedisUtilString.set("openId",openId);
+            User addUser = new User(openId,"无昵称",userName,headPic,true);
+            userService.insertUser(addUser);
+            jedisUtilString.set(openId, JSON.toJSONString(addUser));
+            modelMap.put("userInfo",addUser);
+        }else{
+            /**
+             *  已经授权过的用户
+             */
+            jedisUtilString.set(openId, JSON.toJSONString(user));
+            modelMap.put("userInfo",user);
         }
-
-        /**
-         *  已经授权过的用户
-         */
-        return null;
+        jedisUtilString.set("token",openId);
+        modelMap.put("token",openId);
+        modelMap.put("status",1);
+        modelMap.put("msg","登陆成功");
+        return modelMap;
     }
 
     /**
@@ -144,10 +172,10 @@ public class AuthenticateController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/register")
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
     public Object register(String nickName, String avatarUrl,String name) throws Exception {
 
-        openId = jedisUtil.STRINGS.get("openId");
+        openId = jedisUtilString.get("openId");
 
         User user = new User(nickName,name,openId,avatarUrl,true);
 

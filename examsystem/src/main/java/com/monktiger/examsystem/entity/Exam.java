@@ -13,6 +13,8 @@ public class Exam implements Serializable {
      */
     private Integer id;
 
+    private Integer groupId;
+
     /**
      * 考试名称
      */
@@ -109,6 +111,14 @@ public class Exam implements Serializable {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
     @Override
