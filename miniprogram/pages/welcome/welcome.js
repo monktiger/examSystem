@@ -13,8 +13,8 @@ Page({
    */
   onLoad: function (options) {
     setTimeout(function () {
-      wx.switchTab({
-        url: '/pages/index/index',
+      wx.navigateTo({
+        url: '/pages/nav/nav',
       })
     }, 3000)
   },

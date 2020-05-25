@@ -1,7 +1,53 @@
-<!--pages/paperDetails/paperDetails.wxml-->
-<cu-custom bgColor="bg-gradual-orange" isBack="{{true}}">
+<!-- pages/paperDetails/paperDetails.wxml -->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">试卷详情</view>
 </cu-custom>
-<text class="text-xl">试卷详情页面</text>
-<navigator url="/pages/paper/paper">试卷</navigator>
+<!-- <text class="text-xl">试卷详情页面</text> -->
+<!-- <navigator url="/pages/paper/paper">试卷</navigator> -->
+<view class="total text-lg margin-top padding-lr-xl text-black text-bold" hover-class="none" hover-stop-propagation="false">
+  总分4.0（满分5.0）
+</view>
+<view class="objective padding-xl">
+  <view class="title flex justify-between align-center">
+    <view class="text-lg text-bold">客观题</view>
+    <view class="text-df">
+      <text class="text-lg">18</text>
+      /20
+    </view>
+  </view>
+  <view class="grid col-5 text-center margin-top">
+    <view wx:for="{{10}}" wx:key="index">
+      <view class="box padding margin-lr-sm margin-tb-sm text-blue">
+        {{index+1}}
+        <!-- <view class="cu-tag bg-red tag">
+          <text class="cuIcon-close text-white" selectable="false" space="false" decode="false"></text>
+        </view> -->
+        <view class="cu-tag bg-blue tag">
+          <text class="cuIcon-check text-white" selectable="false" space="false" decode="false"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="subjective padding-xl">
+  <view class="title flex justify-between align-center">
+    <view class="text-lg text-bold">主观题</view>
+    <view class="text-df">未批阅</view>
+  </view>
+  <view class="grid col-5 text-center margin-top">
+    <view wx:for="{{10}}" wx:key="index">
+      <view class="box padding margin-lr-sm margin-tb-sm text-blue">
+        {{index+1}}
+        <view class="cu-tag bg-red tag">
+          <text class="cuIcon-close text-white" selectable="false" space="false" decode="false"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="flex justify-center">
+  <button class="cu-btn bg-blue round shadow-blur sub  btn" bindtap="goPaper" data-target="Modal1">
+  查看试卷
+</button>
+</view>

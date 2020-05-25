@@ -1,0 +1,19 @@
+<view class="flex justify-center paper-box">
+  <view 
+  
+  class="paper padding flex  margin-top" 
+  bindtap="changePage">
+  <!-- 图标 -->
+    <view 
+    wx:if="{{pageId==0?true:false}}"
+    class="cuIcon-moreandroid more text-blue" 
+    style="font-size:40rpx"></view>
+    <!-- 分数 -->
+    <view 
+    wx:else
+    class=" more text-red" 
+    style="font-size:40rpx">99</view>
+    <view class="">一体化第一周随堂测试（试卷名）</view>
+    <view class="margin-top-xl">2020.02.02-12:00 - 2020.03.03.13:00</view>
+  </view>
+</view>

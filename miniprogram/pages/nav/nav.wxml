@@ -1,0 +1,16 @@
+<index wx:if="{{PageCur=='chat'}}"></index>
+<my wx:if="{{PageCur=='personal'}}"></my>
+<view class="cu-bar tabbar bg-white shadow foot">
+  <view class="action" bindtap="NavChange" data-cur="chat">
+    <view class='cuIcon-cu-image'>
+      <image src="/image/{{PageCur=='chat'?'chat':'chat2'}}.png"></image>
+    </view>
+    <view class="{{PageCur=='chat'?'text-blue':'text-gray'}}">分组</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="personal">
+    <view class='cuIcon-cu-image'>
+      <image src="/image/{{PageCur=='personal'?'personal':'personal2'}}.png"></image>
+    </view>
+    <view class="{{PageCur=='personal'?'text-blue':'text-gray'}}">我的</view>
+  </view>
+</view>

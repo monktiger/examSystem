@@ -1,18 +1,3 @@
-<!-- pages/paper/paper.wxml -->
-<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">试卷</view>
-</cu-custom>
-<!-- <text class="text-xl">试卷页面</text> -->
-<!-- 单选 -->
-<!-- <singleAnswer></singleAnswer> -->
-<!-- 多选 -->
-<!-- <multipleChoice></multipleChoice> -->
-<!-- 判断 -->
-<!-- <judge></judge> -->
-<!-- 填空 -->
-<!-- <fill></fill> -->
-<!-- 主观 -->
 <view class="padding">
   <view class="flex align-center justify-between">
     <view class="title flex align-center">
@@ -30,3 +15,4 @@
     <textarea maxlength="300" placeholder="请填写答案" cursor-spacing="10" class="comment-text padding answer" focus="{{focus}}" show-confirm-bar="{{false}}" bindinput="inputHd" value="{{commentContent}}"></textarea>
   </view>
 </view>
+
