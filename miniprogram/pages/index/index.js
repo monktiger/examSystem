@@ -29,7 +29,31 @@ Component({
     },
     ],
   },
+  attached: function() {
+    let that=this
+    this.setData({
+      token:app.globalData.token
+    })
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/:group/getList',
+      method: 'GET',
+      data: {
+      },
+      header: {
+        "token":that.data.token
+      },
+      success: function (result) {
+        console.log(result);
+        this.setData({
+          elements: result
+        })
+        
+      }, fail(e) {
+        console.log(e);
 
+      }
+    })
+  },
   /**
    * 组件的方法列表
    */
@@ -48,6 +72,7 @@ Component({
     },
   // 导航栏
   tabSelect(e) {
+    let that = this
     app.globalData.pageId=e.currentTarget.dataset.id;
     if (e.currentTarget.dataset.id == 0) {
       // console.log(e.currentTarget.dataset.id);
@@ -87,8 +112,6 @@ Component({
         ],
       })
     }
-
-
   },
   // 模态窗
   showModal(e) {
@@ -101,6 +124,70 @@ Component({
       modalName: null
     })
   },
+  creatInput(e){
+    this.setData({
+      creatInput: e.detail.value
+    })
+  },
+  addInput(e){
+    this.setData({
+      addInput: e.detail.value
+    })
+  },
+  // 创建组
+  create(e){
+    let that = this;
+    console.log(this.data.creatInput);
+    
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/group/create',
+      method: 'GET',
+      data: {
+        name:that.data.creatInput
+      },
+      header: {
+        // "Content-Type": "application/x-www-form-urlencoded",
+        "token":that.data.token
+      },
+      success: function (result) {
+        console.log(result);
+        
+      }, fail(e) {
+        console.log(e);
 
+      }
+    })
+  },
+  // 加入组
+  add(e){
+    let that = this;
+    console.log(this.data.creatInput);
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/group/join',
+      method: 'GET',
+      data: {
+        groupId:that.data.addInput
+      },
+      header: {
+        // "Content-Type": "application/x-www-form-urlencoded",
+        "token":that.data.token
+      },
+      success: function (result) {
+        console.log(result);
+        
+      }, fail(e) {
+        console.log(e);
+
+      }
+    })
+  },
+  // 退出组
+  quit(e){
+
+  },
+  // 解散组
+  delete(e){
+
+  }
   }
 })

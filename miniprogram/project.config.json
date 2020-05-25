@@ -109,6 +109,12 @@
 					"name": "paperDetails",
 					"pathName": "pages/paperDetails/paperDetails",
 					"query": ""
+				},
+				{
+					"id": -11,
+					"name": "welcome",
+					"pathName": "pages/welcome/welcome",
+					"query": ""
 				}
 			]
 		}

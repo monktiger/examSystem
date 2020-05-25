@@ -41,8 +41,28 @@ Component({
 
       this.triggerEvent('clickCard', data)
     },
-  // 模态窗
-  showModal(e) {
+    // 退出组
+    quit(e) {
+      this.setData({
+        modalName: null
+      })
+      let data={
+
+      }
+      this.triggerEvent('quit', data)
+    },
+    // 删除组
+    delete(e) {
+      this.setData({
+        modalName: null
+      })
+      let data={
+
+      }
+      this.triggerEvent('delete', data)
+    },
+    // 模态窗
+    showModal(e) {
       this.setData({
         modalName: e.currentTarget.dataset.target
       })

@@ -15,7 +15,7 @@
   </scroll-view>
   <scroll-view scroll-y class="scrollPage bg-white padding-top-xl">
   
-      <card cardList="{{elements}}" TabCur="{{TabCur}}" bind:clickCard="clickCard" ></card>
+      <card cardList="{{elements}}" TabCur="{{TabCur}}" bind:clickCard="clickCard" bind:delete="delete" bind:quit="quit"></card>
 
   </scroll-view>
   <!-- 选择模态窗 -->
@@ -57,7 +57,7 @@
             <view class="cuIcon-close text-lg " bindtap="hideModal"></view>
             <!-- <view class="text-xl">加入</view> -->
             <view class="cu-btn bg-blue shadow-blur round m-submit"
-            bind:tap="yes"
+            bind:tap="add"
             data-target="apply-Modal"
             >提交</view>
 		</view>
@@ -65,8 +65,8 @@
 			<view class="margin-left">加入班级</view>
 			<view class="padding-bottom-sm solids-bottom margin-top-lg margin-left padding-left-sm" hover-class="none" hover-stop-propagation="false">
 				<input type="text"
-				bindinput="inputHd"
-				maxlength="10" 
+				bindinput="addInput"
+				maxlength="200" 
 				value="{{input}}"
 				placeholder="请输入班级邀请码"
 				placeholder-style="font-size:32rpx"
@@ -85,7 +85,7 @@
             <view class="cuIcon-close text-lg " bindtap="hideModal"></view>
             <!-- <view class="text-xl">创建组</view> -->
             <view class="cu-btn bg-blue shadow-blur round m-submit"
-            bind:tap="yes"
+            bind:tap="create"
             data-target="apply-Modal"
             >提交</view>
 		</view>
@@ -93,7 +93,7 @@
 			<view class="margin-left">创建组</view>
 			<view class="padding-bottom-sm solids-bottom margin-top-lg margin-left padding-left-sm" hover-class="none" hover-stop-propagation="false">
 				<input type="text"
-				bindinput="inputHd"
+				bindinput="creatInput"
 				maxlength="10" 
 				value="{{input}}"
 				placeholder="请输入组名"
