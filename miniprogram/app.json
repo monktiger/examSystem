@@ -4,6 +4,7 @@
     "pages/nav/nav",
     "pages/editPaper/editPaper",
     "pages/my/my",
+    "pages/myInfo/myInfo",
     "pages/index/index",
     "pages/joinedGroup/joinedGroup",
     "pages/paper/paper",

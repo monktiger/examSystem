@@ -1,0 +1,24 @@
+<!--components/optionQue/optionQue.wxml-->
+<optionQue-cmp>
+	<block wx:for="{{singleQues}}" wx:key="{{singleQues.title}}" wx:for-index="idx">
+		<view class="container">
+			<view class="que-container">
+				<view>
+					<text>{{singleQues[idx].title}}</text>
+				</view>
+				<view class="score-container">
+					<text>( 分值：</text>
+					<text class="score">{{singleQues[idx].score}}</text>
+					<text> )</text>
+				</view>
+			</view>
+			<radio-group class="radio-group">
+				<view>
+					<radio class="opt">
+						<view class="opt-txt">选项a</view>
+					</radio>
+				</view>
+			</radio-group>
+		</view>
+	</block>
+</optionQue-cmp>
