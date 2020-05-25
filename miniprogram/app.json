@@ -1,10 +1,8 @@
 {
   "pages": [
-    "pages/editPaper/editPaper",
-
     "pages/welcome/welcome",
     "pages/nav/nav",
-    "pages/index/index",
+    "pages/editPaper/editPaper",
     "pages/my/my",
     "pages/index/index",
     "pages/joinedGroup/joinedGroup",
@@ -19,9 +17,7 @@
     "pages/editSingle/editSingle",
     "pages/editShort/editShort",
     "pages/editNickName/editNickName",
-    "pages/editName/editName",
-    "pages/managePeople/managePeople",
-    "pages/groupSetting/groupSetting"
+    "pages/editName/editName"
 
   ],
   "window": {
