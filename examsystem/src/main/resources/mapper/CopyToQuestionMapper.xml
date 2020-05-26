@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.monktiger.examsystem.mapper.CopyToQuestionMapper">
-  <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.CopyToQuetion">
+  <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.CopyToQuestion">
     <id column="copy_id" jdbcType="INTEGER" property="copyId" />
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="score" jdbcType="INTEGER" property="score" />
@@ -11,25 +11,25 @@
   <sql id="Base_Column_List">
     copy_id, id, score, answer, already
   </sql>
-  <select id="selectByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuetion" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuestion" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_copy_to_quetion
     where copy_id = #{copyId,jdbcType=INTEGER}
       and id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+  <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuestion">
     delete from tb_copy_to_quetion
     where copy_id = #{copyId,jdbcType=INTEGER}
       and id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+  <insert id="insert" parameterType="com.monktiger.examsystem.entity.CopyToQuestion">
     insert into tb_copy_to_quetion (copy_id, id, score, 
       answer, already)
     values (#{copyId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 
       #{answer,jdbcType=VARCHAR}, #{already,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.CopyToQuestion">
     insert into tb_copy_to_quetion
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="copyId != null">
@@ -66,7 +66,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuetion">
+  <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuestion">
     update tb_copy_to_quetion
     set score = #{score,jdbcType=INTEGER},
       answer = #{answer,jdbcType=VARCHAR},

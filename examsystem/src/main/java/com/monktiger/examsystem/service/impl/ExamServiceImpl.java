@@ -7,6 +7,7 @@ import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.mapper.CopyMapper;
 import com.monktiger.examsystem.mapper.ExamMapper;
 import com.monktiger.examsystem.mapper.GroupMapper;
+import com.monktiger.examsystem.mapper.GroupToExamMapper;
 import com.monktiger.examsystem.service.ExamService;
 import com.monktiger.examsystem.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class ExamServiceImpl implements ExamService {
     private ExamMapper examMapper;
     @Autowired
     private CopyMapper copyMapper;
+    @Autowired
+    private GroupToExamMapper groupToExamMapper;
     @Override
     public Exam selectByPrimaryKey(String openId) {
         return null;
@@ -80,7 +83,7 @@ public class ExamServiceImpl implements ExamService {
             }else if(exam.getStatus()==3&&exam.getType()==false){
                 return 20003;
             }else if(exam.getStatus()==3&&exam.getType()==true){
-                Copy copy=copyMapper.selectByPrimaryKey(user.getOpenId(),examId);
+                Copy copy=copyMapper.selectByAssociaiton(user.getOpenId(),examId);
                 if(copy.getStatus()==2){
                     return 20003;
                 }else return 20004;
@@ -93,10 +96,11 @@ public class ExamServiceImpl implements ExamService {
     public List<Exam> excuteExamList(String groupId, User user) {
         Group group=groupMapper.selectByPrimaryKey(user.getOpenId(),groupId);
         List<Exam> examList;
+        List<Integer> examIdList = groupToExamMapper.selectByGroupId(groupId);
         if (group.getStatus()==1){//管理员
-            examList = examMapper.selectExamByGroup(groupId);
+            examList = examMapper.selectExamByGroup(examIdList);
         }else{//普通成员
-            examList = examMapper.selectExamByGroupAndStatus(groupId);
+            examList = examMapper.selectExamByGroupAndStatus(examIdList);
         }
         return examList;
     }

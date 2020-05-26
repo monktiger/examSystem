@@ -4,6 +4,8 @@ import com.monktiger.examsystem.entity.Exam;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface ExamMapper {
@@ -18,17 +20,17 @@ public interface ExamMapper {
     int updateByPrimaryKeySelective(Exam record);
 
     /**
-     * selectExamInGroupView
-     * @param groupId
+     * 获得某组下的全部试卷
+     * @param examIdList
      * @return
      */
-    List<Exam> selectExamByGroup(String groupId);
+    List<Exam> selectExamByGroup(List<Integer> examIdList);
 
     /**
-     * 选择现在时间与考试开始时间<15min或者大于开始时间的考试
-     * @param groupId
+     *仅获得其他情况下的试卷
+     * @param examIdList
      * @return
      */
-    List<Exam> selectExamByGroupAndStatus(String groupId);
+    List<Exam> selectExamByGroupAndStatus(List<Integer> examIdList);
     int updateByPrimaryKey(Exam record);
 }

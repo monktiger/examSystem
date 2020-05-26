@@ -20,6 +20,25 @@
     from tb_exam
     where id = #{id,jdbcType=INTEGER}
   </select>
+    <select id="selectExamByGroup" resultType="com.monktiger.examsystem.entity.Exam">
+      select *
+      from tb_exam
+      where id in
+      <foreach collection="examIdList" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </select>
+  <select id="selectExamByGroupAndStatus" resultType="com.monktiger.examsystem.entity.Exam">
+    select *
+    from tb_exam
+    <where>
+     id in
+    <foreach collection="examIdList" item="id" index="index" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+    and status in (1,2,3)
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_exam
     where id = #{id,jdbcType=INTEGER}
@@ -32,7 +51,7 @@
       #{status,jdbcType=INTEGER}, #{publisherId,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
       #{endTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.Exam">
+  <insert id="insertSelective" parameterType="com.monktiger.examsystem.entity.Exam" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into tb_exam
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

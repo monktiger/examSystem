@@ -9,8 +9,8 @@ import com.monktiger.examsystem.mapper.*;
 import com.monktiger.examsystem.service.ExamService;
 import com.monktiger.examsystem.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin2.main.client.WMozillaServiceDelegate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -37,6 +37,8 @@ public class ExamController {
     private CopyToQuestionMapper copyToQuestionMapper;
     @Autowired
     private ExamToQuestionMapper examToQuestionMapper;
+    @Autowired
+    private GroupToExamMapper groupToExamMapper;
     @RequestMapping(value = "/getExam",method = RequestMethod.GET)
 public Map<String,Object> getExam(@RequestParam("groupId") String groupId, HttpServletRequest request){
     Map<String,Object> modelMap = new HashMap<>();
@@ -135,10 +137,11 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                     modelMap.put("msg","提交答案为空");
                     return modelMap;
                 }
-                CopyToQuetion ctq=copyToQuestionMapper.selectByPrimaryKey(copyId,id);
+                CopyToQuestion ctq=copyToQuestionMapper.selectByPrimaryKey(copyId,id);
                 if(ctq==null){
                     modelMap.put("status",-2);
                     modelMap.put("msg","试卷中不存在该题");
+                    return modelMap;
                 }
                 ExamToQuestion etq=examToQuestionMapper.selectByPrimaryKey(copy.getExamId(),id);
                 if(etq.getType()!=5){
@@ -172,12 +175,14 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             if(exam==null){
                 modelMap.put("status",-1);
                 modelMap.put("msg","试卷不存在");
+                return modelMap;
             }
             if (exam.getPublisherId()!=user.getOpenId()){
                 modelMap.put("status",-2);
                 modelMap.put("msg","权限不足");
+                return modelMap;
             }
-            if(examToQuestion.getId==0){
+            if(examToQuestion.getId()==null){
                 examToQuestionMapper.insertSelective(examToQuestion);
             }else{
                 examToQuestionMapper.updateByPrimaryKeySelective(examToQuestion);
@@ -188,25 +193,48 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             modelMap.put("status",0);
             modelMap.put("msg","未登录");
         }
+        return modelMap;
     }
     @RequestMapping(value = "/createExam" ,method = RequestMethod.POST)
     public Map<String,Object> createExam(HttpServletRequest request,@RequestBody String examString){
         JSONObject examJSON = JSON.parseObject(examString);
         JSONArray groupIdArray = examJSON.getJSONArray("groupId");
-        List<ExamToGroup> examToGroupList = groupIdArray.toJavaList(ExamToGroup.class);
+        List<String> groupList = groupIdArray.toJavaList(String.class);
         examJSON.remove("groupId");
         Exam exam = examJSON.toJavaObject(Exam.class);
         Map<String,Object> modelMap = new HashMap<>();
+        if(exam.getEndTime().compareTo(exam.getBeginTime())==0||exam.getEndTime().compareTo(exam.getBeginTime())>0){
+            modelMap.put("status",-1);
+            modelMap.put("info","时间设置存在问题");
+            return modelMap;
+        }
         String token = request.getHeader("token");
-        if(token!=null){
+        if(token!=null&&jedisUtilKeys.exists("token")){
             String userStirng = jedisUtilStrings.get(token);
             JSONObject userJson = JSON.parseObject(userStirng);
             User user = userJson.toJavaObject(User.class);
-
+            exam.setPublisherId(user.getOpenId());
+            exam.setStatus(0);
+            if(exam.getId()==null){
+                examMapper.insertSelective(exam);
+                groupToExamMapper.UpdateAssociation(exam.getId(),groupList);
+            }else {
+                Exam oldExam = examMapper.selectByPrimaryKey(exam.getId());
+                if(oldExam.getPublisherId()!=user.getOpenId()){
+                    modelMap.put("status",-2);
+                    modelMap.put("info","无权操作");
+                    return modelMap;
+                }
+                examMapper.updateByPrimaryKey(exam);
+                groupToExamMapper.UpdateAssociation(exam.getId(),groupList);
+            }
+            modelMap.put("status",1);
+            modelMap.put("info","创建成功");
         }
         else{
             modelMap.put("status",0);
             modelMap.put("msg","未登录");
         }
+        return modelMap;
     }
 }

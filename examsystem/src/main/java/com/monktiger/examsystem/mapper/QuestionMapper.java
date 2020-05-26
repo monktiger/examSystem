@@ -2,6 +2,7 @@ package com.monktiger.examsystem.mapper;
 
 import com.monktiger.examsystem.entity.Question;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface QuestionMapper {
 
     int updateByPrimaryKey(Question record);
 
-    int getTotalQuestion(String search, String category, Integer type);
+    int getTotalQuestion(@Param("search") String search, @Param("category") String category, @Param("type") Integer type);
 
-    List<Question> getQuestion(int index, int size, String search, String category, Integer type);
+    List<Question> getQuestion(@Param("index") int index, @Param("size") int size, @Param("search") String search, @Param("category") String category, @Param("type") Integer type);
 }

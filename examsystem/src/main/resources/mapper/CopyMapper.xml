@@ -19,7 +19,13 @@
     from tb_copy
     where copy_id = #{copyId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByAssociaiton" resultType="com.monktiger.examsystem.entity.Copy">
+      select *
+      from tb_copy
+      where exam_id = #{examId}
+      and open_id = #{openId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_copy
     where copy_id = #{copyId,jdbcType=INTEGER}
   </delete>

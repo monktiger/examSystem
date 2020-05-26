@@ -5,17 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.cache.JedisUtil;
 import com.monktiger.examsystem.dto.Score;
 import com.monktiger.examsystem.entity.Copy;
+import com.monktiger.examsystem.entity.CopyToQuestion;
 import com.monktiger.examsystem.entity.Exam;
 import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.mapper.*;
 import com.monktiger.examsystem.util.HttpServletRequestUtil;
-import com.monktiger.examsystem.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Time;
 import java.util.*;
 
 @RestController
@@ -122,7 +120,8 @@ public class PageController {
         String userStirng = jedisUtilStrings.get(token);
         JSONObject userJson = JSON.parseObject(userStirng);
         User user = userJson.toJavaObject(User.class);
-
+        Copy copy=copyMapper.selectByExamAndUser(examId,user.getOpenId());
+        List<CopyToQuestion> c
     }
     else {
         modelMap.put("status",0);
@@ -135,6 +134,17 @@ public class PageController {
     Map<String,Object> modelMap = new HashMap<>();
     Integer copyId = HttpServletRequestUtil.getInt(request,"copyId");
     Integer examId = HttpServletRequestUtil.getInt(request,"examId");
+    String token = request.getHeader("token");
+    if(token!=null&&jedisUtilKeys.exists("token")){
+        String userStirng = jedisUtilStrings.get(token);
+        JSONObject userJson = JSON.parseObject(userStirng);
+        User user = userJson.toJavaObject(User.class);
+        if(user.getOpenId())
+    }
+    else {
+        modelMap.put("status",0);
+        modelMap.put("msg","未登录");
+    }
     return modelMap;
 }
 }

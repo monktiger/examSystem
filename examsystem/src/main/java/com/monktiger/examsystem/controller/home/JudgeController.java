@@ -3,12 +3,11 @@ package com.monktiger.examsystem.controller.home;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.cache.JedisUtil;
-import com.monktiger.examsystem.entity.CopyToQuetion;
+import com.monktiger.examsystem.entity.CopyToQuestion;
 import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.mapper.CopyMapper;
 import com.monktiger.examsystem.mapper.CopyToQuestionMapper;
 import com.monktiger.examsystem.mapper.ExamMapper;
-import com.monktiger.examsystem.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +43,7 @@ public class JudgeController {
         String userString = jedisUtilStrings.get(token);
         JSONObject userJSON = JSON.parseObject(userString);
         User user = userJSON.toJavaObject(User.class);
-        int check = copyMapper.checkCopyPublsher(copyId,user.getOpenId());
+        int check = copyMapper.checkCopyPublisher(copyId,user.getOpenId());
         if(check==0){
             modelMap.put("status",-1);
             modelMap.put("msg","无权限");
@@ -56,9 +55,9 @@ public class JudgeController {
             modelMap.put("msg","非主观题");
             return modelMap;
         }
-        CopyToQuetion copyToQuetion = CopyToQuestionMapper(copyId,id);
-        copyToQuetion.setScore(score);
-        copyToQuestionMapper.updateByPrimaryKey(copyToQuetion);
+        CopyToQuestion copyToQuestion = CopyToQuestionMapper(copyId,id);
+        copyToQuestion.setScore(score);
+        copyToQuestionMapper.updateByPrimaryKey(copyToQuestion);
         modelMap.put("status",1);
         modelMap.put("msg","分数更新成功");
     }else {
