@@ -1,14 +1,20 @@
 <view class='nav-list' wx:for="{{cardList}}" wx:key="index">
     <view class="nav-li bg-{{item.color}}" catch:tap="clickCard">
-        <view class="nav-title">{{item.title}}</view>
-        <view class="nav-name">{{item.name}}</view>
+        <view class="nav-title">{{item.name}}</view>
+        <view class="nav-name">GROUP</view>
         <text 
         wx:if="{{TabCur==0?true:false}}" 
         class="cuIcon-moreandroid"
-        catch:tap="showModal" 
+        catch:tap="showModal1" 
         data-target="deleteModal"
+        data-groupid="{{item.groupId}}"
+        data-index="index"
         ></text>
-        <text wx:else class="cuIcon-moreandroid" catch:tap="showModal" data-target="quitModal"></text>
+        <text wx:else class="cuIcon-moreandroid" 
+        catch:tap="showModal1"
+         data-target="quitModal" 
+         data-index="index"
+         data-groupid="{{item.groupId}}"></text>
     </view>
 </view>
 <!-- 解散组 -->

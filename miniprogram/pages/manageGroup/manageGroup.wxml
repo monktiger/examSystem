@@ -19,7 +19,7 @@
   </view>
   <view class="btn-setting" bindtap="goSetting">
     <view class="cuIcon-settingsfill text-green" style="font-size:80rpx"></view>
-    <view class="text-lg margin-top-xs">成员管理</view>
+    <view class="text-lg margin-top-xs">设置</view>
   </view>
 </view>
 <view wx:for="{{10}}" wx:key="index">

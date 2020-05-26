@@ -19,6 +19,9 @@ Component({
    */
   data: {
   },
+  attached: function() {
+    
+  },
   // observers:{
   //   'TabCur'(TabCur) { 
   //     let that = this //单个监听
@@ -38,7 +41,6 @@ Component({
         TabCur: that.data.TabCur
       }
       console.log(that.data.TabCur);
-
       this.triggerEvent('clickCard', data)
     },
     // 退出组
@@ -47,24 +49,34 @@ Component({
         modalName: null
       })
       let data={
-
+        groupid:that.data.groupid
       }
-      this.triggerEvent('quit', data)
+      this.triggerEvent('delete', data)
     },
     // 删除组
     delete(e) {
+      let that =this
+      console.log(that.data.groupid);
       this.setData({
-        modalName: null
+        modalName: null,
       })
       let data={
-
+        groupid:that.data.groupid,
+        index:that.data.index
       }
       this.triggerEvent('delete', data)
     },
     // 模态窗
     showModal(e) {
       this.setData({
-        modalName: e.currentTarget.dataset.target
+        modalName: e.currentTarget.dataset.target,
+      })
+    },
+    showModal1(e) {
+      this.setData({
+        modalName: e.currentTarget.dataset.target,
+        groupid:e.currentTarget.dataset.groupid,
+        index:e.currentTarget.dataset.index
       })
     },
     hideModal(e) {
