@@ -26,6 +26,19 @@
       and open_id = #{openId}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <select id="selectByGroupAndExam" resultType="com.monktiger.examsystem.entity.Copy">
+    select
+    <include refid="Base_Column_List"/>
+    where exam_id = #{examId,jdbcType=INTEGER}
+    and group_id = #{groupId,jdbcType=VARCHAR}
+  </select>
+  <select id="checkCopyPublisher" resultType="integer">
+    select
+    <include refid="Base_Column_List"/>
+    where copy_id = #{copyId,jdbcType=INTEGER}
+    and open_id = #{openId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_copy
     where copy_id = #{copyId,jdbcType=INTEGER}
   </delete>
@@ -118,6 +131,11 @@
       `status` = #{status,jdbcType=INTEGER},
       judge = #{judge,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER}
+    where copy_id = #{copyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateJudge">
+    update tb_copy
+    set judge = #{judge,jdbcType=VARCHAR}
     where copy_id = #{copyId,jdbcType=INTEGER}
   </update>
 </mapper>

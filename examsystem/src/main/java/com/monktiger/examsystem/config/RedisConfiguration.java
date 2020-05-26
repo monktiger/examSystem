@@ -1,5 +1,7 @@
 package com.monktiger.examsystem.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,9 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 public class RedisConfiguration {
+
+	private Logger logger = LoggerFactory.getLogger(RedisConfiguration.class);
+
 	@Value("${redis.hostname}")
 	private String hostname;
 	@Value("${redis.port}")
@@ -56,6 +61,8 @@ public class RedisConfiguration {
 		jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
 		// 在获取连接的时候检查有效性
 		jedisPoolConfig.setTestOnBorrow(testOnBorrow);
+		logger.info("JedisPool注入成功！");
+
 		return jedisPoolConfig;
 	}
 

@@ -13,12 +13,12 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 	private final static Logger LOG = LoggerFactory.getLogger(com.monktiger.examsystem.controller.GlobalExceptionHandler.class);
 
-	@ExceptionHandler(value = Exception.class)
-	@ResponseBody
-	public Map<String, Object> handle(Exception e) {
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		modelMap.put("status",-1);
-		modelMap.put("msg", "系统内部错误!");
-		return modelMap;
-	}
+//	@ExceptionHandler(value = Exception.class)
+//	@ResponseBody
+//	public Map<String, Object> handle(Exception e) {
+//		Map<String, Object> modelMap = new HashMap<String, Object>();
+//		modelMap.put("status",-1);
+//		modelMap.put("msg", "系统内部错误!");
+//		return modelMap;
+//	}
 }

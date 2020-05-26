@@ -56,6 +56,7 @@ public class JudgeController {
             return modelMap;
         }
         CopyToQuestion copyToQuestion = CopyToQuestionMapper(copyId,id);
+        CopyToQuestion copyToQuestion = new CopyToQuestion(copyId,id);
         copyToQuestion.setScore(score);
         copyToQuestionMapper.updateByPrimaryKey(copyToQuestion);
         modelMap.put("status",1);
@@ -76,7 +77,7 @@ public class JudgeController {
         String userString = jedisUtilStrings.get(token);
         JSONObject userJSON = JSON.parseObject(userString);
         User user = userJSON.toJavaObject(User.class);
-        int check = copyMapper.checkCopyPublsher(copyId,user.getOpenId());
+        int check = copyMapper.checkCopyPublisher(copyId,user.getOpenId());
         if(check==0){
             modelMap.put("status",-1);
             modelMap.put("msg","无权限");

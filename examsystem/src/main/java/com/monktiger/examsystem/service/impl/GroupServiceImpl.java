@@ -24,11 +24,6 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public int createGroup(Group group) throws Exception {
         group.setStatus(1);
-
-        /**
-         * 创建唯一 字符串作为 groupId
-         */
-        group.setGroupId(UUID.randomUUID().toString());
         return groupMapper.insert(group);
     }
 
@@ -40,9 +35,10 @@ public class GroupServiceImpl implements GroupService {
      */
     @Override
     public int joinGroup(Group group) throws Exception {
-       List<Group> msg = groupMapper.selectByKeyState(group.getGroupId(),1);
-       if(msg!=null){
-           group.setStatus(0);
+       List<Group> msg = groupMapper.selectByKeyState(group.getGroupId(),0);
+       if(!msg.isEmpty()){
+           group.setName(msg.get(0).getName());
+           group.setStatus(1);
            return groupMapper.insert(group);
        }else{
            return 2;
@@ -74,8 +70,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> selectSelfGroup(String openId) throws Exception {
-        return groupMapper.selectSelfGroup(openId);
+    public List<Group> selectSelfGroup(String openId,Integer type) throws Exception {
+        return groupMapper.selectSelfGroup(openId,type);
     }
 
     /**
@@ -119,17 +115,9 @@ public class GroupServiceImpl implements GroupService {
      * @throws Exception
      */
     @Override
-    public List<Group> listGroup(String groupId) throws Exception {
-        List<Group> groups;
-        groups = groupMapper.selectByKeyState(groupId,0);
-        List<Group> group = groupMapper.selectByKeyState(groupId,1);
-        if(group != null){
-            groups.add((Group) group);
-            return groups;
-        }else{
-            System.out.println("不合理数据，无组长小组");
-            return groups;
-        }
+    public List<Group> listGroup(String groupId,Integer type) throws Exception {
+        List<Group> groups = groupMapper.selectByKeyState(groupId,type);
+        return groups;
     }
 
     /**

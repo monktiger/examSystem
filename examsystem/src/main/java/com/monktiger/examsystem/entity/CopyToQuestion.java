@@ -7,7 +7,6 @@ import java.io.Serializable;
  * @author 唐伟嘉
  */
 public class CopyToQuestion extends CopyToQuestionKey implements Serializable {
-
     /**
      * 试题得分
      */
@@ -24,6 +23,10 @@ public class CopyToQuestion extends CopyToQuestionKey implements Serializable {
     private Boolean already;
 
     private static final long serialVersionUID = 1L;
+
+    public CopyToQuestion(){}
+
+    public CopyToQuestion(int copyId,int id){super.setCopyId(copyId); super.setId(id);}
 
     public Integer getScore() {
         return score;

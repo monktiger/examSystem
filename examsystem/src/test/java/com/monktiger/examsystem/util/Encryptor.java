@@ -19,7 +19,7 @@ public class Encryptor {
 //解密内容
 //        String url = textEncryptor.decrypt("");
 //        String name = textEncryptor.decrypt("");
-//        String password = textEncryptor.decrypt("4EyN0xDLbnP2lsaayjl8fbIctj5bVIdD");
+//         password = textEncryptor.decrypt("4EyN0xDLbnP2lsaayjl8fbIctj5bVIdD");
 
 
         System.out.println("url:"+url);

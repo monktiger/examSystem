@@ -44,6 +44,18 @@ public class Copy implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Copy(){}
+
+    public Copy(Integer copyId, String groupId, Integer examId, String openId, Integer status, String judge, Integer score) {
+        this.copyId = copyId;
+        this.groupId = groupId;
+        this.examId = examId;
+        this.openId = openId;
+        this.status = status;
+        this.judge = judge;
+        this.score = score;
+    }
+
     public Integer getCopyId() {
         return copyId;
     }

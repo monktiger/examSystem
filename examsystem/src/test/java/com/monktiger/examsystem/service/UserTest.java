@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 @SpringBootTest
 public class UserTest {
     @Autowired
@@ -14,18 +16,21 @@ public class UserTest {
     @Test
     public void testAdd() throws Exception {
         System.out.println("add");
-        User user = new User("open_i","nick_name","name","avaturl",true);
+        UUID id = UUID.randomUUID();
+        User user = new User(id.toString(),"nick_name","name","avaturl",true);
         userService.insertUser(user);
     }
 
     @Test
     public void testDelete() throws Exception {
-        System.out.println("delete");
+       userService.deleteUser("open_ids");
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdate()throws Exception{
         System.out.println("update");
+        User user = new User("open_id","hello_world","names","head_pic",true);
+        userService.updateUser(user);
     }
 
     @Test

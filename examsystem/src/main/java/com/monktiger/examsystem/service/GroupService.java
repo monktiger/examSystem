@@ -44,7 +44,7 @@ public interface GroupService {
      * @return
      * @throws Exception
      */
-    public List<Group> selectSelfGroup(String openId)throws Exception;
+    public List<Group> selectSelfGroup(String openId,Integer type)throws Exception;
 
     /**
      * 模糊搜索小组 byGroupName
@@ -70,7 +70,7 @@ public interface GroupService {
      */
     public int dissolve(String groupId)throws Exception;
 
-    public List<Group> listGroup(String openId)throws Exception;
+    public List<Group> listGroup(String openId,Integer type)throws Exception;
 
     public int insertGroup(Group group)throws Exception;
 
