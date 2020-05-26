@@ -3,12 +3,11 @@ package com.monktiger.examsystem.controller.home;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.cache.JedisUtil;
+import com.monktiger.examsystem.dto.CopyQuestion;
 import com.monktiger.examsystem.dto.Score;
-import com.monktiger.examsystem.entity.Copy;
-import com.monktiger.examsystem.entity.CopyToQuestion;
-import com.monktiger.examsystem.entity.Exam;
-import com.monktiger.examsystem.entity.User;
+import com.monktiger.examsystem.entity.*;
 import com.monktiger.examsystem.mapper.*;
+import com.monktiger.examsystem.service.ExamService;
 import com.monktiger.examsystem.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +31,12 @@ public class PageController {
     private JedisUtil.Keys jedisUtilKeys;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private GroupToExamMapper groupToExamMapper;
+    @Autowired
+    private CopyToQuestionMapper copyToQuestionMapper;
+    @Autowired
+    private ExamService examService;
 @RequestMapping(value = "/toAdminShow",method = RequestMethod.GET)
     public Map<String,Object> toAdminShow(@RequestParam("examId")int examId, HttpServletRequest request){
     Map<String,Object> modelMap = new HashMap<>();
@@ -48,10 +53,11 @@ public class PageController {
             if(exam.getStatus()==0||exam.getStatus()==1||exam.getStatus()==2){
             modelMap.put("examName",exam.getName());
             //groupId已经分离，这里要改写
-            modelMap.put("groupId",exam.getGroupId());
+            List<String> groupList = groupToExamMapper.selectByExamId(examId);
+            modelMap.put("groupId",groupList);
             modelMap.put("beginTime", exam.getBeginTime());
             modelMap.put("endTime",exam.getEndTime());
-            modelMap.put("questionList",examToQuestionMapper.selectByPrimaryKey(examId));
+            modelMap.put("questionList",examToQuestionMapper.selectByExamKey(examId));
             modelMap.put("status",1);
             modelMap.put("msg","试卷渲染成功");}
             else {
@@ -103,7 +109,7 @@ public class PageController {
                 modelMap.put("msg","成绩列表渲染成功");
             }else{
                 modelMap.put("status",2);
-                modelMap.put("msg","考试已经结束，请重定向");
+                modelMap.put("msg","考试还未结束，请重定向");
             }
         }
     }
@@ -118,15 +124,42 @@ public class PageController {
      String token = request.getHeader("token");
     if(token!=null&&jedisUtilKeys.exists("token")){
         String userStirng = jedisUtilStrings.get(token);
-
-
-
-
-
         JSONObject userJson = JSON.parseObject(userStirng);
         User user = userJson.toJavaObject(User.class);
-        Copy copy=copyMapper.selectByExamAndUser(examId,user.getOpenId());
-        List<CopyToQuestion> c
+        Exam exam = examMapper.selectByPrimaryKey(examId);
+        if(exam==null){
+            modelMap.put("status",-1);
+            modelMap.put("msg","exam不存在");
+            return modelMap;
+        }
+        Copy copy=copyMapper.selectByAssociaiton(user.getOpenId(),examId);
+        if(copy==null){
+            modelMap.put("status",-2);
+            modelMap.put("msg","copy不存在");
+            return modelMap;
+        }
+        if(copy.getStatus()!=1||exam.getStatus()!=2){
+            modelMap.put("status",-3);
+            modelMap.put("msg","非考试时间");
+            return modelMap;
+        }
+        modelMap.put("examName",exam.getName());
+        modelMap.put("beginTime",exam.getBeginTime());
+        modelMap.put("endTime",exam.getEndTime());
+        modelMap.put("copyId",copy.getCopyId());
+        List<CopyToQuestion> copyToQuestionList = copyToQuestionMapper.selectByCopyId(copy.getCopyId());
+        List<ExamToQuestion> examToQuestionList = examToQuestionMapper.selectByExamKey(examId);
+        List<CopyQuestion> copyQuestionList = new ArrayList<>();
+        for(int i = 0;i<copyToQuestionList.size();i++){
+            CopyQuestion copyQuestion = new CopyQuestion(
+                    copyToQuestionList.get(i),
+                    examToQuestionList.get(i)
+            );
+            copyQuestionList.add(copyQuestion);
+        }
+        modelMap.put("questionList",copyQuestionList);
+        modelMap.put("status",1);
+        modelMap.put("msg","获取成功");
     }
     else {
         modelMap.put("status",0);
@@ -144,7 +177,24 @@ public class PageController {
         String userStirng = jedisUtilStrings.get(token);
         JSONObject userJson = JSON.parseObject(userStirng);
         User user = userJson.toJavaObject(User.class);
-        if(user.getOpenId())
+        modelMap=examService.excuteWrong(user,copyId,examId);
+        if (modelMap==null){
+             modelMap.put("status",-1);
+            modelMap.put("msg","错题本不存在");
+            return modelMap;
+        }
+        modelMap.put("status",1);
+        modelMap.put("msg","错题本获取成功");
+//        if(copyId!=null){
+//            //用户
+//        Copy copy =copyMapper.selectByPrimaryKey(copyId);
+//
+//        }else if(examId!=null){
+//
+//        }else{
+//            modelMap.put("status",-1);
+//            modelMap.put("msg","不存在wrongBook");
+//        }
     }
     else {
         modelMap.put("status",0);

@@ -15,6 +15,11 @@
       from tb_group_to_exam
       where gid = #{groupId}
     </select>
+    <select id="selectByExamId" resultType="java.lang.String">
+      select gid
+      from tb_group_to_exam
+      where eid = #{examId}
+    </select>
     <insert id="insert" parameterType="com.monktiger.examsystem.entity.GroupToExamKey">
     insert into tb_group_to_exam (gid, eid)
     values (#{gid,jdbcType=VARCHAR}, #{eid,jdbcType=VARCHAR})

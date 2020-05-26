@@ -3,6 +3,7 @@ package com.monktiger.examsystem.controller.home;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.cache.JedisUtil;
+import com.monktiger.examsystem.entity.Copy;
 import com.monktiger.examsystem.entity.CopyToQuestion;
 import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.mapper.CopyMapper;
@@ -55,10 +56,18 @@ public class JudgeController {
             modelMap.put("msg","非主观题");
             return modelMap;
         }
-        CopyToQuestion copyToQuestion = CopyToQuestionMapper(copyId,id);
         CopyToQuestion copyToQuestion = new CopyToQuestion(copyId,id);
         copyToQuestion.setScore(score);
         copyToQuestionMapper.updateByPrimaryKey(copyToQuestion);
+        Copy copy = copyMapper.selectByPrimaryKey(copyId);
+        int totalScore = copy.getScore();
+        totalScore = totalScore+score;
+        copyMapper.updateByPrimaryKeySelective(copy);
+        int count=copyToQuestionMapper.selectCopyIdScore(copyId);
+        if(count==0){
+            copy.setStatus(2);
+            copyMapper.updateByPrimaryKeySelective(copy);
+        }
         modelMap.put("status",1);
         modelMap.put("msg","分数更新成功");
     }else {

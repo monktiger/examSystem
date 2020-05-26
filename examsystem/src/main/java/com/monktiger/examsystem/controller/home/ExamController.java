@@ -130,6 +130,11 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             if(copy==null){
                 modelMap.put("status",-1);
                 modelMap.put("msg","你无该试卷");
+                return modelMap;
+            }
+            if(copy.getStatus()!=1){
+                modelMap.put("status",-4);
+                modelMap.put("msg","未在开始时限内，无法答题");
             }
             else{
                 if(answer==null){
@@ -148,7 +153,9 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                     if(etq.getCurrent().equals(answer)){
                         ctq.setScore(etq.getScore());
                     }else ctq.setScore(0);
-                }
+                }else ctq.setScore(null);
+                copy.setScore(copy.getScore()+ctq.getScore());
+                copyMapper.updateByPrimaryKeySelective(copy);
                 ctq.setAnswer(answer);
                 ctq.setAlready(true);
                 copyToQuestionMapper.updateByPrimaryKey(ctq);
@@ -183,6 +190,9 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 return modelMap;
             }
             if(examToQuestion.getId()==null){
+                List<ExamToQuestion> examToQuestions =examToQuestionMapper.selectByExamKey(exam.getId());
+                int id =examToQuestions.get(examToQuestions.size()-1).getId()+1;
+                examToQuestion.setId(id);
                 examToQuestionMapper.insertSelective(examToQuestion);
             }else{
                 examToQuestionMapper.updateByPrimaryKeySelective(examToQuestion);

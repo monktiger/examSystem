@@ -4,6 +4,7 @@ import com.monktiger.examsystem.entity.Exam;
 import com.monktiger.examsystem.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ExamService {
 
@@ -39,4 +40,13 @@ public interface ExamService {
      * @return
      */
     List<Exam> excuteExamList(String groupId,User user);
+
+    /**
+     *
+     * @return
+     * @param user
+     * @param copyId
+     * @param examId
+     */
+    Map<String,Object> excuteWrong( User user, Integer copyId, Integer examId);
 }

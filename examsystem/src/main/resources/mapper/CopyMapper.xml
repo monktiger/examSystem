@@ -25,7 +25,6 @@
       where exam_id = #{examId}
       and open_id = #{openId}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
   <select id="selectByGroupAndExam" resultType="com.monktiger.examsystem.entity.Copy">
     select
     <include refid="Base_Column_List"/>
@@ -34,7 +33,7 @@
   </select>
   <select id="checkCopyPublisher" resultType="integer">
     select
-    <include refid="Base_Column_List"/>
+    count (*)
     where copy_id = #{copyId,jdbcType=INTEGER}
     and open_id = #{openId,jdbcType=VARCHAR}
   </select>
@@ -99,6 +98,17 @@
       </if>
     </trim>
   </insert>
+  <insert id="createCopyList">
+    insert into tb_copy
+    <set>
+      group_id = #{groupId} and
+      exam_id = #{id} and
+      `status` =#{status} and
+      open_id in <foreach collection="groupList" item="group" index="index" open="(" close=")" separator=",">
+      #{group.openId}
+    </foreach>
+    </set>
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.monktiger.examsystem.entity.Copy">
     update tb_copy
     <set>
@@ -137,5 +147,17 @@
     update tb_copy
     set judge = #{judge,jdbcType=VARCHAR}
     where copy_id = #{copyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByExamList">
+    update tb_copy
+    set `status`=1
+    where exam_id in <foreach collection="examList" item="exam" index="index" open="(" close=")" separator=",">
+    #{exam.id}
+  </foreach>
+  </update>
+  <update id="updateByExam">
+    update tb_copy
+    set    `status` = #{status}
+    where exam_id = #{id}
   </update>
 </mapper>

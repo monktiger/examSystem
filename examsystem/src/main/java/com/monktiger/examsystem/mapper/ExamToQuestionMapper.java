@@ -20,9 +20,7 @@ public interface ExamToQuestionMapper {
 
     ExamToQuestion selectByPrimaryKey(@Param("examId") int examId, @Param("id") int id);
 
-    List<Question> selectByPrimaryKey(Integer examId);
-
-    ExamToQuestion selectByPrimaryKey(Integer examId, Integer id);
+    List<ExamToQuestion> selectByExamKey(@Param("examId") Integer examId);
 
     int updateByPrimaryKeySelective(ExamToQuestion record);
 

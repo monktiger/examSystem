@@ -1,6 +1,8 @@
 package com.monktiger.examsystem.mapper;
 
 import com.monktiger.examsystem.entity.Copy;
+import com.monktiger.examsystem.entity.Exam;
+import com.monktiger.examsystem.entity.Group;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -29,11 +31,18 @@ public interface CopyMapper {
 
     int updateByPrimaryKey(Copy record);
 
-    Copy selectByPrimaryKey(Integer copyId);
+    Copy selectByPrimaryKey(@Param("copyId") Integer copyId);
 
-    Copy selectByPrimaryKey(String openId,Integer examId);
+    //Copy selectByPrimaryKey(String openId,Integer examId);
 
-    List<Copy> selectByGroupAndExam(Integer examId, String groupId);
+    List<Copy> selectByGroupAndExam(@Param("examId") Integer examId, @Param("groupId") String groupId);
 
-    int checkCopyPublisher(Integer copyId,String openId);
+    int checkCopyPublisher(@Param("copyId") Integer copyId, @Param("openId") String openId);
+
+    int createCopyList(
+            @Param("groupId") String groupId, @Param("groupList") List<Group> groupList, @Param("id") Integer id, @Param("status") Integer status);
+
+    int updateByExamList(@Param("examList") List<Exam> examList);
+
+    void updateByExam(@Param("id") Integer id, @Param("status") Integer status);
 }

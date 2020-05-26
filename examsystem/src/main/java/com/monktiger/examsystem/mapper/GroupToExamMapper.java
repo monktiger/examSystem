@@ -23,6 +23,6 @@ public interface GroupToExamMapper {
      */
     List<Integer> selectByGroupId(@Param("groupId") String groupId);
 
-
+    List<String> selectByExamId(@Param("examId")int examId);
     int UpdateAssociation(@Param("id") Integer id,@Param("groupList") List<String> groupList);
 }

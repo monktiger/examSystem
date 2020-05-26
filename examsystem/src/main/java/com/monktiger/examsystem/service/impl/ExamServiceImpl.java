@@ -1,21 +1,15 @@
 package com.monktiger.examsystem.service.impl;
 
-import com.monktiger.examsystem.entity.Copy;
-import com.monktiger.examsystem.entity.Exam;
-import com.monktiger.examsystem.entity.Group;
-import com.monktiger.examsystem.entity.User;
-import com.monktiger.examsystem.mapper.CopyMapper;
-import com.monktiger.examsystem.mapper.ExamMapper;
-import com.monktiger.examsystem.mapper.GroupMapper;
-import com.monktiger.examsystem.mapper.GroupToExamMapper;
+import com.monktiger.examsystem.dto.CopyQuestion;
+import com.monktiger.examsystem.dto.WrongBookQuestion;
+import com.monktiger.examsystem.entity.*;
+import com.monktiger.examsystem.mapper.*;
 import com.monktiger.examsystem.service.ExamService;
 import com.monktiger.examsystem.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ExamServiceImpl implements ExamService {
@@ -27,6 +21,10 @@ public class ExamServiceImpl implements ExamService {
     private CopyMapper copyMapper;
     @Autowired
     private GroupToExamMapper groupToExamMapper;
+    @Autowired
+    private CopyToQuestionMapper copyToQuestionMapper;
+    @Autowired
+    private ExamToQuestionMapper examToQuestionMapper;
     @Override
     public Exam selectByPrimaryKey(String openId) {
         return null;
@@ -103,5 +101,47 @@ public class ExamServiceImpl implements ExamService {
             examList = examMapper.selectExamByGroupAndStatus(examIdList);
         }
         return examList;
+    }
+
+    @Override
+    public Map<String, Object> excuteWrong(User user, Integer copyId, Integer examId) {
+        //相当于管理员
+        Copy copy;
+        Exam exam;
+        Map<String,Object> modelMap = new HashMap<>();
+        if(copyId!=null&&examId==null){
+             copy =copyMapper.selectByPrimaryKey(copyId);
+            if(copy==null) return null;
+             exam = examMapper.selectByPrimaryKey(copy.getExamId());
+            if(exam==null||exam.getPublisherId()!=user.getOpenId()){
+                return null;
+            }
+        }else if(examId!=null&&copyId==null){//相当于学生
+             exam = examMapper.selectByPrimaryKey(examId);
+            if (exam==null) return null;
+           copy = copyMapper.selectByAssociaiton(user.getOpenId(),examId);
+            if(copy==null){
+                return null;
+            }
+        }else return null;
+        if(exam.getStatus()!=3){
+            return null;
+        }
+        List<CopyToQuestion> copyToQuestionList = copyToQuestionMapper.selectByCopyId(copy.getCopyId());
+        List<ExamToQuestion> examToQuestionList = examToQuestionMapper.selectByExamKey(exam.getId());
+        List<WrongBookQuestion> wrongBookQuestionList = new ArrayList<>();
+        for(int i = 0;i<copyToQuestionList.size();i++){
+            WrongBookQuestion wrongBookQuestion = new WrongBookQuestion(
+                    copyToQuestionList.get(i),
+                    examToQuestionList.get(i)
+            );
+            wrongBookQuestionList.add(wrongBookQuestion);
+        }
+        modelMap.put("examName",exam.getName());
+        modelMap.put("copyId",copy.getCopyId());
+        modelMap.put("judge",copy.getJudge());
+        modelMap.put("getScore",copy.getScore());
+        modelMap.put("questionList",wrongBookQuestionList);
+        return modelMap;
     }
 }

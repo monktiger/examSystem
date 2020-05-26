@@ -12,7 +12,6 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	private final static Logger LOG = LoggerFactory.getLogger(com.monktiger.examsystem.controller.GlobalExceptionHandler.class);
-
 //	@ExceptionHandler(value = Exception.class)
 //	@ResponseBody
 //	public Map<String, Object> handle(Exception e) {

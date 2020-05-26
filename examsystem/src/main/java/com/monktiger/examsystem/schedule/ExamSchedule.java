@@ -29,21 +29,36 @@ private CopyToQuestionMapper copyToQuestionMapper;
    List<Exam> examList =examMapper.getPrepareExam();
    examMapper.updateexamListStatus(examList,1);
    for(Exam e:examList){
-    List<String> groupIdList = groupToExamMapper.getGroup(e.getId());
-       List<ExamToQuestion> examToQuestions = examToQuestionMapper.selectByExam(e.getId());
+    List<String> groupIdList = groupToExamMapper.selectByExamId(e.getId());
+       List<ExamToQuestion> examToQuestions = examToQuestionMapper.selectByExamKey(e.getId());
+       Integer totalScore = null;
+       int flag =1;
+       for (ExamToQuestion etq: examToQuestions){
+           totalScore+=etq.getScore();
+           if(etq.getType()==5){
+               flag=0;
+           }
+       }if(flag==1){
+           e.setType(true);
+       }else e.setType(false);
+       e.setScore(totalScore);
+       examMapper.updateByPrimaryKeySelective(e);
        for (String groupId: groupIdList){
-        List<String> userIdList = groupMapper.selectGroupMember(groupId);
-        copyMapper.createCopyList(groupId,userIdList,e.getId(),0);
-        List<Integer> copyIdList = copyMapper.selectByExamAndGroup(e.getId(),groupId);
-        copyToQuestionMapper.createQuestion(copyIdList,examToQuestions,false);
+        List<Group> groupList = groupMapper.selectByKeyState(groupId,0);
+        copyMapper.createCopyList(groupId,groupList,e.getId(),0);
+        List<Copy> copyList = copyMapper.selectByGroupAndExam(e.getId(),groupId);
+        copyToQuestionMapper.createQuestion(copyList,examToQuestions,false);
     }
    }
 }
 
     @Scheduled(cron = "0/10 * * * * ? ")
     public void beginExam(){
-    examMapper.beginExam();
+   List<Exam> examList= examMapper.getbeginExam();
+   examMapper.updateexamListStatus(examList,2);
+    copyMapper.updateByExamList(examList);
     }
+
     @Scheduled(cron = "0/10 * * * * ? ")
     public void endExam(){
     List<Exam> examList = examMapper.getEndExam();

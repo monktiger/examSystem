@@ -23,6 +23,13 @@
     where exam_id = #{examId,jdbcType=INTEGER}
       and id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByExamKey" resultType="com.monktiger.examsystem.entity.ExamToQuestion">
+    select
+    <include refid="Base_Column_List" />
+    from tb_exam_to_question
+    where exam_id = #{examId,jdbcType=INTEGER}
+    order by id;
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.ExamToQuestion">
     delete from tb_exam_to_question
     where exam_id = #{examId,jdbcType=INTEGER}

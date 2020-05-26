@@ -18,6 +18,24 @@
     where copy_id = #{copyId,jdbcType=INTEGER}
       and id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="checkQuestionType" resultType="java.lang.Integer">
+    select
+    `type`
+    from tb_copy_to_quetion
+    where copy_id = #{copyId,jdbcType=INTEGER}
+    and id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectCopyIdScore" resultType="java.lang.Integer">
+    select count (*)
+    from tb_copy_to_quetion
+    where copy_id = #{copyId} and score is null;
+  </select>
+  <select id="selectByCopyId" resultType="com.monktiger.examsystem.entity.CopyToQuestion">
+    select *
+    from tb_copy_to_question
+    where copy_id = #{copyId}
+    order by id;
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuestion">
     delete from tb_copy_to_quetion
     where copy_id = #{copyId,jdbcType=INTEGER}
@@ -66,11 +84,23 @@
       </if>
     </trim>
   </insert>
+  <insert id="createQuestion">
+    insert into tb_copy_to_question(copy_id,id,already)
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <foreach collection="copyList" index="index" item="copy">
+        #{copy.copyId},
+      </foreach>
+      <foreach collection="examToQuestions" index="index" item="examq">
+        #{examq.id},
+      </foreach>
+      #{already}
+    </trim>
+  </insert>
   <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.CopyToQuestion">
     update tb_copy_to_quetion
-    set score = #{score,jdbcType=INTEGER},
-      answer = #{answer,jdbcType=VARCHAR},
-      already = #{already,jdbcType=BIT}
+    <set><if test="score!=null">score = #{score,jdbcType=INTEGER},</if>
+      <if test="score!=null"> answer = #{answer,jdbcType=VARCHAR},</if>
+      <if test="already!=null">already = #{already,jdbcType=BIT}</if></set>
     where copy_id = #{copyId,jdbcType=INTEGER}
       and id = #{id,jdbcType=INTEGER}
   </update>

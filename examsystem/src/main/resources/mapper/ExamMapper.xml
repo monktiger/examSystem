@@ -39,6 +39,24 @@
     and status in (1,2,3)
     </where>
   </select>
+  <select id="getPrepareExam" resultType="com.monktiger.examsystem.entity.Exam">
+    select *
+    from tb_exam
+    where status = 0 and
+    TIMESTAMPDIFF(MINUTE,begin_time,now())&gt;=15
+  </select>
+  <select id="getEndExam" resultType="com.monktiger.examsystem.entity.Exam">
+    select *
+    from tb_exam
+    where status = 2 and
+    TIMESTAMPDIFF(SECOND,end_time,now())&gt;=0
+  </select>
+  <select id="getbeginExam" resultType="com.monktiger.examsystem.entity.Exam">
+        select *
+    from tb_exam
+    where status = 1 and
+    TIMESTAMPDIFF(SECOND,begin_time,now())&gt;=0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_exam
     where id = #{id,jdbcType=INTEGER}
@@ -143,5 +161,12 @@
       begin_time = #{beginTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateexamListStatus">
+    update tb_exam
+    set status = #{status}
+    where id in <foreach collection="examList" item="exam" index="index" open="(" close=")" separator=",">
+    #{exam.id}
+  </foreach>
   </update>
 </mapper>

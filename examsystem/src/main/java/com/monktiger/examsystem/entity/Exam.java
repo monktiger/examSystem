@@ -13,7 +13,7 @@ public class Exam implements Serializable {
      */
     private Integer id;
 
-    private Integer groupId;
+  //  private Integer groupId;
 
     /**
      * 考试名称
@@ -113,13 +113,13 @@ public class Exam implements Serializable {
         this.endTime = endTime;
     }
 
-    public Integer getGroupId() {
-        return groupId;
-    }
+ //   public Integer getGroupId() {
+    //    return groupId;
+  //  }
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
-    }
+   // public void setGroupId(Integer groupId) {
+     //   this.groupId = groupId;
+   // }
 
     @Override
     public boolean equals(Object that) {
