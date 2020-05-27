@@ -1,6 +1,6 @@
 <view class="UCenter-bg">
 	<image src="/image/bg.jpg">
-		<image src="/image/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+		<image src="{{avatarUrl}}" mode="scaleToFill" class="gif-wave"></image>
 	</image>
 	<view class="content">
 		<image src="/image/logo.jpg" class="png" mode="widthFix"></image>

@@ -39,6 +39,124 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
+<<<<<<< Updated upstream
+=======
+          // 在跳转前？
+          app.globalData.group_id = result.groupList.group_id;
+          app.globalData.group_name = result.groupList.name;
+        }, fail(e) {
+          console.log(e);
+
+        }
+      })
+    },
+    // 模态窗
+    showModal(e) {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    },
+    hideModal(e) {
+      this.setData({
+        modalName: null
+      })
+    },
+    creatInput(e) {
+      this.setData({
+        creatInput: e.detail.value
+      })
+    },
+    addInput(e) {
+      this.setData({
+        addInput: e.detail.value
+      })
+    },
+    // 创建组
+    create(e) {
+      let that = this;
+      console.log(this.data.creatInput);
+      wx.request({
+        url: 'http://monktiger.natapp1.cc/group/create',
+        method: 'GET',
+        data: {
+          name: that.data.creatInput
+        },
+        header: {
+          // "Content-Type": "application/x-www-form-urlencoded",
+          "token": that.data.token
+        },
+        success: function (result) {
+          console.log(result);
+          wx.request({
+            url: 'http://monktiger.natapp1.cc/group/getList',
+            method: 'GET',
+            data: {
+              type: that.data.TabCur
+            },
+            header: {
+              "token": that.data.token
+            },
+            success: function (result) {
+              console.log(result);
+              that.setData({
+                elements: result.data.groups,
+              })
+            }, fail(e) {
+              console.log(e);
+            }
+          })
+        }, fail(e) {
+          console.log(e);
+
+        }
+      })
+    },
+    // 加入组
+    add(e) {
+      let that = this;
+      console.log(this.data.addInput);
+
+      console.log(this.data.token);
+      wx.request({
+        url: 'http://monktiger.natapp1.cc/group/join',
+        method: 'GET',
+        data: {
+          groupId: that.data.addInput
+        },
+        header: {
+          // "Content-Type": "application/x-www-form-urlencoded",
+          "token": that.data.token
+        },
+        success: function (result) {
+          console.log(result);
+
+        }, fail(e) {
+          console.log(e);
+        }
+      })
+    },
+    // 解散组
+    delete(e) {
+      let that = this;
+      console.log(e.detail.groupid);
+      wx.request({
+        url: 'http://monktiger.natapp1.cc/group/quit',
+        method: 'GET',
+        data: {
+          groupId: e.detail.groupid
+        },
+        header: {
+          // "Content-Type": "application/x-www-form-urlencoded",
+          "token": that.data.token
+        },
+        success: function (result) {
+          console.log(result);
+          let elements = that.data.elements;
+          elements.splice(e.detail.index, 1)
+        }, fail(e) {
+          console.log(e);
+
+>>>>>>> Stashed changes
         }
       })
     }

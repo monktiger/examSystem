@@ -29,7 +29,7 @@ Page({
       url: that.data.addQuestionUrl,
       method: "post",
       header: {
-        "content-type": ""
+        "token": that.data.token
       },
       data: {
         title: title,

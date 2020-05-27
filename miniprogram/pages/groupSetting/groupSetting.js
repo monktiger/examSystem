@@ -6,11 +6,15 @@ Page({
 
   },
 
-  onLoad: function(options) {
+  onLoad: function (options) {
     var editGroupUrl = app.globalData.url + "group/nodify";
+    var showMemberUrl = app.globalData.url + "group/showMember";
     this.setData({
       editGroupUrl: editGroupUrl,
+      groupName: app.globalData.group_name,
+      groupId: app.globalData.group_id
     });
+    this.getMemberCount();
   },
 
   showModal(e) {
@@ -25,12 +29,42 @@ Page({
     })
   },
 
+  // 获得组成员人数
+  getMemberCount: function (e) {
+    var that = this;
+    // 发起网络请求
+    wx.request({
+      url: that.data.showMemberUrl,
+      method: "get",
+      header: {
+        "token": that.data.token
+      },
+      data: {
+        groupId: that.data.groupId
+      },
+      success: function (res) {
+        if (res.status == 1) {
+          var count = res.memberList.length;
+          this.setData({
+            count: count
+          })
+        }
+        else {
+          console.log("status:" + res.status + ";msg:" + res.msg);
+        }
+      },
+      fail: function (error) {
+        console.log(error);
+      }
+    })
+  },
+
   // 获取组名
-  groupName: function(e) {
+  getGroupName: function (e) {
     this.setData({
-      groupName: e.detail.value,
+      setName: e.detail.value,
     });
-    console.log("组名" + this.data.groupName);
+    console.log("组名" + this.data.setName);
   },
 
   // 设置组名
@@ -41,13 +75,13 @@ Page({
       url: that.data.editGroupUrl,
       method: "get",
       header: {
-        "content-type": ""
+        "token": that.data.token
       },
       data: {
-        name: that.data.groupName,
-        groupId: "ASXERV" // ***组Id
+        groupName: that.data.setName,
+        groupId: that.data.groupId
       },
-      success: function(res) {
+      success: function (res) {
         if (res.status == 1) {
           // 隐藏modal
           that.setData({
@@ -62,17 +96,17 @@ Page({
           // 刷新页面
           that.onLoad();
         }
-        else{
+        else {
           // 弹窗失败
           wx.showToast({
             title: '修改失败！', // 标题
             icon: 'none', // 图标类型，默认success
             duration: 1500 // 提示窗停留时间，默认1500ms
           })
-          console.log("status:"+res.status+";msg:"+res.msg);
+          console.log("status:" + res.status + ";msg:" + res.msg);
         }
       },
-      fail: function(error) {
+      fail: function (error) {
         console.log(error);
       }
     })
