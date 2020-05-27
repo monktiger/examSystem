@@ -182,8 +182,7 @@ public class GroupController {
      */
     @RequestMapping("/deleteMember")
     public Object deleteMember(String groupId,List<String> openIds)throws Exception{
-//        String openId = jedisUtil.STRINGS.get("openId");
-        String  openId = "openId";
+        String openId = jedisUtil.STRINGS.get("openId");
         Group aim_group = groupService.selectGroupById(groupId,openId);
         if(aim_group==null){
             return new ResponseBean<>(false,"查无此人",CommonErrorEnum.FAILED_QUESTION);

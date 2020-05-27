@@ -1,6 +1,8 @@
 package com.monktiger.examsystem.entity;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * tb_user
@@ -23,10 +25,10 @@ public class User implements Serializable {
 
     }
 
-    public User(String openId,String nickname,String name,String avatarurl, boolean available){
+    public User(String openId,String nickname,String name,String avatarurl, boolean available) throws UnsupportedEncodingException {
         this.openId = openId;
         this.nickname = nickname;
-        this.name = name;
+        this.name = URLEncoder.encode(name,"utf-8");
         this.avatarurl = avatarurl;
         this.available = available;
     }

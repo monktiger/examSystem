@@ -36,6 +36,7 @@ public interface   ExamMapper {
      * @return
      */
     List<Exam> selectExamByGroupAndStatus(@Param("examIdList") List<Integer> examIdList);
+
     int updateByPrimaryKey(Exam record);
 
     int updateexamListStatus(@Param("examList") List<Exam> examList, @Param("status") Integer status);

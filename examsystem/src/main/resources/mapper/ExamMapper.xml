@@ -24,19 +24,23 @@
       select *
       from tb_exam
       where id in
-      <foreach collection="examIdList" item="id" index="index" open="(" close=")" separator=",">
-        #{id}
-      </foreach>
+      <if test="examIdList!=null">
+        <foreach collection="examIdList" item="id" index="index" open="(" close=")" separator=",">
+         #{id}
+        </foreach>
+      </if>
     </select>
   <select id="selectExamByGroupAndStatus" resultType="com.monktiger.examsystem.entity.Exam">
     select *
     from tb_exam
     <where>
-     id in
-    <foreach collection="examIdList" item="id" index="index" open="(" close=")" separator=",">
-      #{id}
-    </foreach>
-    and status in (1,2,3)
+      <if test="examIdList!=null">
+        id in
+        <foreach collection="examIdList" item="id" index="index" open="(" separator="," close=")" >
+          #{id}
+        </foreach>
+      </if>
+      and status in (1,2,3)
     </where>
   </select>
   <select id="getPrepareExam" resultType="com.monktiger.examsystem.entity.Exam">

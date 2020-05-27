@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import sun.plugin2.main.client.WMozillaServiceDelegate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -213,7 +214,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
         examJSON.remove("groupId");
         Exam exam = examJSON.toJavaObject(Exam.class);
         Map<String,Object> modelMap = new HashMap<>();
-        if(exam.getEndTime().compareTo(exam.getBeginTime())==0||exam.getEndTime().compareTo(exam.getBeginTime())>0){
+        if(exam.getEndTime().compareTo(exam.getBeginTime())<=0|| exam.getEndTime().compareTo(new Date(System.currentTimeMillis()))<=0){
             modelMap.put("status",-1);
             modelMap.put("info","时间设置存在问题");
             return modelMap;

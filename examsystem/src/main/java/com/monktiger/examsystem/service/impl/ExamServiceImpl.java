@@ -95,7 +95,11 @@ public class ExamServiceImpl implements ExamService {
         Group group=groupMapper.selectByPrimaryKey(user.getOpenId(),groupId);
         List<Exam> examList;
         List<Integer> examIdList = groupToExamMapper.selectByGroupId(groupId);
-        if (group.getStatus()==1){//管理员
+
+        if(examIdList.size()==0){
+            return null;
+        }
+        if (group.getStatus()==0){//管理员
             examList = examMapper.selectExamByGroup(examIdList);
         }else{//普通成员
             examList = examMapper.selectExamByGroupAndStatus(examIdList);

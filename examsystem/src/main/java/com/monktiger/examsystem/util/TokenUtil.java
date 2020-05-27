@@ -2,12 +2,13 @@ package com.monktiger.examsystem.util;
 
 import com.monktiger.examsystem.entity.User;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
 public class TokenUtil {
-    public static String createToken(User user,int type){
+    public static String createToken(User user,int type) throws UnsupportedEncodingException {
         StringBuilder  str=new StringBuilder();
         if(type==1){
         str.append("token:");}

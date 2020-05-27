@@ -22,6 +22,11 @@ public class UserTest {
     }
 
     @Test
+
+
+
+
+
     public void testDelete() throws Exception {
        userService.deleteUser("open_ids");
     }
@@ -36,7 +41,7 @@ public class UserTest {
     @Test
     public void testSelect() throws Exception {
         System.out.println("select");
-        User user = userService.selectUserByKey("open_ids");
-        System.out.println(user);
+        User user = userService.selectUserByKey("oOfAs5CvZ4l_G9bIIODwpUMos_94");
+        System.out.println(user.toString());
     }
 }

@@ -44,7 +44,7 @@ private CopyToQuestionMapper copyToQuestionMapper;
        e.setScore(totalScore);
        examMapper.updateByPrimaryKeySelective(e);
        for (String groupId: groupIdList){
-        List<Group> groupList = groupMapper.selectByKeyState(groupId,0);
+        List<Group> groupList = groupMapper.selectByKeyState(groupId,1);
         copyMapper.createCopyList(groupId,groupList,e.getId(),0);
         List<Copy> copyList = copyMapper.selectByGroupAndExam(e.getId(),groupId);
         copyToQuestionMapper.createQuestion(copyList,examToQuestions,false);
