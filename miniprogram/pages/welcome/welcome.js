@@ -12,6 +12,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> dfx
   onGotUserInfo(e) {
     let that = this
     console.log("DDD");
@@ -41,8 +46,14 @@ Page({
             // 保存openid
             console.log(result);
             app.globalData.token = result.data.token;
+<<<<<<< HEAD
             app.globalData.openid = result.data.openId;
             app.globalData.name = result.data.name;
+=======
+            app.globalData.name = result.userInfo.name;
+            app.globalData.nickname = result.userInfo.nickname;
+            app.globalData.avatarUrl = result.userInfo.avatarUrl;
+>>>>>>> dfx
             wx.navigateTo({
               url: '/pages/nav/nav'
             })        
@@ -55,6 +66,10 @@ Page({
     })
 
   },
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> dfx
   onLoad: function (options) {
     // setTimeout(function () {
     //   wx.navigateTo({

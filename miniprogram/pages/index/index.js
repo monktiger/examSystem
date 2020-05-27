@@ -103,6 +103,9 @@ Component({
             elements: elements,
             TabCur: e.currentTarget.dataset.id,
           })
+          // 在跳转前？???这个不是在这里传值叭？
+          app.globalData.group_id = result.groupList.group_id;
+          app.globalData.group_name = result.groupList.name;
         }, fail(e) {
           console.log(e);
 
@@ -217,7 +220,6 @@ Component({
           elements.splice(e.detail.index, 1)
         }, fail(e) {
           console.log(e);
-
         }
       })
     }

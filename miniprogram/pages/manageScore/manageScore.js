@@ -3,17 +3,19 @@ var app = getApp();
 Page({
 
   data: {
-
   },
 
   onLoad: function (options) {
     var scoreListUrl = app.globalData.url + "in/toScoreList";
     this.setData({
       scoreListUrl: scoreListUrl,
+      groupId: app.globalData.group_id,
+      examId: app.globalData.exam_id
     });
     this.getScoreList(scoreListUrl);
   },
 
+  // 获得成绩列表
   getScoreList: function(url){
     var that = this;
     // 发起网络请求
@@ -21,11 +23,11 @@ Page({
       url: url,
       method: "get",
       header: {
-        "content-type": ""
+        "token": that.data.token
       },
       data: {
-        examId: "10086", // ***examId
-        groupId: "ASX123" // ***组Id
+        examId: that.data.examId,
+        groupId: that.data.groupId
       },
       success: function (res) {
         that.processScore(res.scoreList);
@@ -36,6 +38,7 @@ Page({
     })
   },
 
+  // 展示成绩列表
   processScore: function(scoreList){
     var scores = [];
     for (var idx in scoreList) {
@@ -53,5 +56,12 @@ Page({
     this.setData({
       scores: scores
     });
+  },
+  
+  // 查看详情
+  detail:function(e){
+    wx.navigateTo({
+      url: '/pages/paperDetail/paperDetail',
+    })
   }
 })

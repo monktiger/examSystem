@@ -112,6 +112,59 @@
 				},
 				{
 					"id": -11,
+					"name": "editMulti",
+					"pathName": "pages/editMulti/editMulti",
+					"query": ""
+				},
+				{
+					"id": -12,
+					"name": "editName",
+					"pathName": "pages/editName/editName",
+					"query": ""
+				},
+				{
+					"id": -13,
+					"name": "editNickName",
+					"pathName": "pages/editNickName/editNickName",
+					"query": ""
+				},
+				{
+					"id": -14,
+					"name": "editPaper",
+					"pathName": "pages/editPaper/editPaper",
+					"query": ""
+				},
+				{
+					"id": -15,
+					"name": "editShort",
+					"pathName": "pages/editShort/editShort",
+					"query": ""
+				},
+				{
+					"id": -16,
+					"name": "editSingle",
+					"pathName": "pages/editSingle/editSingle",
+					"query": ""
+				},
+				{
+					"id": -17,
+					"name": "myInfo",
+					"pathName": "pages/myInfo/myInfo",
+					"query": ""
+				},{
+					"id": -18,
+					"name": "welcome",
+					"pathName": "pages/welcome/welcome",
+					"query": ""
+				},{
+					"id": -19,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": ""
+
+				},
+				{
+					"id": -20,
 					"name": "welcome",
 					"pathName": "pages/welcome/welcome",
 					"query": ""

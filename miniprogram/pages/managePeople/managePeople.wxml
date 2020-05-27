@@ -3,11 +3,12 @@
   <view slot="backText">返回</view>
   <view slot="content">成员管理</view>
 </cu-custom>
-<view class="flex align-center solid padding-sm margin justify-between bg-white radius">
-  <input placeholder="请输入成员名称" bindconfirm="onBindConfirm" />
-  <text class="cuIcon-search lg text-gray"></text>
+<view class="flex align-center solid padding-sm margin bg-white radius text-left">
+  <text class="cuIcon-search lg text-gray padding-right"></text>
+  <input class="search" placeholder="请输入成员名称" bindconfirm="onBindConfirm" bindfocus="onBindFocus" />
+  <text class="cuIcon-close lg text-gray padding-left" bindtap="onCancelImgTap"  wx:if="{{searchPanelShow}}"></text>
 </view>
-<view class="margin padding bg-white">
+<!-- <view class="margin padding bg-white">
   <view class="margin-bottom-sm">
     <text class="text-xl text-black text-bold">组长</text>
   </view>
@@ -15,7 +16,7 @@
     <image class="cu-avatar lg round margin-right-sm" src="/image/logo.jpg"></image>
     <text class="text-xl">Suppasit</text>
   </view>
-</view>
+</view> -->
 <view class="margin padding bg-white">
   <view class="flex align-center justify-between margin-bottom-sm">
     <text class="text-xl text-black text-bold">成员</text>
@@ -25,12 +26,12 @@
   <view class="cu-list menu-avatar">
     <block wx:for="{{members}}" wx:for-item="item">
       <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
-        <view class="cu-avatar round lg" style="background-image:url({{avatarUrl}});"></view>
+        <view class="cu-avatar round lg" style="background-image:url({{item.avatarUrl}});"></view>
         <view class="content">
-          <view class="text-grey">{{name}}</view>
-          <view class="text-gray text-sm">{{openId}}</view>
+          <view class="text-grey">{{item.name}}</view>
+          <!-- <view class="text-gray text-sm">{{openId}}</view> -->
         </view>
-        <view class="move" catchtap="delete">
+        <view class="move" catchtap="delete" data-openId="{{item.openId}}">
           <view class="bg-red">删除</view>
         </view>
       </view>

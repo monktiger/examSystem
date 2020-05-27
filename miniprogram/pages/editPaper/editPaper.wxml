@@ -6,6 +6,17 @@
 	</cu-custom>
 </view>
 
+<!-- 试卷说明 -->
+<view>
+<text>试卷名称</text>
+<text>试卷说明</text>
+<view>
+<text class="cuIcon-writefill lg text-gray"></text>
+<text >修改</text>
+</view>
+</view>
+
+<!-- 题目列表 -->
 <optionQue-cmp />
 <multiQue-cmp />
 <showShort-cmp />
@@ -15,6 +26,7 @@
 </view>
 <view class="createButton" catchtap="create">创建试卷</view>
 
+<!-- 选择新增题目类型 -->
 <view class="qus-type justify-center text-center {{style?'hide':'show'}}" wx:if="{{show}}" catchtap="hideType">
 	<view class="margin-xl" catchtap="single">
 		<button class="cu-btn line-mauve round shadow flex">

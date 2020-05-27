@@ -30,7 +30,7 @@ Page({
       url: that.data.createExamUrl,
       method: "get",
       header: {
-        "content-type": ""
+        "token": that.data.token
       },
       data: {
         examName: "10086", // ***examId
