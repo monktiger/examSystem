@@ -4,16 +4,16 @@
   <view slot="content">成绩管理</view>
 </cu-custom>
 <view class="solids-bottom flex">
-  <view class="flex-sub text-center padding-sm margin-xs">名字</view>
+  <view class="flex-sub text-center padding-sm margin-xs">姓名</view>
   <view class="flex-sub text-center padding-sm margin-xs">分数</view>
   <view class="flex-sub text-center padding-sm margin-xs">查看详情</view>
 </view>
 <view class="bg-white">
   <block wx:for="{{scores}}" wx:for-item="item">
     <view class="solids-bottom flex">
-      <view class="flex-sub text-center padding-sm margin-xs">{{studentName}}</view>
-      <view class="flex-sub text-center padding-sm margin-xs">{{score}}</view>
-      <view class="flex-sub text-center padding-sm margin-xs cu-btn line-grey">
+      <view class="flex-sub text-center padding-sm margin-xs">{{item.studentName}}</view>
+      <view class="flex-sub text-center padding-sm margin-xs">{{item.score}}</view>
+      <view class="flex-sub text-center padding-sm margin-xs cu-btn line-grey" catchtap="detail">
         <navigator url="/pages/paperDetails/paperDetails">查看</navigator>
       </view>
     </view>
