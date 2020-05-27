@@ -37,14 +37,17 @@ Component({
       success: function (result) {
         console.log(result);
         let elements = result.data.groups;
-        let color = result.data.color;
+        let color = that.data.color;
         let i;
-        for (i = 0; i < elements.lenght; i++) {
-          elements[i].color = color[i % 4];
+        if(elements){
+          for (i = 0; i < elements.length; i++) {
+            elements[i].color = color[i % 4];
+          }
         }
         that.setData({
           elements: elements,
         })
+        
 
       }, fail(e) {
         console.log(e);
@@ -85,12 +88,15 @@ Component({
           "token": that.data.token
         },
         success: function (result) {
-          console.log(result);
+          // console.log(result);
           let elements = result.data.groups;
-          let color = result.data.color;
+          let color = that.data.color;
           let i;
-          for (i = 0; i < elements.lenght; i++) {
-            elements[i].color = color[i % 4];
+          // console.log(elements.length);
+          if(elements){
+            for (i = 0; i < elements.length; i++) {
+              elements[i].color = color[i % 4];
+            }
           }
           that.setData({
             elements: elements,
@@ -152,6 +158,7 @@ Component({
               console.log(result);
               that.setData({
                 elements: result.data.groups,
+                modalName: null
               })
             }, fail(e) {
               console.log(e);
@@ -181,7 +188,9 @@ Component({
         },
         success: function (result) {
           console.log(result);
-
+          that.setData({
+            modalName: null
+          })
         }, fail(e) {
           console.log(e);
         }

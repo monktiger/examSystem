@@ -10,7 +10,7 @@
 </view>
 <view class="objective padding-xl">
   <view class="title flex justify-between align-center">
-    <view class="text-lg text-bold">客观题</view>
+    <view class="text-lg text-bold text-gray">客观题</view>
     <view class="text-df">
       <text class="text-lg">18</text>
       /20
@@ -32,7 +32,7 @@
 </view>
 <view class="subjective padding-xl">
   <view class="title flex justify-between align-center">
-    <view class="text-lg text-bold">主观题</view>
+    <view class="text-lg text-bold text-gray">主观题</view>
     <view class="text-df">未批阅</view>
   </view>
   <view class="grid col-5 text-center margin-top">

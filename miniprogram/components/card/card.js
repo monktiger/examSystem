@@ -20,6 +20,7 @@ Component({
   data: {
   },
   attached: function() {
+    console.log(this.data.cardList);
     
   },
   // observers:{
