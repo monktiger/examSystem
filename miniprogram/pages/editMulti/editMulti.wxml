@@ -11,7 +11,7 @@
   <view class="option-container">
     <block wx:for="{{opt}}" wx:for-item="item" wx:for-index='idx'>
       <view class="option-group">
-        <checkbox class="margin-right-sm" checked="{{checked}}" data-idx="{{idx}}"></checkbox> 
+        <checkbox class="margin-right-sm" checked="{{item.checked}}" data-idx="{{idx}}"></checkbox> 
         <input class="basis-xl" placeholder="输入选项"  bindinput="optDetail" data-idx="{{idx}}"></input>
         <text class="cuIcon-roundclosefill lg text-pink" catchtap="deleteOpt"></text>
       </view>

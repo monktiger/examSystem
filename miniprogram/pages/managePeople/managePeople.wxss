@@ -5,3 +5,7 @@
   width: 100%;
   height:100rpx;
 }
+
+.search{
+  width: 100%;
+}

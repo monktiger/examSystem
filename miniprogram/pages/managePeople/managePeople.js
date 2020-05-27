@@ -6,36 +6,42 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    searchPanelShow: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     var deleteMemberUrl = app.globalData.url + "group/deleteMember";
     var showMemberUrl = app.globalData.url + "group/showMember";
-    this.getMemberListData(showMemberUrl);
+    this.getMemberListData(showMemberUrl,0);
 
     this.setData({
       deleteMemberUrl: deleteMemberUrl,
+      groupId: app.globalData.group_id
     });
   },
 
-  getMemberListData: function(showMemberUrl){
+  // 获得组成员列表
+  getMemberListData: function (showMemberUrl,memberName) {
     var that = this;
     // 发起网络请求
     wx.request({
       url: showMemberUrl,
       method: "get",
       header: {
-        "content-type": ""
+        "token": that.data.token
       },
-      data:{
-        groupId:"AXDV64" //待修改
+      data: {
+        groupId: that.data.groupId
       },
       success: function (res) {
-        that.processMemberData(res.memberList);
+        if (res == 1) {
+          that.processMemberData(res.memberList,memberName);
+        } else {
+          console.log(res.msg);
+        }
       },
       fail: function (error) {
         console.log(error);
@@ -43,24 +49,38 @@ Page({
     })
   },
 
-  processMemberData: function (memberList) {
+  // 展示组成员列表
+  processMemberData: function (memberList, memberName) {
     var members = [];
     for (var idx in memberList) {
-      var subject = memberList[idx];
-      var name = subject.name;
-      if (name.length >= 6) {
-        name = name.substring(0, 6) + "...";
+      if (memberName) {
+        var names = memberList.filter((p) => {
+          return p.name == memberName;
+        });
+        pushMemberList(names,members);
+      } else {
+        pushMemberList(memberList,members);
       }
-      var temp = {
-        name: name,
-        avatarUrl: subject.avatarUrl,
-        openId: subject.openId,
-      }
-      members.push(temp);
     }
     this.setData({
       members: members
     });
+  },
+
+  // push成员列表
+  pushMemberList: function(memberList,members){
+    var subject = memberList[idx];
+    var name = subject.name;
+    if (name.length >= 6) {
+      name = name.substring(0, 6) + "...";
+    }
+    var temp = {
+      name: name,
+      avatarUrl: subject.avatarUrl,
+      openId: subject.openId,
+    }
+    members.push(temp);
+    return members;
   },
 
   // ListTouch触摸开始
@@ -94,40 +114,65 @@ Page({
   },
 
   // 搜索成员
-  onBindConfirm: function (event) {
-    var text = event.detail.value;
-    // var searchUrl = app.globalData.doubanBase + "/v2/movie/search?q=" + text;
-    // this.getMovieListData(searchUrl, "searchResult", "");
+  onBindFocus: function (event) {
+    this.setData({
+      searchPanelShow: true
+    })
   },
 
+  // 展示相应成员
+  onBindConfirm: function (event) {
+    var text = event.detail.value;
+    that.getMemberListData(res.memberList,text);
+  },
+
+  onCancelImgTap: function (event) {
+    this.setData({
+      searchPanelShow: false,
+      // 把所有成员展示
+      searchResult: {}
+    })
+  },
+
+  // 删除组成员
   delete(e) {
+    var openId = e.currentTarget.dataset.openId;
     var that = this;
     wx.showModal({
       title: 'confirm的弹窗',
       content: '确认要删除该成员吗？',
-      success: function(res) {
-        if (res.confirm) {
+      success: function (result) {
+        if (result.confirm) {
           console.log('点击确认回调')
           // 发起网络请求
           wx.request({
             url: that.data.deleteMemberUrl,
             method: "get",
             header: {
-              "content-type": ""
+              "token": that.data.token
             },
             data: {
-              groupId: "AXDV64",
-              openId: "AXasdadsdadaDV64aaa"
+              groupId: that.data.groupId,
+              openId: openId
             },
             success: function (res) {
-              // 弹窗成功
-              wx.showToast({
-                title: '删除成功！', // 标题
-                icon: 'success', // 图标类型，默认success
-                duration: 1500 // 提示窗停留时间，默认1500ms
-              })
-              // 刷新页面
-              that.onLoad();
+              if (res == 1) {
+                // 弹窗成功
+                wx.showToast({
+                  title: '删除成功！',
+                  icon: 'success',
+                  duration: 1500
+                })
+                // 刷新页面
+                that.onLoad();
+              } else {
+                wx.showToast({
+                  title: '删除失败！',
+                  icon: 'none',
+                  duration: 1500
+                })
+                console.log(res.msg);
+              }
             },
             fail: function (error) {
               console.log(error);

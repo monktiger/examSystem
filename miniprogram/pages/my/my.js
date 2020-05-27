@@ -1,4 +1,5 @@
 // pages/my/my.js
+var app = getApp();
 Page({
 
   data: {
@@ -12,7 +13,10 @@ Page({
   },
 
   onLoad: function (options) {
-
+    this.setData({
+      name:app.globalData.name,
+      avatarUrl:app.globalData.avatarUrl,
+    })
   },
 
  

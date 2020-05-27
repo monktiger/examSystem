@@ -12,12 +12,14 @@ Page({
   onLoad: function (options) {
     var editNickNameUrl = app.globalData.url + "user/nodify";
     this.setData({
+      token:app.globalData.token,
       editNickNameUrl: editNickNameUrl,
+      nickname: app.globalData.nickname
     });
   },
 
   // 获取昵称
-  nickname: function(e){
+  nickname: function (e) {
     this.setData({
       nickname: e.detail.value,
     });
@@ -31,22 +33,31 @@ Page({
       url: that.data.editNickNameUrl,
       method: "post",
       header: {
-        "content-type": ""
+        "token": that.data.token
       },
-      data:{
+      data: {
         nickname: that.data.nickname
       },
       success: function (res) {
-        // 弹窗成功
-        wx.showToast({
-          title: '修改成功！', // 标题
-          icon: 'success',  // 图标类型，默认success
-          duration: 1500  // 提示窗停留时间，默认1500ms
-        })
-        // 跳转
-        wx.navigateTo({
-          url: '/pages/myInfo/myInfo',
-        })
+        if (res == 1) {
+          // 弹窗成功
+          wx.showToast({
+            title: '修改成功！', // 标题
+            icon: 'success',  // 图标类型，默认success
+            duration: 1500  // 提示窗停留时间，默认1500ms
+          })
+          // 跳转
+          wx.navigateTo({
+            url: '/pages/myInfo/myInfo',
+          })
+        } else {
+          // 弹窗失败
+          wx.showToast({
+            title: '修改失败！', // 标题
+            icon: 'none',
+            duration: 1500  // 提示窗停留时间，默认1500ms
+          })
+        }
       },
       fail: function (error) {
         console.log(error);
