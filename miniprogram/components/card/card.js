@@ -20,7 +20,7 @@ Component({
   data: {
   },
   attached: function() {
-    console.log(this.data.cardList);
+    // console.log(this.data.cardList);
     
   },
   // observers:{
@@ -39,9 +39,10 @@ Component({
     clickCard: function (e) {
       let that = this
       let data = {
-        TabCur: that.data.TabCur
+        TabCur: that.data.TabCur,
+        groupid:e.currentTarget.dataset.groupid,
       }
-      console.log(that.data.TabCur);
+      // console.log(that.data.TabCur);
       this.triggerEvent('clickCard', data)
     },
     // 退出组

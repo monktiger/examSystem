@@ -1,19 +1,61 @@
+<view wx:for="{{paperList}}" wx:key="index">
 <view class="flex justify-center paper-box">
   <view 
   
   class="paper padding flex  margin-top" 
-  bindtap="changePage">
+  catch:tap="changePage">
   <!-- 图标 -->
     <view 
     wx:if="{{pageId==0?true:false}}"
     class="cuIcon-moreandroid more text-blue" 
-    style="font-size:40rpx"></view>
+    style="font-size:40rpx"
+    catch:tap="showModal"
+    data-target="deleteModal"
+    ></view>
     <!-- 分数 -->
     <view 
     wx:else
     class=" more text-red" 
     style="font-size:40rpx">99</view>
-    <view class="">一体化第一周随堂测试（试卷名）</view>
-    <view class="margin-top-xl">2020.02.02-12:00 - 2020.03.03.13:00</view>
+    <view class="">{{item.name}}</view>
+    <view class="margin-top-xl">{{item.beginTime}} - {{item.endTime}}</view>
   </view>
+</view>
+</view>
+<!-- 解散组 -->
+<view class="cu-modal bottom-modal {{modalName=='deleteModal'?'show':''}}" catchtouchmove>
+    <view class="cu-dialog modal ">
+        <view class="cu-list menu text-center ">
+            <view class="cu-item">
+                <view class="content text-lg text-gray padding-top-sm" bindtap="showModal" data-target="deleteTipsModal">
+                    解散出组
+                </view>
+            </view>
+            <view class="cu-item margin-top-sm">
+                <view class="content text-lg text-gray" catchtap="hideModal">取消</view>
+            </view>
+        </view>
+    </view>
+</view>
+<!-- 解散组 -->
+<view class="cu-modal  {{modalName=='deleteTipsModal'?'show':''}}" catchtouchmove>
+    <view class="cu-dialog middle-modal ">
+        <view class="box margin-lr margin-top padding" hover-class="none" hover-stop-propagation="false">
+            <view class="text-lg" hover-class="none" hover-stop-propagation="false">确定退出组？</view>
+            <view class="flex justify-between padding-lr btn-box margin-top" hover-class="none" hover-stop-propagation="false">
+                <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" 
+                style="letter-spacing:3rpx "
+                catch:tap="hideModal" 
+                >
+                    确定
+                </button>
+                <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" 
+                style="letter-spacing:3rpx" 
+                bindtap="hideModal" 
+                >
+                    取消
+                </button>
+            </view>
+        </view>
+    </view>
 </view>

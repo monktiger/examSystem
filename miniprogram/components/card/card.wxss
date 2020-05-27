@@ -98,6 +98,7 @@
     text-align: center;
     line-height: 60rpx;
   }
+  /* modal */
   .modal{
     border-top-right-radius: 30rpx !important;
     border-top-left-radius: 30rpx !important;

@@ -22,7 +22,6 @@
     <view class="text-lg margin-top-xs">设置</view>
   </view>
 </view>
-<view wx:for="{{10}}" wx:key="index">
-  <papercard class="papercard" bind:changePage="goManageScore"></papercard>
-</view>
+
+  <papercard class="papercard" bind:changePage="goManageScore" paperList="{{paperList}}"></papercard>
 

@@ -1,11 +1,12 @@
 // pages/manageGroup/manageGroup.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    paperList:[]
   },
   goManagePeople(e) {
     wx.navigateTo({
@@ -31,7 +32,27 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/group/getList',
+      method: 'GET',
+      data: {
+        groupId: app.globalData.groupId
+      },
+      header: {
+        "token": that.data.token
+      },
+      success: function (result) {
+        console.log(result);
+       
+        that.setData({
+          paperList: result.data.examList,
+          
+        })
+      }, fail(e) {
+        console.log(e);
 
+      }
+    })
   },
 
   /**

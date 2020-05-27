@@ -62,6 +62,7 @@ Component({
     // 去组页面
     clickCard(e) {
       if (e.detail.TabCur == 0) {
+        app.globalData.groupId=e.currentTarget.dataset.groupid
         wx.navigateTo({
           url: '/pages/manageGroup/manageGroup',
         })
