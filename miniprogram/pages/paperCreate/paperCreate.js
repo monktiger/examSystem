@@ -35,12 +35,14 @@ Page({
       data: {
         examName: "10086", // ***examId
         groupId: "ASX123",// ***组Id
-        beginTime: beginTime,
-        endTime: endTime,
-        examId: examId,
+        // beginTime: beginTime,
+        // endTime: endTime,
+        // examId: examId,
       },
       success: function (res) {
-        that.processScore(res.scoreList);
+        wx.navigateTo({
+          url: "../editPaper/editPaper"
+        })
       },
       fail: function (error) {
         console.log(error);

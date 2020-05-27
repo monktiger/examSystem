@@ -47,12 +47,19 @@ Page({
           for (let i in shortQues) {
             let o = {};
             o[i] = shortQues[i];
-            arr.push(o)
+            arr.push(o[i])
           }
           arr.push({
             title: title,
             score: score,
           })
+          wx.removeStorage({
+            key: 'short_ques',
+            success (res) {
+              console.log(res)
+            }
+          })
+          console.log("arr:",arr);
           wx.setStorageSync('short_ques', arr);
           wx.navigateTo({
             url: "../editPaper/editPaper"
@@ -71,5 +78,6 @@ Page({
     this.setData({
       addQuestionUrl: addQuestionUrl,
     });
+
   }
 })

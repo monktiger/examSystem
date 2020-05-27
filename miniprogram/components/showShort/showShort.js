@@ -4,10 +4,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    // shortQues:{
-    //   title:String,
-    //   score:Number
-    // }
+    
   },
 
   /**
@@ -31,8 +28,6 @@ Component({
       this.setData({
         shortQues: shortQues
       })
-      //为什么setdata不成功？？？？？？？？
-      console.log()
     }
   },
 

@@ -53,13 +53,20 @@ Page({
     // if(shortQues){
       // 如果有缓存，则放进data内
 
-      console.log(shortQues);
+      console.log("editPaper",shortQues);
     // } 
     // else {
     //   //没有缓存则定义缓存数组？
     //   shortQues=[];
     //   wx.setStorageSync('short_ques', shortQues);
     // }
+    
+    // wx.removeStorage({
+    //   key: 'short_ques',
+    //   success (res) {
+    //     console.log(res)
+    //   }
+    // })
   },
 
   create:function(e){
@@ -71,5 +78,6 @@ Page({
       icon: 'success', // 图标类型，默认success
       duration: 1500 // 提示窗停留时间，默认1500ms
     })
+
   }
 })
