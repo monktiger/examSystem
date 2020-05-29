@@ -344,4 +344,9 @@ Page({
       time: time,
     })
   },
+  onLoad: function (options) {
+    this.setData({
+      groupId: app.globalData.groupId,
+    })
+  },
 })
