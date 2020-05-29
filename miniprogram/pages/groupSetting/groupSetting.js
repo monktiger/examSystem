@@ -37,13 +37,13 @@ Page({
       url: that.data.showMemberUrl,
       method: "get",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token
       },
       data: {
         groupId: that.data.groupId
       },
       success: function (res) {
-        if (res.status == 1) {
+        if (res.data.status == 1) {
           var count = res.memberList.length;
           this.setData({
             count: count
@@ -75,14 +75,14 @@ Page({
       url: that.data.editGroupUrl,
       method: "get",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token
       },
       data: {
         groupName: that.data.setName,
         groupId: that.data.groupId
       },
       success: function (res) {
-        if (res.status == 1) {
+        if (res.data.status == 1) {
           // 隐藏modal
           that.setData({
             modalName: null

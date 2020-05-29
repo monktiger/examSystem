@@ -7,13 +7,17 @@
 </view>
 
 <!-- 试卷说明 -->
-<view>
-<text>试卷名称</text>
-<text>试卷说明</text>
-<view>
-<text class="cuIcon-writefill lg text-gray"></text>
-<text >修改</text>
-</view>
+<view class="bg-white padding">
+	<text class="text-black text-bold text-xl">{{examName?examName:"请设置试卷名称"}}</text>
+	<view class="text-center text-lg padding-tb">
+		<text>{{beginTime?beginTime:"请设定开始时间"}}</text>
+		<text> - </text>
+		<text>{{endTime?endTime:"请设定结束时间"}}</text>
+	</view>
+	<view class="solids-top padding-top-sm text-center" catchtap="setPaperMsg">
+		<text class="cuIcon-writefill lg text-gray"></text>
+		<text class="margin-left lg text-gray">修改</text>
+	</view>
 </view>
 
 <!-- 题目列表 -->

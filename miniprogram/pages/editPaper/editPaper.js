@@ -41,6 +41,9 @@ Page({
     var addQuestionUrl = app.globalData.url + "exam/addQuestion";
     this.setData({
       addQuestionUrl: addQuestionUrl,
+      examName:app.globalData.examName,
+      beginTime:app.globalData.beginTime,
+      endTime:app.globalData.endTime,
     });
     // 获取简答题缓存
     var shortQues = wx.getStorageSync('short_ques');
@@ -69,6 +72,7 @@ Page({
     // })
   },
 
+  // 创建试卷
   create:function(e){
     wx.navigateTo({
       url: "/pages/manageGroup/manageGroup"
@@ -79,5 +83,12 @@ Page({
       duration: 1500 // 提示窗停留时间，默认1500ms
     })
 
+  },
+
+  // 修改试卷信息
+  setPaperMsg:function(e){
+    wx.navigateTo({
+      url: "/pages/paperCreate/paperCreate"
+    })
   }
 })
