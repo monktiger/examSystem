@@ -41,6 +41,7 @@ Component({
       let data = {
         TabCur: that.data.TabCur,
         groupid:e.currentTarget.dataset.groupid,
+        groupname:e.currentTarget.dataset.groupname,
       }
       // console.log(that.data.TabCur);
       this.triggerEvent('clickCard', data)

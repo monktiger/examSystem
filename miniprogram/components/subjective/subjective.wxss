@@ -2,11 +2,14 @@
 @import "/colorui/icon.wxss";
 @import "/colorui/main.wxss";
 @import "/colorui/animation.wxss";
+.box{
+    background-color: white;
+}
 .problem{
     line-height: 40rpx;
 }
 .answer{
-    height: 700rpx !important;
+    height: 300rpx !important;
     width: 95%;
     line-height: 40rpx;
 }

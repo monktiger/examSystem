@@ -17,6 +17,7 @@ Component({
     title: ["我管理的组", "我加入的组"],
     elements: [],
   },
+  
   attached: function () {
     let that = this
     this.setData({
@@ -32,7 +33,7 @@ Component({
         type: that.data.TabCur
       },
       header: {
-        "token": that.data.token
+         "token":app.globalData.token
       },
       success: function (result) {
         console.log(result);
@@ -46,9 +47,7 @@ Component({
         }
         that.setData({
           elements: elements,
-        })
-        
-
+        }) 
       }, fail(e) {
         console.log(e);
 
@@ -61,8 +60,9 @@ Component({
   methods: {
     // 去组页面
     clickCard(e) {
+      app.globalData.groupId=e.detail.groupid;
+      app.globalData.groupname=e.detail.groupname;
       if (e.detail.TabCur == 0) {
-        app.globalData.groupId=e.currentTarget.dataset.groupid
         wx.navigateTo({
           url: '/pages/manageGroup/manageGroup',
         })
@@ -103,9 +103,6 @@ Component({
             elements: elements,
             TabCur: e.currentTarget.dataset.id,
           })
-          // 在跳转前？???这个不是在这里传值叭？
-          app.globalData.group_id = result.groupList.group_id;
-          app.globalData.group_name = result.groupList.name;
         }, fail(e) {
           console.log(e);
 
@@ -160,6 +157,15 @@ Component({
             },
             success: function (result) {
               console.log(result);
+              let elements = result.data.groups;
+              let color = that.data.color;
+              let i;
+              // console.log(elements.length);
+              if(elements){
+                for (i = 0; i < elements.length; i++) {
+                  elements[i].color = color[i % 4];
+                }
+              }
               that.setData({
                 elements: result.data.groups,
                 modalName: null

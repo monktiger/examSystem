@@ -3,7 +3,7 @@ page{
     height: 100vh;
     background-color: #ffff;
 }
-.box{
+/* .box{
     border: 1rpx solid #4b93c4;
     border-radius: 20rpx;
     position: relative;
@@ -16,9 +16,16 @@ page{
     left: 50%;
     margin-left: -20rpx;
     position: absolute;
-}
+}*/
 .btn{
-    width: 300rpx !important;
-    margin: 40rpx auto 0 auto;
+    width: 400rpx !important;
+    margin: 80rpx auto 0 auto;
     letter-spacing: 4rpx;
+} 
+.box{
+    margin: 70rpx auto 0 auto;
+    width: 400rpx;
+}
+.item{
+    width: 300rpx;
 }

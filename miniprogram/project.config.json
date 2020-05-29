@@ -151,17 +151,18 @@
 					"name": "myInfo",
 					"pathName": "pages/myInfo/myInfo",
 					"query": ""
-				},{
+				},
+				{
 					"id": -18,
 					"name": "welcome",
 					"pathName": "pages/welcome/welcome",
 					"query": ""
-				},{
+				},
+				{
 					"id": -19,
 					"name": "index",
 					"pathName": "pages/index/index",
 					"query": ""
-
 				},
 				{
 					"id": -20,

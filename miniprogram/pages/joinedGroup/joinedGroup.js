@@ -1,4 +1,5 @@
 // pages/joinedGroup/joinedGroup.js
+const app = getApp()
 Page({
 
   /**
@@ -16,7 +17,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/exam/getExam',
+      method: 'GET',
+      data: {
+        groupId: app.globalData.groupId,
+        status:app.globalData.pageId
+      },
+      header: {
+        "token": app.globalData.token
+      },
+      success: function (result) {
+        console.log(result);
+       
+        that.setData({
+          paperList: result.data.examList,   
+        })
+      }, fail(e) {
+        console.log(e);
 
+      }
+    })
   },
 
   /**

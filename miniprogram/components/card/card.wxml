@@ -1,5 +1,9 @@
 <view class='nav-list' wx:for="{{cardList}}" wx:key="index">
-    <view class="nav-li bg-{{item.color}}" catch:tap="clickCard">
+    <view class="nav-li bg-{{item.color}}" 
+    catch:tap="clickCard" 
+    data-groupid="{{item.groupId}}"
+    data-groupname="{{item.name}}"
+    >
         <view class="nav-title">{{item.name}}</view>
         <view class="nav-name">GROUP</view>
         <text 
@@ -14,7 +18,8 @@
         catch:tap="showModal1"
          data-target="quitModal" 
          data-index="index"
-         data-groupid="{{item.groupId}}"></text>
+         data-groupid="{{item.groupId}}"
+         ></text>
     </view>
 </view>
 <!-- 解散组 -->

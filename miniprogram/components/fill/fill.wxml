@@ -1,4 +1,4 @@
-<view class="padding">
+<view class="padding box ">
   <view class="flex align-center justify-between">
     <view class="title flex align-center">
       <view class="text-lg">第四题</view>
@@ -13,7 +13,7 @@
       用来隐藏小的数据块，比如加密密钥和数字签名中所用的散列函数值。
     </view>
   </view>
-  <view class="margin-top  flex justify-center text-lg text">
+  <view class="margin-top  flex justify-center text-lg text margin-bottom">
     <textarea maxlength="20" placeholder="请填写答案" cursor-spacing="10" class="comment-text padding answer" focus="{{focus}}" show-confirm-bar="{{false}}" bindinput="inputHd" value="{{commentContent}}"></textarea>
   </view>
 </view>

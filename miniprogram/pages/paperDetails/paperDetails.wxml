@@ -5,7 +5,7 @@
 </cu-custom>
 <!-- <text class="text-xl">试卷详情页面</text> -->
 <!-- <navigator url="/pages/paper/paper">试卷</navigator> -->
-<view class="total text-lg margin-top padding-lr-xl text-black text-bold" hover-class="none" hover-stop-propagation="false">
+<!-- <view class="total text-lg margin-top padding-lr-xl text-black text-bold" hover-class="none" hover-stop-propagation="false">
   总分4.0（满分5.0）
 </view>
 <view class="objective padding-xl">
@@ -20,9 +20,6 @@
     <view wx:for="{{10}}" wx:key="index">
       <view class="box padding margin-lr-sm margin-tb-sm text-blue">
         {{index+1}}
-        <!-- <view class="cu-tag bg-red tag">
-          <text class="cuIcon-close text-white" selectable="false" space="false" decode="false"></text>
-        </view> -->
         <view class="cu-tag bg-blue tag">
           <text class="cuIcon-check text-white" selectable="false" space="false" decode="false"></text>
         </view>
@@ -49,5 +46,32 @@
 <view class="flex justify-center">
   <button class="cu-btn bg-blue round shadow-blur sub  btn" bindtap="goPaper" data-target="Modal1">
   查看试卷
-</button>
+  </button>
+</view> -->
+<view class="total text-xl margin-top padding-lr-xl text-black">
+  项目管理概念
+  <text class="text-df margin-left">(总分8分)</text>
 </view>
+<view class="box">
+  <view class="text-lg">
+    <text class="text-gray">题目数量</text>
+    <text class="margin-left">5道题</text>
+  </view>
+  <view class="margin-top text-lg">
+    <text class="text-gray">开始时间</text>
+    <text class="margin-left">2018-11-23 11:30</text>
+  </view> 
+    <view class="margin-top text-lg">
+    <text class="text-gray">结束时间</text>
+    <text class="margin-left">5道题</text>
+  </view>
+    <view class="margin-top text-lg">
+    <text class="text-bold text-orange ">最终得分</text>
+    <text class="margin-left text-bold text-orange">5分（总分10）</text>
+  </view>
+</view>
+<view class="flex justify-center">
+  <button class="cu-btn bg-blue round shadow-blur lg  btn" bindtap="goPaper" data-target="Modal1">
+  查看试卷
+  </button>
+</view> 
