@@ -87,6 +87,5 @@ Page({
     this.setData({
       addQuestionUrl: addQuestionUrl,
     });
-
   }
 })
