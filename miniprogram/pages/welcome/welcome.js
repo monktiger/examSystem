@@ -41,12 +41,12 @@ Page({
                         // 保存openid
                         console.log(result);
                         app.globalData.token = result.data.token;
-                        app.globalData.name = result.userInfo.name;
-                        app.globalData.nickname = result.userInfo.nickname;
-                        app.globalData.avatarUrl = result.userInfo.avatarUrl;
+                        app.globalData.name = result.data.userInfo.name;
+                        app.globalData.nickname = result.data.userInfo.nickname;
+                        app.globalData.avatarUrl = result.data.userInfo.avatarurl;
                         wx.navigateTo({
                             url: '/pages/nav/nav'
-                        })
+                        });
                     },
                     fail(e) {
                         console.log(e);

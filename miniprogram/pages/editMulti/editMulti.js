@@ -8,7 +8,19 @@ Page({
     optList:[
       { idx: 0, detail:""},
       { idx: 1, detail: ""},
-    ]
+    ],
+
+    // 样例
+    multi:{ 
+      "title":"这是一道多选题", 
+      "score":20, 
+      "type":1, 
+      "current":"A", 
+      "answerA":"选项a", 
+      "answerB":"选项b", 
+      "answerC":"选项c", 
+      "answerD":"选项d" 
+    },
   },
 
   PickerChange(e) {
@@ -102,27 +114,30 @@ Page({
   confirm:function(e){
     // 创建一个数组，bindChange 改变的时候改变数组的值，判断current
     var that = this;
-    // 发起网络请求
+    var data = this.data.multi;
+    // 发起网络请求is
     wx.request({
       url: that.data.addQuestionUrl,
       method: "post",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token
       },
-      data:{
-        title:that.data.title, //待修改
-        score:that.data.index,
-        type:2,
-        current:"A",
-        answerA:"AXDV64",// 获取数组的值
-        answerB:"AXDV64",
-        answerC:"AXDV64",
-        answerD:"AXDV64",
-        examId:"",
-        questionId:"",
-      },
+      data:JSON.stringify(data)
+      // {
+        // title:that.data.title, //待修改
+        // score:that.data.index,
+        // type:2,
+        // current:"A",
+        // answerA:"AXDV64",// 获取数组的值
+        // answerB:"AXDV64",
+        // answerC:"AXDV64",
+        // answerD:"AXDV64",
+        // examId:"",
+        // questionId:"",
+      // }
+      ,
       success: function (res) {
-        if(res){
+        if(res.data.status==1){
           wx.navigateTo({
             url:"../editPaper/editPaper"
           })

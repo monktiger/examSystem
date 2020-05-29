@@ -4,6 +4,13 @@ Page({
   data: {
     index: null,
     picker: ['1', '2', '3', '4', '5'],
+
+    //样例
+    short:{ 
+      "title":"这是一道多选题", 
+      "score":20, 
+      "type":5, 
+    },
   },
 
   PickerChange(e) {
@@ -24,23 +31,25 @@ Page({
     var that = this;
     var title = wx.getStorageSync("title");
     var score = parseInt(this.data.index) + 1;
+    var data = {
+      title: title,
+      score: score,
+      type: 5,
+      current: that.data.current,
+      examId: "",
+      questionId: "",
+    }
     // 发起网络请求
     wx.request({
       url: that.data.addQuestionUrl,
       method: "post",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token
       },
-      data: {
-        title: title,
-        score: score,
-        type: 5,
-        current: that.data.current,
-        examId: "",
-        questionId: "",
-      },
+      data: JSON.stringify(data),
       success: function (res) {
-        if (res) {
+        console.log("res:",res);
+        if (res.data.status == 1) {
           // 设置题目缓存
           var shortQues = wx.getStorageSync('short_ques');
           var arr = []
