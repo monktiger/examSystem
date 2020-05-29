@@ -15,7 +15,7 @@ Page({
     this.setData({
       examName: e.detail.value
     })
-    console.log("examName",e.detail.value);
+    // console.log("examName",e.detail.value);
   },
 
   detail: function(e) {
@@ -71,6 +71,7 @@ Page({
       createExamUrl: createExamUrl,
       groupId:app.globalData.groupId
     });
+    console.log("app.globalData.groupId",app.globalData.groupId)
   },
 
   pickerTap: function () {
