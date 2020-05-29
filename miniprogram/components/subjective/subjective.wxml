@@ -1,0 +1,18 @@
+<view class="padding">
+  <view class="flex align-center justify-between">
+    <view class="title flex align-center">
+      <view class="text-lg">第五题</view>
+      <text class="cu-tag line-blue radius m-post-words-ifelec margin-left" selectable="false" space="false" decode="false">主观题</text>
+    </view>
+    <view class="text-lg text-blue">(10分)</view>
+  </view>
+  <view class="padding-tb problem">
+    <view class="text-lg">
+      最常用的方法用来隐藏小的数据块，比如加密密钥和数字签名中所用的散列函数值。请写出具体：
+    </view>
+  </view>
+  <view class="margin-top  flex justify-center text-lg text">
+    <textarea maxlength="300" placeholder="请填写答案" cursor-spacing="10" class="comment-text padding answer" focus="{{focus}}" show-confirm-bar="{{false}}" bindinput="inputHd" value="{{commentContent}}"></textarea>
+  </view>
+</view>
+

@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "singleAnswer":"/components/singleAnswer/singleAnswer",
+    "multipleChoice":"/components/multipleChoice/multipleChoice",
+    "judge":"/components/judge/judge",
+    "fill":"/components/fill/fill"
+  }
 }

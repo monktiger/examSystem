@@ -1,9 +1,0 @@
-<!--components/option/option.wxml-->
-<option-cmp>
-  <radio-group class="radio-group">
-    <view>
-      <radio class="opt" />
-    </view>
-    <view class="opt-txt">选项a</view>
-  </radio-group>
-</option-cmp>

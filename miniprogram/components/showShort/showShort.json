@@ -1,7 +1,4 @@
 {
   "component": true,
-  "usingComponents": {
-    "showQue-cmp": "/components/showQue/showQue",
-    "shortQue-cmp": "/components/shortQue/shortQue"
-  }
+  "usingComponents": {}
 }

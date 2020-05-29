@@ -1,1 +1,27 @@
 /* components/multiQue/multiQue.wxss */
+.que-container{
+  margin-top: 10rpx;
+  padding: 30rpx 20rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+}
+.score-container{
+  margin-left: 10rpx;
+  vertical-align: middle;
+  font-size: 24rpx;
+  color: rgb(255, 208, 0);
+}
+.checkbox-group{
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 0 30rpx 30rpx;
+  font-size: 28rpx;
+  color: #666;
+  align-items: center;
+}
+.checkbox-group checkbox{
+  display: block;
+  transform:scale(0.7);
+}

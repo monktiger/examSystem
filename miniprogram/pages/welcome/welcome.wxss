@@ -8,7 +8,7 @@
   background-color: rgb(240, 248, 255);
 }
 .welcome_img {
-  margin-top: -100px;
+  /* margin-top: -100px; */
   width: 314px;
 }
 .welcome_text{
@@ -17,4 +17,27 @@
   letter-spacing:10px;
   font-size: large;
   color: #4b93c4;
+}
+
+.welcome-btn{
+  height: 80rpx;
+  width: 200rpx;
+  border: 1px solid rgb(147, 196, 238);
+  background: rgb(147, 196, 238);
+  color: white;
+  letter-spacing: 10rpx;
+  border-radius: 10rpx;
+  font-size: 32rpx;
+  margin: 300rpx auto 0 auto;
+}
+button{
+  position: absolute;
+  left: 50%;
+  margin-top: 485rpx;
+  margin-left:-100rpx !important;
+  width: 200rpx !important;
+  height: 80rpx;
+  background-color:red;
+  z-index: 100;
+  border: 1px !important;
 }

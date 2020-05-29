@@ -1,5 +1,39 @@
+@import "/colorui/icon.wxss";
+@import "/colorui/main.wxss";
+@import "/colorui/animation.wxss";
+page{
+  background-color: white !important;
+  height: 100vh;
+}
 .index-title{
   letter-spacing:10px;
   font-size: large;
   color:white;
+}
+/* 切换 */
+.nav .cu-item.cur {
+  border-bottom: 4rpx solid;
+}
+.nav .cu-item {
+  margin:0 30rpx 0 20rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+.add{
+  display: inline;
+  position: absolute;
+  right: 40rpx;
+  line-height: 100rpx;
+}
+/* 模态窗 */
+.modal{
+  border-top-right-radius: 30rpx !important;
+  border-top-left-radius: 30rpx !important;
+}
+/* 写字的模态框 */
+.comment-modal{
+  height: 70%;
+  border-top-right-radius: 30rpx !important;
+  border-top-left-radius: 30rpx !important;
+  text-align: left;
 }

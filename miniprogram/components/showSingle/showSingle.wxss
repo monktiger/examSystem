@@ -1,0 +1,34 @@
+/* components/optionQue/optionQue.wxss */
+.container{
+  background-color: #fff;
+}
+.que-container{
+  margin-top: 10rpx;
+  padding: 30rpx 20rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+}
+.score-container{
+  margin-left: 10rpx;
+  vertical-align: middle;
+  font-size: 24rpx;
+  color: rgb(255, 208, 0);
+}
+.radio-group {
+  background-color: #fff;
+  padding: 0 30rpx 30rpx;
+  font-size: 40rpx;
+  color: #666;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.radio-group radio{
+  display: block;
+  transform:scale(0.7);
+}
+.opt-txt{
+  display: block;
+  margin-left: 10rpx;
+}

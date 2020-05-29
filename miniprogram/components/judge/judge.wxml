@@ -1,0 +1,22 @@
+<view class="padding">
+    <view class="flex align-center justify-between">
+        <view class="title flex align-center">
+            <view class="text-lg">第三题</view>
+            <text class="cu-tag line-blue radius m-post-words-ifelec margin-left" selectable="false" space="false" decode="false">判断 </text>
+        </view>
+        <view class="text-lg text-blue">(2分)</view>
+    </view>
+    <view class="padding-tb ">
+        <text class="text-lg">____最常用的方法，用来隐藏小的数据块，比如加密密钥和数字签名中所用的散列函数值。</text>
+    </view>
+    <view class="option padding">
+        <view class="flex align-center margin-bottom padding-bottom-xs" data-cur="A" bindtap="clickCur">
+            <view class="option-circle{{cur=='A'?'-cur':''}} text-black text-lg cuIcon-check" style="font-size:40rpx"></view>
+            <view class="margin-left text-lg">正确</view>
+        </view>
+        <view class="flex align-center margin-bottom padding-bottom-xs" data-cur="B" bindtap="clickCur">
+            <view class="option-circle{{cur=='B'?'-cur':''}} text-black text-lg cuIcon-close" style="font-size:40rpx"></view>
+            <view class="margin-left text-lg">错误</view>
+        </view>
+    </view>
+</view>

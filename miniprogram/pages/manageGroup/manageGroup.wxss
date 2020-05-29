@@ -1,1 +1,18 @@
-/* pages/manageGroup/manageGroup.wxss */
+
+page{
+    width: 100%;
+    height: 100vh;
+    background-color: #ffff !important;
+}
+.btn-group,.btn-addPaper,.btn-setting{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* width: 120rpx; */
+    text-align: center;
+    letter-spacing: 2rpx;
+}
+
+.papercard{
+    width: 100%;
+}

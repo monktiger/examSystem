@@ -1,10 +1,28 @@
-<!--pages/manageGroup/manageGroup.wxml-->
-<cu-custom bgColor="bg-gradual-red" isBack="{{true}}">
+<!-- pages/manageGroup/manageGroup.wxml -->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">一体化工程（组名）</view>
 </cu-custom>
-<view class="text-xl">我创建的组页面</view>
+<!-- <view class="text-xl">我创建的组页面</view>
 <navigator url="/pages/managePeople/managePeople">成员管理</navigator>
 <navigator url="/pages/paperCreate/paperCreate">创建试题</navigator>
 <navigator url="/pages/groupSetting/groupSetting">设置</navigator>
-<navigator url="/pages/manageScore/manageScore">成绩管理</navigator>
+<navigator url="/pages/manageScore/manageScore">成绩管理</navigator> -->
+<view class="flex justify-around margin-top padding-lr-lg padding-bottom solid-bottom">
+  <view class="btn-group" bindtap="goManagePeople">
+    <view class="cuIcon-group_fill text-pink btn-shadow" style="font-size:80rpx"></view>
+    <view class="text-lg margin-top-xs">成员管理</view>
+  </view>
+  <view class="btn-addPaper" bindtap="goPaperCreate">
+    <view class="cuIcon-formfill text-purple" style="font-size:80rpx"></view>
+    <view class="text-lg margin-top-xs">新建试题</view>
+  </view>
+  <view class="btn-setting" bindtap="goSetting">
+    <view class="cuIcon-settingsfill text-green" style="font-size:80rpx"></view>
+    <view class="text-lg margin-top-xs">设置</view>
+  </view>
+</view>
+<view wx:for="{{10}}" wx:key="index">
+  <papercard class="papercard" bind:changePage="goManageScore"></papercard>
+</view>
+

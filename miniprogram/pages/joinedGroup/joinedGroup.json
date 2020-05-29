@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "paperCard":"/components/paperCard/paperCard"
+  }
 }
