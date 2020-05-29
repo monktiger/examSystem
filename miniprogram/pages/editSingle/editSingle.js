@@ -7,11 +7,11 @@ var app = getApp();
 Page({
   data: {
     index: null,
-    picker: ['1', '2', '3','4','5'],
-    opt:2,
-    optList:[
-      { idx: 0, detail:""},
-      { idx: 1, detail: ""},
+    picker: ['1', '2', '3', '4', '5'],
+    opt: 2,
+    optList: [
+      { idx: 0, detail: "" },
+      { idx: 1, detail: "" },
     ]
   },
 
@@ -27,13 +27,13 @@ Page({
     // idx start from 0
     var idx = e.currentTarget.dataset.idx;
     var optList = this.data.optList;
-    var details=e.detail.value;
+    var details = e.detail.value;
 
     //1. 得到对象
     var oj = optList.filter((p) => {
       return p.idx == idx;
     });
-    
+
     //2. 修改数据
     oj[0].detail = details;
 
@@ -43,19 +43,19 @@ Page({
   },
 
   // 添加选项
-  addOpt:function(e){
-    var opt=this.data.opt+1;
-    var optList=this.data.optList;
-    if (opt<5){
+  addOpt: function (e) {
+    var opt = this.data.opt + 1;
+    var optList = this.data.optList;
+    if (opt < 5) {
       optList.push({
-        idx: opt-1, detail:"",
+        idx: opt - 1, detail: "",
       });
       this.setData({
         opt: opt,
-        optList:optList
+        optList: optList
       });
     }
-    else{
+    else {
       // 弹窗
       wx.showToast({
         title: '选项不超过4个！', // 标题
@@ -66,7 +66,7 @@ Page({
   },
 
   // 删除选项
-  deleteOpt:function(e){
+  deleteOpt: function (e) {
     var opts = this.data.opt;
     if (opts < 3) {
       // 弹窗
@@ -75,8 +75,8 @@ Page({
         duration: 1500 // 提示窗停留时间，默认1500ms
       })
     }
-    else{
-      var that =this;
+    else {
+      var that = this;
       // 弹窗
       wx.showModal({
         title: '提示',
@@ -88,10 +88,10 @@ Page({
             let filterRes = list.filter((index) => {
               return index != idx;
             });
-            var opt=that.data.opt-1;
+            var opt = that.data.opt - 1;
             that.setData({
               optList: filterRes,
-              opt:opt,
+              opt: opt,
             });
             that.onLoad();
           } else if (res.cancel) {
@@ -103,10 +103,12 @@ Page({
   },
 
   // 提交单选题
-  confirm:function(e){
+  confirm: function (e) {
     // 创建一个数组，bindChange 改变的时候改变数组的值，判断current
     // 类比豆瓣打分 设置[0,0,0,0] 点击就翻转？
     var that = this;
+    var title = wx.getStorageSync("title");
+    var score = parseInt(this.data.index) + 1;
     // 发起网络请求
     wx.request({
       url: that.data.addQuestionUrl,
@@ -114,25 +116,50 @@ Page({
       header: {
         "token": that.data.token
       },
-      data:{
-        title:that.data.title, //待修改
-        score:that.data.index,
-        type:1,
-        current:"A",
-        answerA:"AXDV64",// 获取数组的值
-        answerB:"AXDV64",
-        answerC:"AXDV64",
-        answerD:"AXDV64",
-        examId:"",
-        questionId:"",
+      data: {
+        title: title, //待修改
+        score: score,
+        type: 1,
+        current: "A",
+        answerA: "AXDV64",// 获取数组的值
+        answerB: "AXDV64",
+        answerC: "AXDV64",
+        answerD: "AXDV64",
+        examId: "",
+        questionId: "",
       },
       success: function (res) {
-        if(res){
+        if (res) {
+          // 设置题目缓存
+          var singleQues = wx.getStorageSync('single_ques');
+          var arr = []
+          for (let i in singleQues) {
+            let o = {};
+            o[i] = singleQues[i];
+            arr.push(o[i])
+          }
+          arr.push({
+            title: title,
+            score: score,
+            current: "A",
+            answerA: "AXDV64",// 获取数组的值
+            answerB: "AXDV64",
+            answerC: "AXDV64",
+            answerD: "AXDV64",
+          })
+          wx.removeStorage({
+            key: 'single_ques',
+            success(res) {
+              console.log(res)
+            }
+          })
+          console.log("arr:", arr);
+          wx.setStorageSync('single_ques', arr);
           wx.navigateTo({
-            url:"../editPaper/editPaper"
+            url: "../editPaper/editPaper"
           })
         }
-        else{
+        else {
           console.log(res.msg);
         }
       },

@@ -1,7 +1,25 @@
 <!--components/multiQue/multiQue.wxml-->
-<optionQue-cmp>
-  <view class="container">
-    <showQue-cmp />
-    <multi-cmp />
-  </view>
-</optionQue-cmp>
+<multiQue-cmp>
+	<view class="container">
+		<view class="que-container">
+			<view>
+				<text>1</text>
+				<text>.</text>
+				<text>这是题目</text>
+			</view>
+			<view class="score-container">
+				<text>( 分值：</text>
+				<text class="score">5</text>
+				<text> )</text>
+			</view>
+		</view>
+		<checkbox-group bindchange="checkboxChange">
+			<label class="checkbox-group" wx:for="{{items}}" wx:key="{{item.value}}">
+				<view>
+					<checkbox value="{{item.value}}" checked="{{item.checked}}" />
+				</view>
+				<view class="weui-cell__bd">{{item.name}}</view>
+			</label>
+		</checkbox-group>
+	</view>
+</multiQue-cmp>

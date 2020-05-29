@@ -18,6 +18,12 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    attached: function (e) {
+      // 获取简答题缓存
+      var singleQues = wx.getStorageSync('single_ques');
+      this.setData({
+        singleQues: singleQues
+      })
+    }
   }
 })

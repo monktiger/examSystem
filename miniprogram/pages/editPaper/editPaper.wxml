@@ -21,7 +21,7 @@
 <multiQue-cmp />
 <showShort-cmp />
 
-<view class="justify-center padding margin-top-sm">
+<view class="justify-center padding-tb-xl margin-bottom-xl">
 	<button class="cu-btn line-mauve round shadow flex" catchtap="showType">新增题目</button>
 </view>
 <view class="createButton" catchtap="create">创建试卷</view>

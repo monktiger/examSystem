@@ -59,7 +59,6 @@ Page({
       },
       success: function (result) {
         console.log(result);
-       
         that.setData({
           paperList: result.data.examList,   
         })
