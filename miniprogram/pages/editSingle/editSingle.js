@@ -198,6 +198,72 @@ Page({
         });
     },
 
+
+
+    // // 提交单选题
+    // confirm: function(e) {
+    //     var that = this;
+    //     var title = wx.getStorageSync("title");
+    //     var score = parseInt(this.data.index) + 1;
+    //     var data = {
+    //             title: title,
+    //             score: score,
+    //             type: 1,
+    //             current: "a",
+    //             answerA: this.data.inputVal[0],
+    //             answerB: this.data.inputVal[1],
+    //             answerC: this.data.inputVal[2],
+    //             answerD: this.data.inputVal[3],
+    //         }
+    //     // 发起网络请求
+    //     wx.request({
+    //         url: that.data.addQuestionUrl,
+    //         method: "post",
+    //         header: {
+    //             "token": app.globalData.token,
+    //             "Content-Type": "application/json",
+    //         },
+    //         data: JSON.stringify(data),
+    //         success: function(res) {
+    //             if (res) {
+    //                 // 设置题目缓存
+    //                 var singleQues = wx.getStorageSync('single_ques');
+    //                 var arr = []
+    //                 for (let i in singleQues) {
+    //                     let o = {};
+    //                     o[i] = singleQues[i];
+    //                     arr.push(o[i])
+    //                 }
+    //                 arr.push({
+    //                     title: title,
+    //                     score: score,
+    //                     current: "A",
+    //                     answerA: "AXDV64", // 获取数组的值
+    //                     answerB: "AXDV64",
+    //                     answerC: "AXDV64",
+    //                     answerD: "AXDV64",
+    //                 })
+    //                 wx.removeStorage({
+    //                     key: 'single_ques',
+    //                     success(res) {
+    //                         console.log(res)
+    //                     }
+    //                 })
+    //                 console.log("arr:", arr);
+    //                 wx.setStorageSync('single_ques', arr);
+    //                 wx.navigateTo({
+    //                     url: "../editPaper/editPaper"
+    //                 })
+    //             } else {
+    //                 console.log(res.msg);
+    //             }
+    //         },
+    //         fail: function(error) {
+    //             console.log(error);
+    //         }
+    //     })
+    // },
+
     // >>>>>>>>>>>尝试动态添加删除input<<<<<<<<<<<<<<
 
     // 提交单选题
@@ -205,14 +271,25 @@ Page({
         var that = this;
         var title = wx.getStorageSync("title");
         var score = parseInt(this.data.index) + 1;
-        // 发起网络请求
+        var data = {
+                title: title,
+                score: score,
+                type: 1,
+                current: "a",
+                answerA: this.data.inputVal[0],
+                answerB: this.data.inputVal[1],
+                answerC: this.data.inputVal[2],
+                answerD: this.data.inputVal[3],
+            }
+            // 发起网络请求
         wx.request({
             url: that.data.addQuestionUrl,
             method: "post",
             header: {
-                "token": app.globalData.token
+                "token": app.globalData.token,
+                "Content-Type": "application/json",
             },
-            data: JSON.stringify(that.data.single),
+            data: JSON.stringify(data),
             success: function(res) {
                 if (res) {
                     // 设置题目缓存
@@ -224,13 +301,7 @@ Page({
                         arr.push(o[i])
                     }
                     arr.push({
-                        title: title,
-                        score: score,
-                        current: "A",
-                        answerA: "AXDV64", // 获取数组的值
-                        answerB: "AXDV64",
-                        answerC: "AXDV64",
-                        answerD: "AXDV64",
+                        data: data,
                     })
                     wx.removeStorage({
                         key: 'single_ques',
