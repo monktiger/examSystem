@@ -28,12 +28,14 @@ Page({
 
   confirm(e) {
     var that = this;
+    var name = that.data.name;
     // 发起网络请求
     wx.request({
       url: that.data.editNameUrl,
       method: "post",
       header: {
-        "token": app.globalData.token
+        "token": app.globalData.token,
+        "Content-Type": "application/json",
       },
       data: {
         name: that.data.name
