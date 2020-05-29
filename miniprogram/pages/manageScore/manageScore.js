@@ -23,7 +23,7 @@ Page({
       url: url,
       method: "get",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token
       },
       data: {
         examId: that.data.examId,

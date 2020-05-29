@@ -15,6 +15,7 @@ Page({
     this.setData({
       examName: e.detail.value
     })
+    console.log("examName",e.detail.value);
   },
 
   detail: function(e) {
@@ -25,24 +26,38 @@ Page({
 
   createPaper: function(e){
     var that = this;
+    var data = {
+      name: this.data.examName,
+      groupId: this.data.groupId||[ "AX1V7T", "BVC234" ],
+      beginTime: "2020-06-01 10:00:00",
+      endTime: "2020-07-01 10:00:00"
+      // beginTime: "1591002038",
+      // endTime: "1591866038"
+      // beginTime: this.Convert.ToDateTime("2020-02-02 11:00:00"),
+      // endTime: this.Convert.ToDateTime("2020-02-20 11:00:00"),
+      // examId: examId,
+    }
     // 发起网络请求
     wx.request({
       url: that.data.createExamUrl,
-      method: "get",
+      method: "post",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token,
+        // "Content-Type": "application/x-www-form-urlencoded"
       },
-      data: {
-        examName: "10086", // ***examId
-        groupId: "ASX123",// ***组Id
-        // beginTime: beginTime,
-        // endTime: endTime,
-        // examId: examId,
-      },
+      data: JSON.stringify(data),
       success: function (res) {
-        wx.navigateTo({
-          url: "../editPaper/editPaper"
-        })
+        console.log(res);
+        if(res.data.status == 1 ){
+          app.globalData.examName=that.data.examName;
+          app.globalData.beginTime=that.data.beginTime;
+          app.globalData.endTime=that.data.endTime;
+          wx.navigateTo({
+            url: "../editPaper/editPaper"
+          })
+        } else {
+          console.log(res.data.info);
+        }
       },
       fail: function (error) {
         console.log(error);
@@ -54,6 +69,7 @@ Page({
     var createExamUrl = app.globalData.url + "exam/createExam";
     this.setData({
       createExamUrl: createExamUrl,
+      groupId:app.globalData.groupId
     });
   },
 

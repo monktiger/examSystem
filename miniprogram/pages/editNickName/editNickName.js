@@ -33,13 +33,14 @@ Page({
       url: that.data.editNickNameUrl,
       method: "post",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token
       },
       data: {
         nickname: that.data.nickname
       },
       success: function (res) {
-        if (res == 1) {
+        if (res.data.status == 1) {
+          app.globalData.nickname = that.data.nickname;
           // 弹窗成功
           wx.showToast({
             title: '修改成功！', // 标题

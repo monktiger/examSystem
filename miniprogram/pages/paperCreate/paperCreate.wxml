@@ -7,7 +7,7 @@
   <view class="bg-white padding">
     <text>试卷名称</text>
     <view class="padding-sm margin-top-sm text-sm solid radius">
-      <textarea id="title" placeholder="请输入名称" maxlength="80" bindchange="examName"></textarea>
+      <textarea id="title" placeholder="请输入名称" maxlength="80" bindinput="examName"></textarea>
     </view>
   </view>
   <view class="margin-top-sm bg-white padding">
@@ -32,12 +32,6 @@
           </view>
         </picker>
       </view>
-    </view>
-  </view>
-  <view class="margin-top-sm bg-white padding">
-    <text>试卷描述</text>
-    <view class="padding-sm margin-top-sm text-sm solid radius">
-      <textarea id="paper-detail" placeholder="请输入描述" bindchange="detail"></textarea>
     </view>
   </view>
   <view class="justify-center padding margin-top-xs">

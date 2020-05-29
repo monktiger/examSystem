@@ -31,13 +31,13 @@ Page({
       url: showMemberUrl,
       method: "get",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token
       },
       data: {
         groupId: that.data.groupId
       },
       success: function (res) {
-        if (res == 1) {
+        if (res.data.status == 1) {
           that.processMemberData(res.memberList,memberName);
         } else {
           console.log(res.msg);
@@ -156,7 +156,7 @@ Page({
               openId: openId
             },
             success: function (res) {
-              if (res == 1) {
+              if (res.data.status == 1) {
                 // 弹窗成功
                 wx.showToast({
                   title: '删除成功！',

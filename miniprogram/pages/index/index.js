@@ -16,7 +16,6 @@ Component({
     title: ["我管理的组", "我加入的组"],
     elements: [],
   },
-
   attached: function () {
     let that = this
     this.setData({
@@ -32,24 +31,25 @@ Component({
         type: that.data.TabCur
       },
       header: {
-        "token": app.globalData.token
+        "token": that.data.token
       },
       success: function (result) {
         console.log(result);
         let elements = result.data.groups;
         let color = that.data.color;
         let i;
+        // console.log(elements.length);
         if (elements) {
           for (i = 0; i < elements.length; i++) {
             elements[i].color = color[i % 4];
           }
         }
         that.setData({
-          elements: elements,
+          elements: result.data.groups,
+          modalName: null
         })
       }, fail(e) {
         console.log(e);
-
       }
     })
   },
@@ -103,110 +103,6 @@ Component({
             TabCur: e.currentTarget.dataset.id,
           })
         }, fail(e) {
-          console.log(e);
-
-        }
-      })
-    },
-    // 模态窗
-    showModal(e) {
-      this.setData({
-        modalName: e.currentTarget.dataset.target
-      })
-    },
-    hideModal(e) {
-      this.setData({
-        modalName: null
-      })
-    },
-    attached: function () {
-      let that = this
-      this.setData({
-        token: app.globalData.token
-      })
-      // type 0自己创建的组
-      // type 1自己加入的组
-      // 获得组列表
-      wx.request({
-        url: 'http://monktiger.natapp1.cc/group/getList',
-        method: 'GET',
-        data: {
-          type: that.data.TabCur
-        },
-        header: {
-          "token": that.data.token
-        },
-        success: function (result) {
-          console.log(result);
-          let elements = result.data.groups;
-          let color = that.data.color;
-          let i;
-          // console.log(elements.length);
-          if (elements) {
-            for (i = 0; i < elements.length; i++) {
-              elements[i].color = color[i % 4];
-            }
-          }
-          that.setData({
-            elements: result.data.groups,
-            modalName: null
-          })
-        }, fail(e) {
-          console.log(e);
-        }
-      })
-    },
-
-  },
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-    // 去组页面
-    clickCard(e) {
-      if (e.detail.TabCur == 0) {
-        wx.navigateTo({
-          url: '/pages/manageGroup/manageGroup',
-        })
-      } else {
-        wx.navigateTo({
-          url: '/pages/joinedGroup/joinedGroup',
-        })
-      }
-    },
-    // 导航栏
-    tabSelect(e) {
-      let that = this
-      app.globalData.pageId = e.currentTarget.dataset.id;
-      // 根据id获取组列表
-      // type 0自己创建的组
-      // type 1自己加入的组
-      wx.request({
-        url: 'http://monktiger.natapp1.cc/group/getList',
-        method: 'GET',
-        data: {
-          type: e.currentTarget.dataset.id
-        },
-        header: {
-          "token": that.data.token
-        },
-        success: function (result) {
-          // console.log(result);
-          let elements = result.data.groups;
-          let color = that.data.color;
-          let i;
-          // console.log(elements.length);
-          if (elements) {
-            for (i = 0; i < elements.length; i++) {
-              elements[i].color = color[i % 4];
-            }
-          }
-          that.setData({
-            elements: elements,
-            TabCur: e.currentTarget.dataset.id,
-          })
-        },
-        fail(e) {
           console.log(e);
 
         }

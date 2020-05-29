@@ -1,23 +1,25 @@
 // pages/my/my.js
 var app = getApp();
-Page({
-
+Component({
   data: {
-
+    
   },
-
-  info(e){
-    wx.navigateTo({
-      url: "/pages/myInfo/myInfo"
-    })
+  methods: {
+    attached: function (e) {
+      console.log("Component",this.data)
+    },
+    info(e){
+      wx.navigateTo({
+        url: "/pages/myInfo/myInfo"
+      })
+    },
   },
-
-  onLoad: function (options) {
-    this.setData({
-      name:app.globalData.name,
-      avatarUrl:app.globalData.avatarUrl,
-    })
+  lifetimes: {
+    attached: function (e) {
+      this.setData({
+        name:app.globalData.name,
+        avatarUrl:app.globalData.avatarUrl
+      });
+    }
   },
-
- 
 })

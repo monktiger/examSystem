@@ -33,13 +33,13 @@ Page({
       url: that.data.editNameUrl,
       method: "post",
       header: {
-        "token": that.data.token
+        "token": app.globalData.token
       },
       data: {
         name: that.data.name
       },
       success: function (res) {
-        if (res == 1) {
+        if (res.data.status == 1) {
           // 弹窗成功
           wx.showToast({
             title: '修改成功！', // 标题

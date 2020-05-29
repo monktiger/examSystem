@@ -1,5 +1,6 @@
 <!--components/optionQue/optionQue.wxml-->
 <optionQue-cmp>
+<view>这是选择题！</view>
 	<block wx:for="{{singleQues}}" wx:key="{{singleQues.title}}" wx:for-index="idx">
 		<view class="container">
 			<view class="que-container">
