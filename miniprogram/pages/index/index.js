@@ -34,7 +34,7 @@ Component({
         "token": that.data.token
       },
       success: function (result) {
-        console.log(result);
+        // console.log(result);
         let elements = result.data.groups;
         let color = that.data.color;
         let i;
@@ -88,7 +88,7 @@ Component({
           "token": that.data.token
         },
         success: function (result) {
-          // console.log(result);
+          console.log(result);
           let elements = result.data.groups;
           let color = that.data.color;
           let i;
@@ -202,6 +202,34 @@ Component({
           that.setData({
             modalName: null
           })
+          wx.request({
+            url: 'http://monktiger.natapp1.cc/group/getList',
+            method: 'GET',
+            data: {
+              type: that.data.TabCur
+            },
+            header: {
+              "token": that.data.token
+            },
+            success: function (result) {
+              console.log(result);
+              let elements = result.data.groups;
+              let color = that.data.color;
+              let i;
+              // console.log(elements.length);
+              if (elements) {
+                for (i = 0; i < elements.length; i++) {
+                  elements[i].color = color[i % 4];
+                }
+              }
+              that.setData({
+                elements: result.data.groups,
+                modalName: null
+              })
+            }, fail(e) {
+              console.log(e);
+            }
+          })
         },
         fail(e) {
           console.log(e);
@@ -223,9 +251,12 @@ Component({
           "token": that.data.token
         },
         success: function (result) {
-          console.log(result);
+          // console.log(result);
           let elements = that.data.elements;
-          elements.splice(e.detail.index, 1)
+          elements.splice(e.detail.index, 1);
+          that.setData({
+            elements:elements
+          }) 
         },
         fail(e) {
           console.log(e);

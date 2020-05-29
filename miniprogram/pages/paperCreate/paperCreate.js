@@ -43,7 +43,6 @@ Page({
       method: "post",
       header: {
         "token": app.globalData.token,
-        // "Content-Type": "application/x-www-form-urlencoded"
       },
       data: JSON.stringify(data),
       success: function (res) {
