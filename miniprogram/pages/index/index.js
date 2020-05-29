@@ -88,7 +88,7 @@ Component({
                     "token": that.data.token
                 },
                 success: function(result) {
-                    // console.log(result);
+                    console.log(result);
                     let elements = result.data.groups;
                     let color = that.data.color;
                     let i;

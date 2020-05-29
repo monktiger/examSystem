@@ -205,12 +205,16 @@ Page({
         var that = this;
         var title = wx.getStorageSync("title");
         var score = parseInt(this.data.index) + 1;
-        // 发起网络请求
+        var data = {
+
+            }
+            // 发起网络请求
         wx.request({
             url: that.data.addQuestionUrl,
             method: "post",
             header: {
-                "token": app.globalData.token
+                "token": app.globalData.token,
+                "Content-Type": "application/json",
             },
             data: JSON.stringify(that.data.single),
             success: function(res) {

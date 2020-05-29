@@ -120,7 +120,8 @@ Page({
       url: that.data.addQuestionUrl,
       method: "post",
       header: {
-        "token": app.globalData.token
+        "token": app.globalData.token,
+        "Content-Type": "application/json",
       },
       data:JSON.stringify(data)
       // {

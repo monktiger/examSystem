@@ -28,7 +28,7 @@ Page({
     var that = this;
     var data = {
       name: this.data.examName,
-      groupId: this.data.groupId||[ "AX1V7T", "BVC234" ],
+      groupId: this.data.groupId,
       beginTime: "2020-06-01 10:00:00",
       endTime: "2020-07-01 10:00:00"
       // beginTime: "1591002038",
@@ -42,7 +42,8 @@ Page({
       url: that.data.createExamUrl,
       method: "post",
       header: {
-        "token": app.globalData.token
+        "token": app.globalData.token,
+        "Content-Type": "application/json",
       },
       data: JSON.stringify(data),
       success: function (res) {
