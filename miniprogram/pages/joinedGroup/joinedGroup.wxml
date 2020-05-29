@@ -5,8 +5,8 @@
 </cu-custom>
 <!-- <text class="text-xl">我加入的组页面</text>
 <navigator url="/pages/paperDetails/paperDetails">试卷详情页面</navigator> -->
-<view wx:for="{{10}}" wx:key="index">
-  <paperCard style="width:100%" bind:changePage="goPaperDetails"></paperCard>
-</view>
+
+  <paperCard style="width:100%" bind:changePage="goPaperDetails" paperList="{{paperList}}"></paperCard>
+
 
 

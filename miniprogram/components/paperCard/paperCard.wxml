@@ -22,7 +22,7 @@
   </view>
 </view>
 </view>
-<!-- 解散组 -->
+<!-- 删除试卷 -->
 <view class="cu-modal bottom-modal {{modalName=='deleteModal'?'show':''}}" catchtouchmove>
     <view class="cu-dialog modal ">
         <view class="cu-list menu text-center ">
@@ -37,7 +37,7 @@
         </view>
     </view>
 </view>
-<!-- 解散组 -->
+<!-- 删除试卷 -->
 <view class="cu-modal  {{modalName=='deleteTipsModal'?'show':''}}" catchtouchmove>
     <view class="cu-dialog middle-modal ">
         <view class="box margin-lr margin-top padding" hover-class="none" hover-stop-propagation="false">

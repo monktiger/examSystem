@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    paperList:[]
   },
   goPaperDetails(e){
     wx.navigateTo({
@@ -30,9 +30,17 @@ Page({
       },
       success: function (result) {
         console.log(result);
-       
+        let paperList = result.data.examList;
+        let i;
+        // console.log(elements.length);
+        if (paperList) {
+          for (i = 0; i < paperList.length; i++) {
+            paperList[i].beginTime=new Date(paperList[i].beginTime);
+            paperList[i].endTime=new Date(paperList[i].endTime);
+          }
+        }
         that.setData({
-          paperList: result.data.examList,   
+          paperList: paperList,   
         })
       }, fail(e) {
         console.log(e);
