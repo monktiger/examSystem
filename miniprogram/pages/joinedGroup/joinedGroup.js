@@ -9,10 +9,42 @@ Page({
     paperList:[]
   },
   goPaperDetails(e){
-    wx.navigateTo({
-      url:'/pages/paperDetails/paperDetails'
+   
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/exam/inExam',
+      method: 'GET',
+      data: {
+        examId:e.detail.examId
+      },
+      header: {
+        "token": app.globalData.token
+      },
+      success: function (result) {
+        console.log(result);
+        // wx.navigateTo({
+        //   url:'/pages/paperDetails/paperDetails'
+        // })
+      }, fail(e) {
+        console.log(e);
+
+      }
     })
+
   },
+ formatDate(now) { 
+    var year=now.getFullYear();  //取得4位数的年份
+    var month=now.getMonth()+1;  //取得日期中的月份，其中0表示1月，11表示12月
+    var date=now.getDate();      //返回日期月份中的天数（1到31）
+    var hour=now.getHours();     //返回日期中的小时数（0到23）
+    var minute=now.getMinutes(); //返回日期中的分钟数（0到59）
+    var second=now.getSeconds(); //返回日期中的秒数（0到59）
+    if(month<'10') month='0'+month;
+    if(date<'10') date='0'+date;
+    if(hour<'10') hour='0'+hour;
+    if(minute<'10') minute='0'+minute;
+    if(second<'10') second='0'+second;
+    return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
+},
   /**
    * 生命周期函数--监听页面加载
    */
@@ -35,8 +67,10 @@ Page({
         // console.log(elements.length);
         if (paperList) {
           for (i = 0; i < paperList.length; i++) {
-            paperList[i].beginTime=new Date(paperList[i].beginTime);
-            paperList[i].endTime=new Date(paperList[i].endTime);
+            let beginTime=new Date(paperList[i].beginTime);
+            paperList[i].beginTime=that.formatDate(beginTime);
+            let endTime=new Date(paperList[i].endTime);
+            paperList[i].endTime=that.formatDate(endTime);
           }
         }
         that.setData({

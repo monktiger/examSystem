@@ -24,7 +24,10 @@ Component({
    */
   methods: {
     changePage(e) {
-      this.triggerEvent('changePage')
+      let data={
+        examId:e.currentTarget.dataset.examid,
+      }
+      this.triggerEvent('changePage',data)
     },
     showModal(e){
       this.setData({
