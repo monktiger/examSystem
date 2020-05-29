@@ -26,9 +26,10 @@ Page({
 
   createPaper: function(e){
     var that = this;
+    var groupId = [this.data.groupId];
     var data = {
       name: this.data.examName,
-      groupId: this.data.groupId,
+      groupId: groupId,
       beginTime: "2020-06-01 10:00:00",
       endTime: "2020-07-01 10:00:00"
       // beginTime: "1591002038",
