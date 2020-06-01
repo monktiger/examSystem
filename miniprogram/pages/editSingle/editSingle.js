@@ -20,7 +20,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         var addQuestionUrl = app.globalData.url + "exam/addQuestion";
         this.setData({
             addQuestionUrl: addQuestionUrl,
@@ -28,126 +28,18 @@ Page({
         });
     },
 
-<<<<<<< Updated upstream
-
-
-    // // 提交单选题
-    // confirm: function(e) {
-    //     var that = this;
-    //     var title = wx.getStorageSync("title");
-    //     var score = parseInt(this.data.index) + 1;
-    //     var data = {
-    //             title: title,
-    //             score: score,
-    //             type: 1,
-    //             current: "a",
-    //             answerA: this.data.inputVal[0],
-    //             answerB: this.data.inputVal[1],
-    //             answerC: this.data.inputVal[2],
-    //             answerD: this.data.inputVal[3],
-    //         }
-    //     // 发起网络请求
-    //     wx.request({
-    //         url: that.data.addQuestionUrl,
-    //         method: "post",
-    //         header: {
-    //             "token": app.globalData.token,
-    //             "Content-Type": "application/json",
-    //         },
-    //         data: JSON.stringify(data),
-    //         success: function(res) {
-    //             if (res) {
-    //                 // 设置题目缓存
-    //                 var singleQues = wx.getStorageSync('single_ques');
-    //                 var arr = []
-    //                 for (let i in singleQues) {
-    //                     let o = {};
-    //                     o[i] = singleQues[i];
-    //                     arr.push(o[i])
-    //                 }
-    //                 arr.push({
-    //                     title: title,
-    //                     score: score,
-    //                     current: "A",
-    //                     answerA: "AXDV64", // 获取数组的值
-    //                     answerB: "AXDV64",
-    //                     answerC: "AXDV64",
-    //                     answerD: "AXDV64",
-    //                 })
-    //                 wx.removeStorage({
-    //                     key: 'single_ques',
-    //                     success(res) {
-    //                         console.log(res)
-    //                     }
-    //                 })
-    //                 console.log("arr:", arr);
-    //                 wx.setStorageSync('single_ques', arr);
-    //                 wx.navigateTo({
-    //                     url: "../editPaper/editPaper"
-    //                 })
-    //             } else {
-    //                 console.log(res.msg);
-    //             }
-    //         },
-    //         fail: function(error) {
-    //             console.log(error);
-    //         }
-    //     })
-    // },
-
-    // >>>>>>>>>>>尝试动态添加删除input<<<<<<<<<<<<<<
-=======
     //返回
-    back: function (e) {
+    back: function(e) {
         wx.redirectTo({
             url: "/pages/editPaper/editPaper"
         })
     },
->>>>>>> Stashed changes
 
     // 提交单选题
-    confirm: function (e) {
+    confirm: function(e) {
         var that = this;
         var title = wx.getStorageSync("title");
         var score = parseInt(this.data.index) + 1;
-<<<<<<< Updated upstream
-        var data = {
-                title: title,
-                score: score,
-                type: 1,
-                current: "a",
-                answerA: this.data.inputVal[0],
-                answerB: this.data.inputVal[1],
-                answerC: this.data.inputVal[2],
-                answerD: this.data.inputVal[3],
-            }
-            // 发起网络请求
-        wx.request({
-            url: that.data.addQuestionUrl,
-            method: "post",
-            header: {
-                "token": app.globalData.token,
-                "Content-Type": "application/json",
-            },
-            data: JSON.stringify(data),
-            success: function(res) {
-                if (res) {
-                    // 设置题目缓存
-                    var singleQues = wx.getStorageSync('single_ques');
-                    var arr = []
-                    for (let i in singleQues) {
-                        let o = {};
-                        o[i] = singleQues[i];
-                        arr.push(o[i])
-                    }
-                    arr.push({
-                        data: data,
-                    })
-                    wx.removeStorage({
-                        key: 'single_ques',
-                        success(res) {
-                            console.log(res)
-=======
         var answerA = this.data.inputVal[0];
         var answerB = this.data.inputVal[1];
         var answerC = this.data.inputVal[2];
@@ -181,7 +73,7 @@ Page({
                     "Content-Type": "application/json"
                 },
                 data: JSON.stringify(data),
-                success: function (res) {
+                success: function(res) {
                     console.log(res)
                     if (res.data.status == 1) {
                         // 设置题目缓存
@@ -191,7 +83,6 @@ Page({
                             let o = {};
                             o[i] = singleQues[i];
                             arr.push(o[i])
->>>>>>> Stashed changes
                         }
                         data.currentIdx = currentIdx;
                         arr.push({
@@ -212,7 +103,7 @@ Page({
                         console.log(res.msg);
                     }
                 },
-                fail: function (error) {
+                fail: function(error) {
                     console.log(error);
                 }
             })
@@ -220,7 +111,7 @@ Page({
     },
 
     //获取input的值
-    getInputVal: function (e) {
+    getInputVal: function(e) {
         var nowIdx = e.currentTarget.dataset.idx; //获取当前索引
         var val = e.detail.value; //获取输入的值
         var oldVal = this.data.inputVal;
@@ -231,7 +122,7 @@ Page({
     },
 
     //添加input
-    addInput: function () {
+    addInput: function() {
         var old = this.data.array;
         var oldLen = old.length;
         if (oldLen > 3) {
@@ -251,7 +142,7 @@ Page({
     },
 
     //删除input
-    delInput: function (e) {
+    delInput: function(e) {
         var old = this.data.array;
         var oldLen = old.length;
         if (oldLen < 3) {
