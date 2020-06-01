@@ -16,19 +16,22 @@
   color: rgb(255, 208, 0);
 }
 .radio-group {
+  padding: 0 20rpx 20rpx 20rpx;
   background-color: #fff;
-  padding: 0 30rpx 30rpx;
   font-size: 40rpx;
   color: #666;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: left;
 }
 .radio-group radio{
-  display: block;
   transform:scale(0.7);
 }
 .opt-txt{
-  display: block;
   margin-left: 10rpx;
+}
+.answer{
+  margin-left: 10rpx;
+  font-size: 44rpx;
+  color: rgb(255, 208, 0);
 }

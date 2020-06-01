@@ -5,6 +5,7 @@ var currentHours = date.getHours();
 var currentMinute = date.getMinutes();
 Page({
   data: {
+<<<<<<< Updated upstream
     startDate: "请选择日期",
     endDate: "请选择日期",
     multiArray: [['今天', '明天', '3-2', '3-3', '3-4', '3-5'], [0, 1, 2, 3, 4, 5, 6], [0, 10, 20]],
@@ -19,11 +20,24 @@ Page({
   },
 
   detail: function(e) {
+=======
+  },
+
+  examName: function (e) {
+    this.setData({
+      examName: e.detail.value
+    })
+    console.log("examName", e.detail.value);
+  },
+
+  detail: function (e) {
+>>>>>>> Stashed changes
     this.setData({
       detail: e.detail.value
     })
   },
 
+<<<<<<< Updated upstream
   createPaper: function(e){
     var that = this;
     var groupId = [this.data.groupId];
@@ -64,12 +78,70 @@ Page({
         console.log(error);
       }
     })
+=======
+  createPaper: function (e) {
+    var that = this;
+    var groupId = [this.data.groupId];
+    var examId = this.data.examId;
+    var name = this.data.examName;
+    var beginTime = app.globalData.startDateTime;
+    var endTime = app.globalData.endDateTime;
+    if(!name||!beginTime||!endTime){
+      wx.showToast({
+        title: '请填写所有试卷信息！', // 标题
+        icon: 'none', // 图标类型，默认success
+        duration: 1500 // 提示窗停留时间，默认1500ms
+      })
+    } else{
+      var data = {
+        name: name,
+        groupId: groupId,
+        beginTime: beginTime,
+        endTime: endTime,
+        examId: examId||"",
+      };
+      // 发起网络请求
+      wx.request({
+        url: that.data.createExamUrl,
+        method: "post",
+        header: {
+          "token": app.globalData.token,
+          "Content-Type": "application/json"
+        },
+        data: JSON.stringify(data),
+        success: function (res) {
+          console.log(res);
+          if (res.data.status == 1) {
+            app.globalData.examName = name;
+            app.globalData.beginTime = beginTime;
+            app.globalData.endTime = endTime;
+            app.globalData.examId = res.data.examId;
+            wx.navigateTo({
+              url: "../editPaper/editPaper"
+            })
+          } else if(res.data.status == -1){
+            wx.showToast({
+              title: '时间设置存在问题！', // 标题
+              icon: 'none', // 图标类型，默认success
+              duration: 1500 // 提示窗停留时间，默认1500ms
+            })
+          } else {
+            console.log(res.data.info);
+          }
+        },
+        fail: function (error) {
+          console.log(error);
+        }
+      })
+    }
+>>>>>>> Stashed changes
   },
 
   onLoad: function (options) {
     var createExamUrl = app.globalData.url + "exam/createExam";
     this.setData({
       createExamUrl: createExamUrl,
+<<<<<<< Updated upstream
       groupId:app.globalData.groupId
     });
     console.log("app.globalData.groupId",app.globalData.groupId)
@@ -347,4 +419,14 @@ Page({
       time: time,
     })
   },
+=======
+      groupId: app.globalData.groupId,
+      examId:app.globalData.examId,
+      examName:app.globalData.examName,
+    });
+  },
+
+ 
+
+>>>>>>> Stashed changes
 })

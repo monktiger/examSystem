@@ -7,7 +7,7 @@
   <view class="bg-white padding">
     <text>试卷名称</text>
     <view class="padding-sm margin-top-sm text-sm solid radius">
-      <textarea id="title" placeholder="请输入名称" maxlength="80" bindinput="examName"></textarea>
+      <textarea id="title" placeholder="请输入名称" maxlength="80" bindinput="examName" value="{{examName}}"></textarea>
     </view>
   </view>
   <view class="margin-top-sm bg-white padding">
@@ -15,22 +15,14 @@
     <view class="solid-bottom margin-bottom">
       <view class="cu-form-group">
         <view class="title">时间选择</view>
-        <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTapStart' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-          <view class="picker">
-            {{startDate}}
-          </view>
-        </picker>
+         <timePicker-cmp />
       </view>
     </view>
     <view class="margin-top-sm">结束时间</view>
     <view>
       <view class="cu-form-group">
         <view class="title">时间选择</view>
-        <picker class='time-picker' mode="multiSelector" bindchange="bindEndMultiPickerChange" bindtap='pickerTapEnd' bindcolumnchange="bindEndMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-          <view class="picker">
-            {{endDate}}
-          </view>
-        </picker>
+        <timePickerEnd-cmp />
       </view>
     </view>
   </view>

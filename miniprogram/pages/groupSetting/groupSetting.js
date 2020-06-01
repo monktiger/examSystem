@@ -11,8 +11,8 @@ Page({
     var showMemberUrl = app.globalData.url + "group/showMember";
     this.setData({
       editGroupUrl: editGroupUrl,
-      groupName: app.globalData.group_name,
-      groupId: app.globalData.group_id
+      groupName: app.globalData.groupName,
+      groupId: app.globalData.groupId
     });
     this.getMemberCount();
   },
@@ -78,10 +78,11 @@ Page({
         "token": app.globalData.token
       },
       data: {
-        groupName: that.data.setName,
+        name: that.data.setName,
         groupId: that.data.groupId
       },
       success: function (res) {
+        console.log("editGroup",res)
         if (res.data.status == 1) {
           // 隐藏modal
           that.setData({
@@ -94,6 +95,7 @@ Page({
             duration: 1500 // 提示窗停留时间，默认1500ms
           })
           // 刷新页面
+          app.globalData.groupName=that.data.setName;
           that.onLoad();
         }
         else {

@@ -1,4 +1,5 @@
 // components/card/card.js
+var app = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -41,8 +42,15 @@ Component({
       let data = {
         TabCur: that.data.TabCur
       }
+<<<<<<< Updated upstream
       console.log(that.data.TabCur);
       this.triggerEvent('clickCard', data)
+=======
+      // console.log(that.data.TabCur);
+      this.triggerEvent('clickCard', data);
+      app.globalData.groupName=e.currentTarget.dataset.groupname;
+      app.globalData.groupId=e.currentTarget.dataset.groupid;
+>>>>>>> Stashed changes
     },
     // 退出组
     quit(e) {

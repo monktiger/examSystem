@@ -24,14 +24,14 @@
   </view>
 
   <view class="cu-list menu-avatar">
-    <block wx:for="{{members}}" wx:for-item="item">
-      <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
-        <view class="cu-avatar round lg" style="background-image:url({{item.avatarUrl}});"></view>
+    <block wx:for="{{memberList}}" wx:for-index="idx">
+      <view class="cu-item {{modalName=='move-box-'+ idx?'move-cur':''}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{idx}}">
+        <view class="cu-avatar round lg" style="background-image:url({{memberList[idx].avatarUrl}});"></view>
         <view class="content">
-          <view class="text-grey">{{item.name}}</view>
+          <view class="text-grey">{{memberList[idx].name}}</view>
           <!-- <view class="text-gray text-sm">{{openId}}</view> -->
         </view>
-        <view class="move" catchtap="delete" data-openId="{{item.openId}}">
+        <view class="move" catchtap="delete" data-openId="{{memberList[idx].openId}}">
           <view class="bg-red">删除</view>
         </view>
       </view>

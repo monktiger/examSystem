@@ -24,7 +24,22 @@ Component({
    */
   methods: {
     changePage(e) {
+      app.globalData.examId=e.currentTarget.dataset.examId;
       this.triggerEvent('changePage')
+<<<<<<< Updated upstream
+=======
+      console.log("examId",app.globalData.examId)
+    },
+    showModal(e){
+      this.setData({
+        modalName: e.currentTarget.dataset.target,
+      })
+    },
+    hideModal(e) {
+      this.setData({
+        modalName: null
+      })
+>>>>>>> Stashed changes
     }
   }
 })

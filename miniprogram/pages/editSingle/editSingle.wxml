@@ -1,7 +1,7 @@
 <!--pages/editSingle/editSingle.wxml-->
 <view>
   <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-    <view slot="backText">返回</view>
+    <view slot="backText" catchtap="back">返回</view>
     <view slot="content">编辑单选题</view>
   </cu-custom>
 </view>
@@ -10,17 +10,14 @@
   <text class="ans-title">答案 选项</text>
 
   <view class="option-container">
-    <radio-group class="radio-group">
-      <!-- <block wx:for="{{opt}}" wx:for-item="item" wx:for-index='idx'> -->
+    <radio-group class="radio-group" bindchange="radioChange">
       <block wx:for="{{array}}" wx:for-index='idx'>
         <view class="option-group">
-          <radio class="margin-right-sm" checked="{{checked}}" data-idx="{{idx}}"></radio>
+          <radio class="margin-right-sm" data-idx="{{idx}}" value='{{inputVal[idx]}}'></radio>
           <!-- input -->
-          <!-- <input class="basis-xl" placeholder="输入选项" bindinput="optDetail" data-idx="{{idx}}"></input> -->
-          <input class="basis-xl" placeholder="输入选项" data-idx='{{index}}' value='{{inputVal[index]}}' bindinput='getInputVal'></input>
-          <!-- <text class="cuIcon-roundclosefill lg text-pink" catchtap="deleteOpt"></text> -->
+          <input class="basis-xl" placeholder="输入选项" data-idx='{{idx}}' value='{{inputVal[idx]}}' bindinput='getInputVal'></input>
           <!-- 删除按钮 -->
-          <text class="cuIcon-roundclosefill lg text-pink"  bindtap='delInput' data-idx='{{index}}'></text>
+          <text class="cuIcon-roundclosefill lg text-pink"  bindtap='delInput' data-idx='{{idx}}'></text>
         </view>
       </block>
     </radio-group>
