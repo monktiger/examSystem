@@ -39,6 +39,6 @@ public interface   ExamMapper {
 
     int updateByPrimaryKey(Exam record);
 
-    int updateexamListStatus(@Param("examList") List<Exam> examList, @Param("status") Integer status);
+    int updateExamListStatus(@Param("examList") List<Exam> examList, @Param("status") Integer status);
 
 }

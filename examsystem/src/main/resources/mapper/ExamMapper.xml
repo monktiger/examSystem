@@ -7,12 +7,12 @@
     <result column="type" jdbcType="BIT" property="type" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="publisher_id" jdbcType="VARCHAR" property="publisherId" />
-    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="publisherId" jdbcType="VARCHAR" property="publisherId" />
+    <result column="beginTime" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="endTime" jdbcType="TIMESTAMP" property="endTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, `type`, score, `status`, publisher_id, begin_time, end_time
+    id, `name`, `type`, score, `status`, publisherId, beginTime, endTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,7 +21,8 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
     <select id="selectExamByGroup" resultType="com.monktiger.examsystem.entity.Exam">
-      select *
+      select
+      <include refid="Base_Column_List" />
       from tb_exam
       where id in
       <if test="examIdList!=null">
@@ -47,19 +48,19 @@
     select *
     from tb_exam
     where status = 0 and
-    TIMESTAMPDIFF(MINUTE,begin_time,now())&gt;=15
+    TIMESTAMPDIFF(MINUTE,beginTime,now())&gt;=-15
   </select>
   <select id="getEndExam" resultType="com.monktiger.examsystem.entity.Exam">
     select *
     from tb_exam
     where status = 2 and
-    TIMESTAMPDIFF(SECOND,end_time,now())&gt;=0
+    TIMESTAMPDIFF(SECOND,endTime,now())&gt;=0
   </select>
   <select id="getbeginExam" resultType="com.monktiger.examsystem.entity.Exam">
         select *
     from tb_exam
     where status = 1 and
-    TIMESTAMPDIFF(SECOND,begin_time,now())&gt;=0
+    TIMESTAMPDIFF(SECOND,beginTime,now())&gt;=0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_exam
@@ -67,8 +68,8 @@
   </delete>
   <insert id="insert" parameterType="com.monktiger.examsystem.entity.Exam">
     insert into tb_exam (id, `name`, `type`, score, 
-      `status`, publisher_id, begin_time, 
-      end_time)
+      `status`, publisherId, beginTime,
+      endTime)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{score,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{publisherId,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
       #{endTime,jdbcType=TIMESTAMP})
@@ -92,13 +93,13 @@
         `status`,
       </if>
       <if test="publisherId != null">
-        publisher_id,
+        publisherId,
       </if>
       <if test="beginTime != null">
-        begin_time,
+        beginTime,
       </if>
       <if test="endTime != null">
-        end_time,
+        endTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -144,13 +145,13 @@
         `status` = #{status,jdbcType=INTEGER},
       </if>
       <if test="publisherId != null">
-        publisher_id = #{publisherId,jdbcType=VARCHAR},
+        publisherId = #{publisherId,jdbcType=VARCHAR},
       </if>
       <if test="beginTime != null">
-        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+        beginTime = #{beginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
+        endTime = #{endTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -161,16 +162,20 @@
       `type` = #{type,jdbcType=BIT},
       score = #{score,jdbcType=INTEGER},
       `status` = #{status,jdbcType=INTEGER},
-      publisher_id = #{publisherId,jdbcType=VARCHAR},
-      begin_time = #{beginTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP}
+      publisherId = #{publisherId,jdbcType=VARCHAR},
+      beginTime = #{beginTime,jdbcType=TIMESTAMP},
+      endTime = #{endTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateexamListStatus">
+  <update id="updateExamListStatus">
     update tb_exam
-    set status = #{status}
-    where id in <foreach collection="examList" item="exam" index="index" open="(" close=")" separator=",">
-    #{exam.id}
-  </foreach>
+    set `status` = #{status,jdbcType=INTEGER}
+    where
+      id in
+      <if test="examList!=null">
+      <foreach collection="examList" item="exam" index="index" open="(" close=")" separator=",">
+        #{exam.id}
+      </foreach>
+      </if>
   </update>
 </mapper>

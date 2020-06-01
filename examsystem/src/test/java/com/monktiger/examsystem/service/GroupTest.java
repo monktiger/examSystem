@@ -1,7 +1,9 @@
 package com.monktiger.examsystem.service;
 
 import com.monktiger.examsystem.entity.Group;
+import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.mapper.GroupMapper;
+import com.monktiger.examsystem.mapper.UserMapper;
 import com.monktiger.examsystem.service.impl.GroupServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +17,17 @@ public class GroupTest {
     GroupServiceImpl groupService;
     @Autowired
     GroupMapper groupMapper;
+    @Autowired
+    UserMapper userMapper;
 
     @Test
     public void select() throws Exception{
 //        List<Group> groups = groupMapper.selectByKeyState("group_id",1);
-        List<Group> groups = groupMapper.selectSelfGroup("open_id",1);
-        for(Group group : groups){
-            System.out.println(group.toString());
+        List<Group> groups = groupMapper.selectSelfGroup("5ef19a",1);
+//        List<Group> groups = groupMapper.selectIdsByKeyState("5ef19a",0);
+        List<User> users = userMapper.selectByIds(groups);
+        for(User user:users){
+            System.out.println(user.toString());
         }
     }
 

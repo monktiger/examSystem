@@ -113,21 +113,30 @@ public class ExamServiceImpl implements ExamService {
         Copy copy;
         Exam exam;
         Map<String,Object> modelMap = new HashMap<>();
+        /**
+         *  出题人看错题本 看不到
+         *  学生 返回错题内容
+         */
         if(copyId!=null&&examId==null){
              copy =copyMapper.selectByPrimaryKey(copyId);
-            if(copy==null) return null;
+            if(copy==null)
+                return null;
              exam = examMapper.selectByPrimaryKey(copy.getExamId());
             if(exam==null||exam.getPublisherId()!=user.getOpenId()){
                 return null;
             }
         }else if(examId!=null&&copyId==null){//相当于学生
              exam = examMapper.selectByPrimaryKey(examId);
-            if (exam==null) return null;
+            if (exam==null)
+                return null;
            copy = copyMapper.selectByAssociaiton(user.getOpenId(),examId);
             if(copy==null){
                 return null;
             }
-        }else return null;
+        }else{
+            return null;
+        }
+
         if(exam.getStatus()!=3){
             return null;
         }

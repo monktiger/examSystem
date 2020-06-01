@@ -24,6 +24,8 @@ public interface GroupMapper  {
 
     List<Group> selectByKeyState(String groupId, int status);
 
+//    List<String> selectIdsByKeyState(String groupId,int status);
+
     List<Group> fuzzySelectByGroupName(String name);
 
     List<Group> selectSelfGroup(String openId,Integer status);

@@ -17,6 +17,18 @@
     from tb_user
     where open_id = #{openId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByIds" resultType="com.monktiger.examsystem.entity.User">
+    select
+    `name`,open_id,avatarUrl
+    from tb_user
+    <where>
+      <if test="groups!=null">
+        <foreach collection="groups" item="group" open="(" close=")" separator=",">
+          open_id = #{group.open_id,jdbcType=VARCHAR}
+        </foreach>
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_user
     where open_id = #{openId,jdbcType=VARCHAR}

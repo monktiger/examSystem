@@ -83,11 +83,11 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 break;
             case 10002:
                 modelMap.put("status",10002);
-                modelMap.put("msg","跳转到试卷查看页");
+                modelMap.put("msg","考试即将开始，跳转到试卷查看页");
                 break;
             case 10003:
                 modelMap.put("status",10003);
-                modelMap.put("msg","跳转到试卷查看页");
+                modelMap.put("msg","考试已经开始，跳转到试卷查看页");
                 break;
             case 10004:
                 modelMap.put("status",10004);
@@ -95,11 +95,11 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 break;
             case 20001:
                 modelMap.put("status",20001);
-                modelMap.put("msg","试卷还未开放，请等待");
+                modelMap.put("msg","试卷还未开放，请耐心等待");
                 break;
             case 20002:
                 modelMap.put("status",20002);
-                modelMap.put("msg","跳转到作答页");
+                modelMap.put("msg","可以作答，跳转到作答页");
                 break;
             case 20003:
                 modelMap.put("status",20003);
@@ -150,15 +150,25 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                     return modelMap;
                 }
                 ExamToQuestion etq=examToQuestionMapper.selectByPrimaryKey(copy.getExamId(),id);
+                /**
+                 * 主观题设置 null 会报错
+                 */
                 if(etq.getType()!=5){
                     if(etq.getCurrent().equals(answer)){
-                        ctq.setScore(etq.getScore());
+                        if(ctq.getScore()!=0){
+                            ctq.setScore(-etq.getScore());
+                        }else{
+                            ctq.setScore(etq.getScore());
+                        }
                     }else ctq.setScore(0);
-                }else ctq.setScore(null);
+                }else ctq.setScore(0);
                 copy.setScore(copy.getScore()+ctq.getScore());
                 copyMapper.updateByPrimaryKeySelective(copy);
                 ctq.setAnswer(answer);
                 ctq.setAlready(true);
+                if(ctq.getScore()<0){
+                    ctq.setScore(0);
+                }
                 copyToQuestionMapper.updateByPrimaryKey(ctq);
                 modelMap.put("status",1);
                 modelMap.put("msg","提交成功");
@@ -185,14 +195,26 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 modelMap.put("msg","试卷不存在");
                 return modelMap;
             }
-            if (exam.getPublisherId()!=user.getOpenId()){
+            if (!exam.getPublisherId().equals(user.getOpenId())){
                 modelMap.put("status",-2);
                 modelMap.put("msg","权限不足");
                 return modelMap;
             }
             if(examToQuestion.getId()==null){
                 List<ExamToQuestion> examToQuestions =examToQuestionMapper.selectByExamKey(exam.getId());
-                int id =examToQuestions.get(examToQuestions.size()-1).getId()+1;
+                int id;
+
+                if(examToQuestions.size()!=0){
+                    /**
+                     * 非首次添加试题
+                     */
+                    id =examToQuestions.get(examToQuestions.size()-1).getId()+1;
+                }else{
+                    /**
+                     * 首次添加试题
+                     */
+                    id = 1;
+                }
                 examToQuestion.setId(id);
                 examToQuestionMapper.insertSelective(examToQuestion);
             }else{
@@ -240,6 +262,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 groupToExamMapper.UpdateAssociation(exam.getId(),groupList);
             }
             modelMap.put("status",1);
+            modelMap.put("examId",exam.getId());
             modelMap.put("info","创建成功");
         }
         else{

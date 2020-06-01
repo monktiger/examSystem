@@ -54,6 +54,7 @@ public class PageController {
             modelMap.put("examName",exam.getName());
             //groupId已经分离，这里要改写
             List<String> groupList = groupToExamMapper.selectByExamId(examId);
+            modelMap.put("examId",examId);
             modelMap.put("groupId",groupList);
             modelMap.put("beginTime", exam.getBeginTime());
             modelMap.put("endTime",exam.getEndTime());
@@ -79,7 +80,7 @@ public class PageController {
         JSONObject userJson = JSON.parseObject(userStirng);
         User user = userJson.toJavaObject(User.class);
         Exam exam = examMapper.selectByPrimaryKey(examId);
-        if (exam.getPublisherId()!=user.getOpenId()){
+        if (!exam.getPublisherId().equals(user.getOpenId())){
             modelMap.put("status",-1);
             modelMap.put("msg","权限不足");
         }else{
@@ -118,7 +119,14 @@ public class PageController {
     }
     return modelMap;
 }
-@RequestMapping(value = "/toCopy",method = RequestMethod.GET)
+
+    /**
+     * 进入学生试卷
+     * @param examId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/toCopy",method = RequestMethod.GET)
     public Map<String,Object> toCopy(@RequestParam("examId")int examId,HttpServletRequest request){
      Map<String,Object> modelMap = new HashMap<>();
      String token = request.getHeader("token");
@@ -138,7 +146,7 @@ public class PageController {
             modelMap.put("msg","copy不存在");
             return modelMap;
         }
-        if(copy.getStatus()!=1||exam.getStatus()!=2){
+        if(copy.getStatus()!=1&&exam.getStatus()!=2){
             modelMap.put("status",-3);
             modelMap.put("msg","非考试时间");
             return modelMap;
@@ -168,10 +176,10 @@ public class PageController {
     return modelMap;
 }
 @RequestMapping(value = "/toWrongBook" ,method = RequestMethod.GET)
-    public Map<String,Object> toWrongBook(HttpServletRequest request){
+    public Map<String,Object> toWrongBook(HttpServletRequest request,Integer copyId,Integer examId){
     Map<String,Object> modelMap = new HashMap<>();
-    Integer copyId = HttpServletRequestUtil.getInt(request,"copyId");
-    Integer examId = HttpServletRequestUtil.getInt(request,"examId");
+//    Integer copyId = HttpServletRequestUtil.getInt(request,"copyId");
+//    Integer examId = HttpServletRequestUtil.getInt(request,"examId");
     String token = request.getHeader("token");
     if(token!=null&&jedisUtilKeys.exists("token")){
         String userStirng = jedisUtilStrings.get(token);
@@ -179,6 +187,7 @@ public class PageController {
         User user = userJson.toJavaObject(User.class);
         modelMap=examService.excuteWrong(user,copyId,examId);
         if (modelMap==null){
+            modelMap = new HashMap<>();
              modelMap.put("status",-1);
             modelMap.put("msg","错题本不存在");
             return modelMap;

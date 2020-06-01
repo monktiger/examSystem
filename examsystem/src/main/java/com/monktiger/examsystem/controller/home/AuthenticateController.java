@@ -22,7 +22,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.Jedis;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -72,20 +75,35 @@ public class AuthenticateController {
      * 修改个人信息
      * @param name
      * @param nickname
-     * @param openId
      * @return
      * @throws Exception
      */
-    @RequestMapping(value= "/nodify" ,method = RequestMethod.POST)
-    public Object nodify(String name,String nickname,String openId) throws Exception {
-        User user = userService.selectUserByKey(openId);
-        user.setName(name);
-        user.setNickname(nickname);
-        if(userService.updateUser(user)==0){
-            return new ResponseBean(true, CommonErrorEnum.SUCCESS_OPTION);
-        }else{
-            return new ResponseBean(false,CommonErrorEnum.FAILED_QUESTION);
+    @RequestMapping(value= "/nodify" ,method = RequestMethod.GET)
+    public Object nodify(String name, String nickname, HttpServletRequest request) throws Exception {
+        String token = request.getHeader("token");
+        if(token!=null&&jedisUtilKey.exists("token"))
+        {
+            openId = token;
+            User user = userService.selectUserByKey(openId);
+            if(name!=null)
+            user.setName(URLEncoder.encode(name,"utf-8"));
+            if(nickname!=null)
+            user.setNickname(nickname);
+            int state = userService.updateUser(user);
+            if(state>=0){
+                modelMap.put("status",1);
+                modelMap.put("msg","修改成功");
+                jedisUtilString.set(openId,JSON.toJSONString(user));
+            }else{
+                modelMap.put("status",-1);
+                modelMap.put("msg","修改失败");
+            }
         }
+        else{
+            modelMap.put("status",0);
+            modelMap.put("msg","请登录");
+        }
+        return modelMap;
     }
 
     /**
@@ -146,7 +164,7 @@ public class AuthenticateController {
          */
         if(user==null){
             jedisUtilString.set("openId",openId);
-            User addUser = new User(openId,"无昵称",userName,headPic,true);
+            User addUser = new User(openId,"无昵称",URLEncoder.encode(userName,"UTF-8"),headPic,true);
             userService.insertUser(addUser);
             jedisUtilString.set(openId, JSON.toJSONString(addUser));
             modelMap.put("userInfo",addUser);
@@ -154,6 +172,7 @@ public class AuthenticateController {
             /**
              *  已经授权过的用户
              */
+            user.setName(URLDecoder.decode(user.getName(),"utf-8" ));
             jedisUtilString.set(openId, JSON.toJSONString(user));
             modelMap.put("userInfo",user);
         }

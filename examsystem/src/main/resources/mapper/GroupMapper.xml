@@ -34,6 +34,13 @@
     where group_id = #{groupId,jdbcType=VARCHAR}
     and status = #{status,jdbcType=INTEGER}
   </select>
+<!--  <select id="selectIdsByKeyState" parameterType="string" >-->
+<!--    select-->
+<!--    open_id-->
+<!--    from tb_group-->
+<!--    where group_id = #{groupId,jdbcType=VARCHAR}-->
+<!--    and status = #{status,jdbcType=INTEGER}-->
+<!--  </select>-->
   <select id="selectSelfGroup" parameterType="com.monktiger.examsystem.entity.Group" resultMap="BaseResultMap">
     select
     <include refid="Self_Group"/>

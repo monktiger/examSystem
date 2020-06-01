@@ -2,7 +2,9 @@ package com.monktiger.examsystem.controller.home;
 
 import com.monktiger.examsystem.cache.JedisUtil;
 import com.monktiger.examsystem.entity.Group;
+import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.mapper.GroupMapper;
+import com.monktiger.examsystem.mapper.UserMapper;
 import com.monktiger.examsystem.service.impl.GroupServiceImpl;
 import com.monktiger.examsystem.util.MD5Util;
 import com.monktiger.examsystem.utils.resultHander.CommonErrorEnum;
@@ -30,6 +32,9 @@ public class GroupController {
 
     @Autowired
     private GroupMapper groupMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     private JedisUtil jedisUtil;
 
@@ -104,7 +109,7 @@ public class GroupController {
                 modelMap.put("status",1);
                 modelMap.put("msg","成功加入");
 //            return new ResponseBean<>(true,"加入成功",CommonErrorEnum.SUCCESS_OPTION);
-            }else {
+            }else if(state==-1) {
                 modelMap.put("status", 0);
                 modelMap.put("msg", "失败加入");
 //            return new ResponseBean<>(false,"",CommonErrorEnum.FAILED_QUESTION);
@@ -206,19 +211,22 @@ public class GroupController {
         String token = request.getHeader("token");
         if(token!=null&&jedisUtilKeys.exists("token"))
         {
-
-            modelMap.put("state",1);
-            modelMap.put("msg","加入成功");
+//            List<Group> groups = groupMapper.selectByKeyState(groupId,1);
+//            modelMap.put("memberList",groups);
+            List<Group> groups = groupMapper.selectByKeyState(groupId,1);
+            if(groups!=null) {
+                List<User> users = userMapper.selectByIds(groups);
+                modelMap.put("memberList", users);
+                modelMap.put("state", 1);
+                modelMap.put("msg", "成功显示");
+            }else{
+                modelMap.put("state",-1);
+                modelMap.put("msg","小组无任何成员");
+            }
         }else{
             modelMap.put("state",0);
             modelMap.put("msg","请登录后操作");
         }
-        Group group = new Group();
-        group.setGroupId(groupId);
-        group.setStatus(1);
-        List<Group> groups = groupMapper.selectByKeyState(groupId,0);
-        modelMap.put("groups",groups);
-        modelMap.put("state",1);
         return modelMap;
     }
 
@@ -257,6 +265,50 @@ public class GroupController {
         return modelMap;
     }
 
+    /**
+     *  组长解散群 组员退出群
+     * @param groupId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/nodify")
+    public Map<String,Object> nodify(String name,String groupId,HttpServletRequest request)throws Exception{
+        String token = request.getHeader("token");
+        if(token!=null&&jedisUtilKeys.exists("token"))
+        {
+            String openId = token;
+            Group group = groupService.selectGroupById(openId,groupId);
+
+            /**
+             * 判断 执行操作的是组长 还是 组员
+             */
+            if(group.getStatus() == 0){
+                if(name!=null)
+                    group.setName(name);
+                List<Group> groupList = groupService.listGroup(groupId,1);
+                groupService.updateGroup(group);
+
+                /**
+                 *  同时修改小组成员的组名
+                 */
+                for(Group group1:groupList){
+                    group1.setName(name);
+                    groupService.updateGroup(group1);
+                }
+                modelMap.put("status",1);
+                modelMap.put("msg","修改成功");
+            }else{
+                groupService.dissolve(groupId);
+                modelMap.put("status",0);
+                modelMap.put("msg","修改失败，非组长");
+            }
+        }else{
+            modelMap.put("status",0);
+            modelMap.put("msg","请登录后操作");
+        }
+
+        return modelMap;
+    }
 
 
 }

@@ -2,48 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.monktiger.examsystem.mapper.CopyMapper">
   <resultMap id="BaseResultMap" type="com.monktiger.examsystem.entity.Copy">
-    <id column="copy_id" jdbcType="INTEGER" property="copyId" />
-    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
-    <result column="exam_id" jdbcType="INTEGER" property="examId" />
-    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <id column="copyId" jdbcType="INTEGER" property="copyId" />
+    <result column="groupId" jdbcType="VARCHAR" property="groupId" />
+    <result column="examId" jdbcType="INTEGER" property="examId" />
+    <result column="openId" jdbcType="VARCHAR" property="openId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="judge" jdbcType="VARCHAR" property="judge" />
     <result column="score" jdbcType="INTEGER" property="score" />
   </resultMap>
   <sql id="Base_Column_List">
-    copy_id, group_id, exam_id, open_id, `status`, judge, score
+    copyId, groupId, examId, openId, `status`, judge, score
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_copy
-    where copy_id = #{copyId,jdbcType=INTEGER}
+    where copyId = #{copyId,jdbcType=INTEGER}
   </select>
     <select id="selectByAssociaiton" resultType="com.monktiger.examsystem.entity.Copy">
-      select *
+      select
+      <include refid="Base_Column_List" />
       from tb_copy
-      where exam_id = #{examId}
-      and open_id = #{openId}
+      where examId = #{examId}
+      and openId = #{openId}
     </select>
   <select id="selectByGroupAndExam" resultType="com.monktiger.examsystem.entity.Copy">
     select
     <include refid="Base_Column_List"/>
-    where exam_id = #{examId,jdbcType=INTEGER}
-    and group_id = #{groupId,jdbcType=VARCHAR}
+    from tb_copy
+    where examId = #{examId}
+    and groupId = #{groupId}
   </select>
   <select id="checkCopyPublisher" resultType="integer">
     select
     count (*)
-    where copy_id = #{copyId,jdbcType=INTEGER}
-    and open_id = #{openId,jdbcType=VARCHAR}
+    where copyId = #{copyId,jdbcType=INTEGER}
+    and openId = #{openId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_copy
-    where copy_id = #{copyId,jdbcType=INTEGER}
+    where copyId = #{copyId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.monktiger.examsystem.entity.Copy">
-    insert into tb_copy (copy_id, group_id, exam_id, 
-      open_id, `status`, judge, 
+    insert into tb_copy (copyId, groupId, examId, 
+      openId, `status`, judge, 
       score)
     values (#{copyId,jdbcType=INTEGER}, #{groupId,jdbcType=VARCHAR}, #{examId,jdbcType=INTEGER}, 
       #{openId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{judge,jdbcType=VARCHAR}, 
@@ -53,16 +55,16 @@
     insert into tb_copy
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="copyId != null">
-        copy_id,
+        copyId,
       </if>
       <if test="groupId != null">
-        group_id,
+        groupId,
       </if>
       <if test="examId != null">
-        exam_id,
+        examId,
       </if>
       <if test="openId != null">
-        open_id,
+        openId,
       </if>
       <if test="status != null">
         `status`,
@@ -99,27 +101,25 @@
     </trim>
   </insert>
   <insert id="createCopyList">
-    insert into tb_copy
-    <set>
-      group_id = #{groupId} and
-      exam_id = #{id} and
-      `status` =#{status} and
-      open_id in <foreach collection="groupList" item="group" index="index" open="(" close=")" separator=",">
-      #{group.openId}
-    </foreach>
-    </set>
+    insert into tb_copy (groupId,examId,openId,`status`)
+    values
+      <if test="groupList!=null">
+        <foreach collection="groupList" item="group" index="index" separator=",">
+          (#{groupId,jdbcType=VARCHAR},#{id,jdbcType=INTEGER},#{group.openId,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+        </foreach>
+      </if>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.monktiger.examsystem.entity.Copy">
     update tb_copy
     <set>
       <if test="groupId != null">
-        group_id = #{groupId,jdbcType=VARCHAR},
+        groupId = #{groupId,jdbcType=VARCHAR},
       </if>
       <if test="examId != null">
-        exam_id = #{examId,jdbcType=INTEGER},
+        examId = #{examId,jdbcType=INTEGER},
       </if>
       <if test="openId != null">
-        open_id = #{openId,jdbcType=VARCHAR},
+        openId = #{openId,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=INTEGER},
@@ -131,33 +131,33 @@
         score = #{score,jdbcType=INTEGER},
       </if>
     </set>
-    where copy_id = #{copyId,jdbcType=INTEGER}
+    where copyId = #{copyId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Copy">
     update tb_copy
-    set group_id = #{groupId,jdbcType=VARCHAR},
-      exam_id = #{examId,jdbcType=INTEGER},
-      open_id = #{openId,jdbcType=VARCHAR},
+    set groupId = #{groupId,jdbcType=VARCHAR},
+      examId = #{examId,jdbcType=INTEGER},
+      openId = #{openId,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=INTEGER},
       judge = #{judge,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER}
-    where copy_id = #{copyId,jdbcType=INTEGER}
+    where copyId = #{copyId,jdbcType=INTEGER}
   </update>
   <update id="updateJudge">
     update tb_copy
     set judge = #{judge,jdbcType=VARCHAR}
-    where copy_id = #{copyId,jdbcType=INTEGER}
+    where copyId = #{copyId,jdbcType=INTEGER}
   </update>
   <update id="updateByExamList">
     update tb_copy
     set `status`=1
-    where exam_id in <foreach collection="examList" item="exam" index="index" open="(" close=")" separator=",">
+    where examId in <foreach collection="examList" item="exam" index="index" open="(" close=")" separator=",">
     #{exam.id}
   </foreach>
   </update>
   <update id="updateByExam">
     update tb_copy
     set    `status` = #{status}
-    where exam_id = #{id}
+    where examId = #{id}
   </update>
 </mapper>

@@ -7,14 +7,14 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="current" jdbcType="VARCHAR" property="current" />
-    <result column="answer_A" jdbcType="VARCHAR" property="answerA" />
-    <result column="answer_B" jdbcType="VARCHAR" property="answerB" />
-    <result column="answer_C" jdbcType="VARCHAR" property="answerC" />
-    <result column="answer_D" jdbcType="VARCHAR" property="answerD" />
-    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="answerA" jdbcType="VARCHAR" property="answerA" />
+    <result column="answerB" jdbcType="VARCHAR" property="answerB" />
+    <result column="answerC" jdbcType="VARCHAR" property="answerC" />
+    <result column="answerD" jdbcType="VARCHAR" property="answerD" />
+    <result column="openId" jdbcType="VARCHAR" property="openId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, `type`, category, `current`, answer_A, answer_B, answer_C, answer_D, open_id
+    id, title, `type`, category, `current`, answerA, answerB, answerC, answerD, openId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -47,9 +47,9 @@
   </delete>
   <insert id="insert" parameterType="com.monktiger.examsystem.entity.Question">
     insert into tb_question (id, title, `type`, 
-      category, `current`, answer_A, 
-      answer_B, answer_C, answer_D, 
-      open_id)
+      category, `current`, answerA, 
+      answerB, answerC, answerD, 
+      openId)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{category,jdbcType=VARCHAR}, #{current,jdbcType=VARCHAR}, #{answerA,jdbcType=VARCHAR}, 
       #{answerB,jdbcType=VARCHAR}, #{answerC,jdbcType=VARCHAR}, #{answerD,jdbcType=VARCHAR}, 
@@ -74,19 +74,19 @@
         `current`,
       </if>
       <if test="answerA != null">
-        answer_A,
+        answerA,
       </if>
       <if test="answerB != null">
-        answer_B,
+        answerB,
       </if>
       <if test="answerC != null">
-        answer_C,
+        answerC,
       </if>
       <if test="answerD != null">
-        answer_D,
+        answerD,
       </if>
       <if test="openId != null">
-        open_id,
+        openId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -138,19 +138,19 @@
         `current` = #{current,jdbcType=VARCHAR},
       </if>
       <if test="answerA != null">
-        answer_A = #{answerA,jdbcType=VARCHAR},
+        answerA = #{answerA,jdbcType=VARCHAR},
       </if>
       <if test="answerB != null">
-        answer_B = #{answerB,jdbcType=VARCHAR},
+        answerB = #{answerB,jdbcType=VARCHAR},
       </if>
       <if test="answerC != null">
-        answer_C = #{answerC,jdbcType=VARCHAR},
+        answerC = #{answerC,jdbcType=VARCHAR},
       </if>
       <if test="answerD != null">
-        answer_D = #{answerD,jdbcType=VARCHAR},
+        answerD = #{answerD,jdbcType=VARCHAR},
       </if>
       <if test="openId != null">
-        open_id = #{openId,jdbcType=VARCHAR},
+        openId = #{openId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -161,11 +161,11 @@
       `type` = #{type,jdbcType=INTEGER},
       category = #{category,jdbcType=VARCHAR},
       `current` = #{current,jdbcType=VARCHAR},
-      answer_A = #{answerA,jdbcType=VARCHAR},
-      answer_B = #{answerB,jdbcType=VARCHAR},
-      answer_C = #{answerC,jdbcType=VARCHAR},
-      answer_D = #{answerD,jdbcType=VARCHAR},
-      open_id = #{openId,jdbcType=VARCHAR}
+      answerA = #{answerA,jdbcType=VARCHAR},
+      answerB = #{answerB,jdbcType=VARCHAR},
+      answerC = #{answerC,jdbcType=VARCHAR},
+      answerD = #{answerD,jdbcType=VARCHAR},
+      openId = #{openId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
