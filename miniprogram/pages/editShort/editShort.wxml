@@ -1,7 +1,7 @@
 <!--pages/editShort/editShort.wxml-->
 <view>
   <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-    <view slot="backText">返回</view>
+    <view slot="backText" catchtap="back">返回</view>
     <view slot="content">编辑简答题</view>
   </cu-custom>
 </view>

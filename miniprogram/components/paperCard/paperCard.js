@@ -28,6 +28,7 @@ Component({
         examId:e.currentTarget.dataset.examid,
       }
       this.triggerEvent('changePage',data)
+      // console.log("examId",app.globalData.examId)
     },
     showModal(e){
       this.setData({
@@ -39,5 +40,5 @@ Component({
         modalName: null
       })
     },
-  }
+    }
 })

@@ -1,7 +1,7 @@
 <!-- pages/manageGroup/manageGroup.wxml -->
 <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
   <view slot="backText">返回</view>
-  <view slot="content">一体化工程（组名）</view>
+  <view slot="content">{{groupname}}</view>
 </cu-custom>
 <!-- <view class="text-xl">我创建的组页面</view>
 <navigator url="/pages/managePeople/managePeople">成员管理</navigator>
@@ -22,6 +22,6 @@
     <view class="text-lg margin-top-xs">设置</view>
   </view>
 </view>
+  <papercard class="papercard" bind:changePage="goManageScore" paperList="{{paperList}}" ></papercard>
 
-  <papercard class="papercard" bind:changePage="goManageScore" paperList="{{paperList}}"></papercard>
 

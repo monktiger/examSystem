@@ -9,10 +9,10 @@
   <view class="flex-sub text-center padding-sm margin-xs">查看详情</view>
 </view>
 <view class="bg-white">
-  <block wx:for="{{scores}}" wx:for-item="item">
+  <block wx:for="{{scoreList}}" wx:for-index="idx">
     <view class="solids-bottom flex">
-      <view class="flex-sub text-center padding-sm margin-xs">{{item.studentName}}</view>
-      <view class="flex-sub text-center padding-sm margin-xs">{{item.score}}</view>
+      <view class="flex-sub text-center padding-sm margin-xs">{{scoreList[idx].studentName}}</view>
+      <view class="flex-sub text-center padding-sm margin-xs">{{scoreList[idx].score}}</view>
       <view class="flex-sub text-center padding-sm margin-xs cu-btn line-grey" catchtap="detail">
         <navigator url="/pages/paperDetails/paperDetails">查看</navigator>
       </view>

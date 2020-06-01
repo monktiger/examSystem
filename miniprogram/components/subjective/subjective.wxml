@@ -18,7 +18,7 @@
     class="comment-text padding answer" 
     focus="{{focus}}" 
     show-confirm-bar="{{false}}"
-    value="{{answerContent}}" 
+    value="{{answerContent}}"  
     bindinput="inputHd"></textarea>
   </view>
 </view>

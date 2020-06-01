@@ -8,11 +8,6 @@
     <view class="text-bold">{{groupName?groupName:"请设置组名"}}</view>
     <view class="cuIcon-write lg text-gray" bindtap="showModal" data-target="bottomModal"></view>
   </view>
-  <view class="flex align-center margin-top-xl">
-    <text class="cuIcon-people lg text-gray margin-right-sm"></text>
-    <view>组员共
-      <text>{{count?count:"0"}}</text> 人</view>
-  </view>
   <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
     <view class="cu-dialog">
       <view class="cu-bar bg-white">

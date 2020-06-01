@@ -1,4 +1,4 @@
-// components/optionQue/optionQue.js
+// components/multiQue/multiQue.js
 Component({
   /**
    * 组件的属性列表
@@ -11,22 +11,22 @@ Component({
    * 组件的初始数据
    */
   data: {
-
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
+
   },
   lifetimes: {
     attached: function (e) {
-      // 获取单选题缓存
-      var singleQues = wx.getStorageSync('single_ques');
+      // 获取多选题缓存
+      var multiQues = wx.getStorageSync('multi_ques');
       this.setData({
-        singleQues: singleQues
+        multiQues: multiQues
       })
-      console.log("singleQues",singleQues)
+      console.log("multiQues",multiQues)
     }
   },
 })

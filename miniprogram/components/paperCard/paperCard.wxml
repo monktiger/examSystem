@@ -1,7 +1,7 @@
+
 <view wx:for="{{paperList}}" wx:key="index">
 <view class="flex justify-center paper-box ">
   <view 
-  
   class="paper padding flex  margin-top bg-white" 
   catch:tap="changePage"
   data-examid="{{item.id}}"
