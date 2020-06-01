@@ -49,29 +49,43 @@
   </button>
 </view> -->
 <view class="total text-xl margin-top padding-lr-xl text-black">
-  项目管理概念
+  {{paperDetails.examName}}
   <text class="text-df margin-left">(总分8分)</text>
 </view>
 <view class="box">
   <view class="text-lg">
     <text class="text-gray">题目数量</text>
-    <text class="margin-left">5道题</text>
+    <text class="margin-left">{{length}}道题</text>
   </view>
-  <view class="margin-top text-lg">
+  <view 
+  wx:if="{{status=='20002'?true:false}}"
+  class="margin-top text-lg">
     <text class="text-gray">开始时间</text>
-    <text class="margin-left">2018-11-23 11:30</text>
+    <text class="margin-left">{{paperDetails.beginTime}}</text>
   </view> 
-    <view class="margin-top text-lg">
+    <view 
+    wx:if="{{status=='20002'?true:false}}"
+    class="margin-top text-lg">
     <text class="text-gray">结束时间</text>
-    <text class="margin-left">5道题</text>
+    <text class="margin-left">{{paperDetails.endTime}}</text>
   </view>
-    <view class="margin-top text-lg">
+  <view 
+    wx:if="{{status!='20002'?true:false}}"
+    class="margin-top text-lg">
+    <text class="text-gray">评价</text>
+    <text class="margin-left">{{judge}}</text>
+  </view>
+    <view 
+    wx:if="{{status!='20002'?true:false}}"
+    class="margin-top text-lg">
     <text class="text-bold text-orange ">最终得分</text>
-    <text class="margin-left text-bold text-orange">5分（总分10）</text>
+    <text class="margin-left text-bold text-orange">{{sum}}分（总分{{score}}）</text>
   </view>
 </view>
 <view class="flex justify-center">
-  <button class="cu-btn bg-blue round shadow-blur lg  btn" bindtap="goPaper" data-target="Modal1">
-  查看试卷
+  <button class="cu-btn bg-blue round shadow-blur lg  btn"
+   bindtap="goPaper"
+   >
+  {{btnName}}
   </button>
 </view> 

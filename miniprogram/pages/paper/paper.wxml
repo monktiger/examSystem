@@ -1,51 +1,68 @@
 <!-- pages/paper/paper.wxml -->
-<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
-  <view slot="backText">返回</view>
+<cu-custom bgColor="bg-gradual-blue">
+  <!-- <view slot="backText">返回</view> -->
   <view slot="content">试卷</view>
 </cu-custom>
 <!-- <text class="text-xl">试卷页面</text> -->
 <!-- 单选 -->
-<!-- <singleAnswer></singleAnswer> -->
+<singleAnswer
+id="singleAnswer" 
+wx:if="{{displayQuestion.type == 1}}" 
+question="{{displayQuestion}}" 
+index="{{questionIndex + 1}}" 
+bind:updateAnswer="submitAnwer"></singleAnswer>
 <!-- 多选 -->
-<!-- <multipleChoice></multipleChoice> -->
+<multipleChoice
+ id="multipleChoice"
+ wx:if="{{displayQuestion.type == 2}}" 
+ question="{{displayQuestion}}" 
+ index="{{questionIndex + 1}}"
+ bind:updateAnswer="submitAnwer"></multipleChoice>
 <!-- 判断 -->
-<!-- <judge></judge> -->
+<judge
+id="judge" 
+wx:if="{{displayQuestion.type == 4}}" 
+question="{{displayQuestion}}" 
+index="{{questionIndex + 1}}"
+bind:updateAnswer="submitAnwer"></judge>
 <!-- 填空 -->
-<!-- <fill></fill> -->
-<!-- 主观 -->
-<subjective></subjective>
+<fill
+id="fill"
+ wx:if="{{displayQuestion.type == 3}}" 
+ question="{{displayQuestion}}" 
+ index="{{questionIndex + 1}}"
+ bind:updateAnswer="submitAnwer"></fill>
+<!-- 主观 --> 
+<subjective 
+id="subjective"
+wx:if="{{displayQuestion.type == 5}}" 
+question="{{displayQuestion}}" 
+index="{{questionIndex + 1}}"
+bind:updateAnswer="submitAnwer"></subjective>
 <!-- 答案 -->
-<view class="score margin-top-xl margin-left text-lg">
-  <view class="text-green">
-    正确答案 D 你答对了
-  </view>
-    <!-- <view class="text-red text-lg">
-    正确答案 D 你答错了
-  </view> -->
-</view>
-<!-- 评价 -->
-<view class="judge text-lg margin-left margin-top-xl">
-    <view class="text-gray">
-      评价：德国人git人git国际化
+<view wx:if="{{status == '20003'}}">
+  <view class="score margin-top-xl margin-left text-lg">
+    <view 
+    wx:if="{{displayQuestion.judge==true}}"
+    class="text-green">你答对了,正确答案 {{displayQuestion.correct}}  </view>
+    <view 
+    wx:if="{{displayQuestion.judge==false}}"
+    class="text-red text-lg">你答错了,正确答案 {{displayQuestion.correct}} </view>
   </view>
 </view>
-<view class="bottom text-lg flex">
+<view class="bottom text-lg">
   <!-- 第一个状态 -->
-  <view class="flex justify-center one-btn">
-    下一题
+    <view class="flex justify-center one-btn"
+    wx:if="{{questionIndex == 0?true:false}}"
+     bind:tap="nextQuestion">下一题</view>
+  <!-- 第二个状态 -->
+  <view wx:elif="{{questionIndex < length}}" style="width:100%" class="flex">
+    <view class="flex justify-center border two-btn" bind:tap="preQuestion">上一题 </view>
+    <view class="flex justify-center two-btn" bind:tap="nextQuestion">下一题 </view>
   </view>
-  <!-- 第一个状态 -->
-    <!-- <view class="flex justify-center border two-btn">
-    上一题
-  </view>
-  <view class="flex justify-center two-btn">
-    下一题
-  </view> -->
-  <!-- 第三个状态 -->
-      <!-- <view class="flex justify-center border two-btn">
-    上一题
-  </view>
-  <view class="flex justify-center two-btn">
-    提交
-  </view> -->
+    <!-- 第三个状态 -->
+  <view wx:elif="{{questionIndex == length}}" style="width:100%" class="flex">
+    <view class="flex justify-center border two-btn" bind:tap="preQuestion">上一题</view>
+    <view class="flex justify-center two-btn" bind:tap="lastQuestion">{{btn}}</view>
+  </view> 
 </view>

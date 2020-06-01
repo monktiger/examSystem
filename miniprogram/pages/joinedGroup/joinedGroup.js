@@ -20,10 +20,26 @@ Page({
         "token": app.globalData.token
       },
       success: function (result) {
-        console.log(result);
-        // wx.navigateTo({
-        //   url:'/pages/paperDetails/paperDetails'
-        // })
+        console.log(result.data.status);
+        let status = result.data.status
+        if(status=='20001'){
+        }else if(status=='20002'){
+        app.globalData.stuStatus='20002'
+        app.globalData.examId=e.detail.examId
+        wx.navigateTo({
+          url:'/pages/paperDetails/paperDetails'
+        })
+        }
+        else if(status=='20003'){
+          app.globalData.stuStatus='20003'
+          app.globalData.examId=e.detail.examId
+          wx.navigateTo({
+            url:'/pages/paperDetails/paperDetails'
+          })
+        }
+        else if(status=='20004'){
+
+        }
       }, fail(e) {
         console.log(e);
 
