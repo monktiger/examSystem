@@ -1,0 +1,44 @@
+<!--components/multiQue/multiQue.wxml-->
+<multiQue-cmp>
+	<block wx:for="{{multiQues}}" wx:key="{{multiQues.data.title}}" wx:for-index="idx">
+		<view class="container">
+			<view class="que-container">
+				<view>
+					<text>{{multiQues[idx].data.title}}</text>
+				</view>
+				<view class="score-container">
+					<text>( 分值：</text>
+					<text class="score">{{multiQues[idx].data.score}}</text>
+					<text> )</text>
+					<text class="answer">(答案：{{multiQues[idx].data.current}}）</text>
+				</view>
+			</view>
+			<checkbox-group bindchange="checkboxChange">
+				<view class="opts" wx:if="{{multiQues[idx].data.answerA}}">
+					<view class="opt">
+						<checkbox value="" checked="" />
+					</view>
+					<view class="opt-txt">{{multiQues[idx].data.answerA}}</view>
+				</view>
+				<view class="opts" wx:if="{{multiQues[idx].data.answerB}}">
+					<view class="opt">
+						<checkbox value="" checked="" />
+					</view>
+					<view class="opt-txt">{{multiQues[idx].data.answerB}}</view>
+				</view>
+				<view class="opts" wx:if="{{multiQues[idx].data.answerC}}">
+					<view class="opt">
+						<checkbox value="" checked="" />
+					</view>
+					<view class="opt-txt">{{multiQues[idx].data.answerC}}</view>
+				</view>
+				<view class="opts" wx:if="{{multiQues[idx].data.answerD}}">
+					<view class="opt">
+						<checkbox value="" checked="" />
+					</view>
+					<view class="opt-txt">{{multiQues[idx].data.answerD}}</view>
+				</view>
+			</checkbox-group>
+		</view>
+	</block>
+</multiQue-cmp>

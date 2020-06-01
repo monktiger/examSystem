@@ -3,31 +3,31 @@ var app = getApp();
 Page({
 
   data: {
-    show:false,
-    style:false
+    show: false,
+    style: false
   },
 
-  single(e){
-    wx.navigateTo({       
+  single(e) {
+    wx.redirectTo({
       url: "/pages/editSingle/editSingle"
     })
   },
 
   multi(e) {
-    wx.navigateTo({
+    wx.redirectTo({
       url: "/pages/editMulti/editMulti"
     })
   },
 
   short(e) {
-    wx.navigateTo({
+    wx.redirectTo({
       url: "/pages/editShort/editShort"
     })
   },
 
-  showType(e){
+  showType(e) {
     this.setData({
-      show:true
+      show: true
     })
   },
 
@@ -41,54 +41,48 @@ Page({
     var addQuestionUrl = app.globalData.url + "exam/addQuestion";
     this.setData({
       addQuestionUrl: addQuestionUrl,
-      examName:app.globalData.examName,
-      beginTime:app.globalData.beginTime,
-      endTime:app.globalData.endTime,
+      examName: app.globalData.examName,
+      beginTime: app.globalData.beginTime,
+      endTime: app.globalData.endTime,
     });
-    // 获取简答题缓存
-    var shortQues = wx.getStorageSync('short_ques');
-    this.setData({
-      shortQues:shortQues
-    })
-    for(let i in shortQues){
-
-    }
-    // if(shortQues){
-      // 如果有缓存，则放进data内
-
-      console.log("editPaper",shortQues);
-    // } 
-    // else {
-    //   //没有缓存则定义缓存数组？
-    //   shortQues=[];
-    //   wx.setStorageSync('short_ques', shortQues);
-    // }
-    
-    // wx.removeStorage({
-    //   key: 'short_ques',
-    //   success (res) {
-    //     console.log(res)
-    //   }
-    // })
   },
 
   // 创建试卷
-  create:function(e){
-    wx.navigateTo({
-      url: "/pages/manageGroup/manageGroup"
+  create: function (e) {
+    wx.removeStorage({
+      key: 'single_ques',
+      success(res) {
+        console.log(res)
+      }
+    })
+    wx.removeStorage({
+      key: 'multi_ques',
+      success(res) {
+        console.log(res)
+      }
+    })
+    wx.removeStorage({
+      key: 'short_ques',
+      success(res) {
+        console.log(res)
+      }
+    })
+    wx.redirectTo({
+      url: "../manageGroup/manageGroup"
     })
     wx.showToast({
       title: '创建成功！', // 标题
       icon: 'success', // 图标类型，默认success
       duration: 1500 // 提示窗停留时间，默认1500ms
-    })
-
+    });
+    app.globalData.startDate="";
+    app.globalData.endDate="";
   },
 
   // 修改试卷信息
-  setPaperMsg:function(e){
+  setPaperMsg: function (e) {
     wx.navigateTo({
-      url: "/pages/paperCreate/paperCreate"
+      url: "../paperCreate/paperCreate"
     })
   }
 })

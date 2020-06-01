@@ -2,6 +2,6 @@
   "usingComponents": {
     "showShort-cmp": "/components/showShort/showShort",
     "optionQue-cmp": "/components/showSingle/showSingle",
-    "multiQue-cmp": "/components/multiQue/multiQue"
+    "multiQue-cmp": "/components/showMulti/showMulti"
   }
 }

@@ -1,7 +1,6 @@
 // pages/welcome/welcome.js
 const app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -41,7 +40,8 @@ Page({
             // 保存openid
             console.log(result);
             app.globalData.token = result.data.token;
-            app.globalData.nickname = result.data.userInfo.nickname;
+            app.globalData.nickname = result.data.userInfo.nickame;
+            app.globalData.name = result.data.userInfo.name;
             app.globalData.avatarUrl = result.data.userInfo.avatarurl;
             wx.navigateTo({
               url: '/pages/nav/nav'

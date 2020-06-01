@@ -15,17 +15,19 @@ Page({
   onLoad: function (options) {
     var deleteMemberUrl = app.globalData.url + "group/deleteMember";
     var showMemberUrl = app.globalData.url + "group/showMember";
-    this.getMemberListData(showMemberUrl,0);
-
     this.setData({
+      showMemberUrl:showMemberUrl,
       deleteMemberUrl: deleteMemberUrl,
-      groupId: app.globalData.group_id
+      groupId: app.globalData.groupId
     });
+    this.getMemberListData(showMemberUrl,0);
   },
 
   // 获得组成员列表
   getMemberListData: function (showMemberUrl,memberName) {
     var that = this;
+    var groupId = JSON.stringify(this.data.groupId);
+    console.log(this.data.groupId)
     // 发起网络请求
     wx.request({
       url: showMemberUrl,
@@ -34,11 +36,15 @@ Page({
         "token": app.globalData.token
       },
       data: {
-        groupId: that.data.groupId
+        groupId: groupId
       },
       success: function (res) {
-        if (res.data.status == 1) {
+        console.log("getMemberListData",res);
+        if (res.data.state == 1) {
           that.processMemberData(res.memberList,memberName);
+          that.setData({
+            memberList: res.data.memberList
+          });
         } else {
           console.log(res.msg);
         }
@@ -123,7 +129,8 @@ Page({
   // 展示相应成员
   onBindConfirm: function (event) {
     var text = event.detail.value;
-    that.getMemberListData(res.memberList,text);
+    var showMemberUrl = this.data.showMemberUrl
+    this.getMemberListData(showMemberUrl,text);
   },
 
   onCancelImgTap: function (event) {
@@ -137,9 +144,10 @@ Page({
   // 删除组成员
   delete(e) {
     var openId = e.currentTarget.dataset.openId;
+    var groupId = JSON.stringify(this.data.groupId);
     var that = this;
     wx.showModal({
-      title: 'confirm的弹窗',
+      title: '',
       content: '确认要删除该成员吗？',
       success: function (result) {
         if (result.confirm) {
@@ -152,7 +160,7 @@ Page({
               "token": that.data.token
             },
             data: {
-              groupId: that.data.groupId,
+              groupId: groupId,
               openId: openId
             },
             success: function (res) {

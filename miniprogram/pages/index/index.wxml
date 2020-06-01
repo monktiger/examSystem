@@ -6,7 +6,7 @@
   <!-- <navigator url="/pages/manageGroup/manageGroup">我创建的组</navigator>
 <navigator url="/pages/joinedGroup/joinedGroup">我加入的组</navigator> -->
   <scroll-view scroll-x class="bg-white nav padding-left solid-bottom" scroll-with-animation>
-  	<view class="cu-item {{index==TabCur?'text-blue cur text-lg':'text-grey text-df'}} margin-right-xl" wx:for="{{title}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+  	<view class="cu-item {{index==TabCur?'text-blue cur text-lg':'text-grey text-df'}} margin-right-xl" wx:for="{{title}}" wx:key="index" bindtap="tabSelect" data-id="{{index}}">
   		{{item}}
     </view>
     <view class="add text-xl">

@@ -1,9 +1,11 @@
+
 <view wx:for="{{paperList}}" wx:key="index">
-<view class="flex justify-center paper-box">
+<view class="flex justify-center paper-box ">
   <view 
-  
-  class="paper padding flex  margin-top" 
-  catch:tap="changePage">
+  class="paper padding flex  margin-top bg-white" 
+  catch:tap="changePage"
+  data-examid="{{item.id}}"
+  >
   <!-- 图标 -->
     <view 
     wx:if="{{pageId==0?true:false}}"
@@ -14,9 +16,9 @@
     ></view>
     <!-- 分数 -->
     <view 
-    wx:else
+    wx:if="{{item.score}}"
     class=" more text-red" 
-    style="font-size:40rpx">99</view>
+    style="font-size:40rpx">{{item.score}}</view>
     <view class="">{{item.name}}</view>
     <view class="margin-top-xl">{{item.beginTime}} - {{item.endTime}}</view>
   </view>

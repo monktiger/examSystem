@@ -1,0 +1,4 @@
+<!--components/timePickerEnd/timePickerEnd.wxml-->
+<timePickerEnd-cmp>
+	<picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">{{endDate}}</picker>
+</timePickerEnd-cmp>

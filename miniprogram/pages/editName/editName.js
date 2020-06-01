@@ -12,7 +12,7 @@ Page({
   onLoad: function (options) {
     var editNameUrl = app.globalData.url + "user/nodify";
     this.setData({
-      token:app.globalData.token,
+      token: app.globalData.token,
       editNameUrl: editNameUrl,
       name: app.globalData.name
     });
@@ -28,27 +28,29 @@ Page({
 
   confirm(e) {
     var that = this;
+    var name = that.data.name;
     // 发起网络请求
     wx.request({
       url: that.data.editNameUrl,
-      method: "post",
+      method: "get",
       header: {
-        "token": app.globalData.token
+        "token": app.globalData.token,
+        "Content-Type": "application/json"
       },
       data: {
         name: that.data.name
       },
       success: function (res) {
         if (res.data.status == 1) {
+          // 跳转
+          wx.navigateTo({
+            url: '/pages/myInfo/myInfo',
+          })
           // 弹窗成功
           wx.showToast({
             title: '修改成功！', // 标题
             icon: 'success',  // 图标类型，默认success
             duration: 1500  // 提示窗停留时间，默认1500ms
-          })
-          // 跳转
-          wx.navigateTo({
-            url: '/pages/myInfo/myInfo',
           })
         } else {
           wx.showToast({
