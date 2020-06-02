@@ -45,4 +45,6 @@ public interface CopyMapper {
     int updateByExamList(@Param("examList") List<Exam> examList);
 
     void updateByExam(@Param("id") Integer id, @Param("status") Integer status);
+
+    int createCopyList2(@Param("groupList") List<Group> groupList, @Param("id") Integer id, @Param("status") int status);
 }

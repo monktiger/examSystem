@@ -109,7 +109,16 @@
         </foreach>
       </if>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.monktiger.examsystem.entity.Copy">
+    <insert id="createCopyList2">
+      insert into tb_copy (groupId,examId,openId,`status`)
+      values
+      <if test="groupList!=null">
+        <foreach collection="groupList" item="group" index="index" separator=",">
+          (#{groupList.groupId,jdbcType=VARCHAR},#{id,jdbcType=INTEGER},#{group.openId,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+        </foreach>
+      </if>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.monktiger.examsystem.entity.Copy">
     update tb_copy
     <set>
       <if test="groupId != null">
