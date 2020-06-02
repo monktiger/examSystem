@@ -84,7 +84,7 @@ private CopyToQuestionMapper copyToQuestionMapper;
 //        /**
 //         * 生成相应答卷
 //         */
-//          copyMapper.createCopyList(groupId,groupList,e.getId(),0);
+//         copyMapper.createCopyList(groupId,groupList,e.getId(),0);
 //          System.out.println(groupId);
 //          System.out.println(groupList.toString());
 //        /**

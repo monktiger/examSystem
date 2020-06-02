@@ -25,4 +25,6 @@ public interface ExamToQuestionMapper {
     int updateByPrimaryKeySelective(ExamToQuestion record);
 
     int updateByPrimaryKey(ExamToQuestion record);
+
+    int deletByExamId(@Param("examId") int examId);
 }

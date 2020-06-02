@@ -10,7 +10,12 @@
     where username = #{username,jdbcType=VARCHAR}
       and `password` = #{password,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.monktiger.examsystem.entity.Admin">
+    <select id="checkUser" resultType="com.monktiger.examsystem.entity.Admin">
+      select from tb_admin
+          where username = #{username,jdbcType=VARCHAR}
+      and `password` = #{password,jdbcType=VARCHAR}
+    </select>
+    <insert id="insert" parameterType="com.monktiger.examsystem.entity.Admin">
     insert into tb_admin (username, `password`)
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
   </insert>

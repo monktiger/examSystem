@@ -154,21 +154,21 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                  * 主观题设置 null 会报错
                  */
                 if(etq.getType()!=5){
+                    //如果提交答案正确
                     if(etq.getCurrent().equals(answer)){
                         if(ctq.getScore()!=0){
-                            ctq.setScore(-etq.getScore());
+                            ctq.setScore(null);
                         }else{
                             ctq.setScore(etq.getScore());
                         }
                     }else ctq.setScore(0);
-                }else ctq.setScore(0);
-                copy.setScore(copy.getScore()+ctq.getScore());
+                }else ctq.setScore(null);
+                if(ctq.getScore()!=null){
+                    copy.setScore(copy.getScore()+ctq.getScore());
+                }
                 copyMapper.updateByPrimaryKeySelective(copy);
                 ctq.setAnswer(answer);
                 ctq.setAlready(true);
-                if(ctq.getScore()<0){
-                    ctq.setScore(0);
-                }
                 copyToQuestionMapper.updateByPrimaryKey(ctq);
                 modelMap.put("status",1);
                 modelMap.put("msg","提交成功");
@@ -266,6 +266,83 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             modelMap.put("info","创建成功");
         }
         else{
+            modelMap.put("status",0);
+            modelMap.put("msg","未登录");
+        }
+        return modelMap;
+    }
+    @RequestMapping(value = "deleteQuestion" ,method = RequestMethod.GET)
+    public Map<String,Object> deleteQuestion(HttpServletRequest request,@RequestParam("examId")int examId,@RequestParam("id")int id){
+        Map<String,Object> modelMap = new HashMap<>();
+        String token  = request.getHeader("token");
+        if(token!=null&&jedisUtilKeys.exists(token)){
+            String userStirng = jedisUtilStrings.get(token);
+            JSONObject userJson = JSON.parseObject(userStirng);
+            User user = userJson.toJavaObject(User.class);
+            Exam exam = examMapper.selectByPrimaryKey(examId);
+            if(exam!=null){
+                if(user.getOpenId()==exam.getPublisherId()){
+                    if(exam.getStatus()==0){
+                        ExamToQuestion examToQuestion=examToQuestionMapper.selectByPrimaryKey(examId,id);
+                        if(examToQuestion!=null){
+                        examToQuestionMapper.deletByExamId(examId);
+                        modelMap.put("status",1);
+                        modelMap.put("msg","删除成功");}else{
+                            modelMap.put("status",-4);
+                            modelMap.put("msg","找不到该试题");
+                            return modelMap;
+                        }
+                    }else {
+                        modelMap.put("status",-3);
+                        modelMap.put("msg","无法删除试题");
+                    }
+                }else {
+                    modelMap.put("status",-2);
+                    modelMap.put("msg","无权限删除");
+                    return modelMap;
+                }
+            }else{
+                modelMap.put("status",-1);
+                modelMap.put("msg","试卷不存在");
+                return modelMap;
+            }
+        }else {
+            modelMap.put("status",0);
+            modelMap.put("msg","未登录");
+        }
+        return modelMap;
+    }
+    @RequestMapping(value = "deleteExam",method = RequestMethod.GET)
+    public Map<String,Object> deleteExam(HttpServletRequest request,@RequestParam("examId")int examId){
+        Map<String,Object> modelMap = new HashMap<>();
+        String token  = request.getHeader("token");
+        if(token!=null&&jedisUtilKeys.exists(token)){
+            String userStirng = jedisUtilStrings.get(token);
+            JSONObject userJson = JSON.parseObject(userStirng);
+            User user = userJson.toJavaObject(User.class);
+            Exam exam = examMapper.selectByPrimaryKey(examId);
+            if(exam!=null){
+                if(user.getOpenId()==exam.getPublisherId()){
+                    if(exam.getStatus()==0){
+                        examMapper.deleteByPrimaryKey(examId);
+                        examToQuestionMapper.deletByExamId(examId);
+                        modelMap.put("status",1);
+                        modelMap.put("success","删除成功");
+                    }else {
+                        modelMap.put("status",-3);
+                        modelMap.put("msg","无法删除试卷");
+                    }
+                }else {
+                    modelMap.put("status",-2);
+                    modelMap.put("msg","无权限删除");
+                    return modelMap;
+                }
+            }else{
+                modelMap.put("status",-1);
+                modelMap.put("msg","试卷不存在");
+                return modelMap;
+            }
+        }else {
             modelMap.put("status",0);
             modelMap.put("msg","未登录");
         }

@@ -35,7 +35,11 @@
     where examId = #{examId,jdbcType=INTEGER}
       and id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.monktiger.examsystem.entity.ExamToQuestion">
+    <delete id="deletByExamId">
+      delete from tb_exam_to_question
+      where examId = #{examId}
+    </delete>
+    <insert id="insert" parameterType="com.monktiger.examsystem.entity.ExamToQuestion">
     insert into tb_exam_to_question (examId, id, score, 
       title, `type`, `current`, 
       answerA, answerB, answerC, 
