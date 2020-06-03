@@ -42,6 +42,7 @@ public class QuestionBankController {
            question.setOpenId(user.getOpenId());
            questionMapper.insertSelective(question);
            modelMap.put("status",1);
+           modelMap.put("id",question.getId());
            modelMap.put("msg","题目提交到题库成功");
         }
         else{

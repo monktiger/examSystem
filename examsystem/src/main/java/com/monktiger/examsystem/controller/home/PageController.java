@@ -46,12 +46,9 @@ public class PageController {
         JSONObject userJson = JSON.parseObject(userStirng);
         User user = userJson.toJavaObject(User.class);
         Exam exam = examMapper.selectByPrimaryKey(examId);
-        if (exam.getPublisherId()!=user.getOpenId()){
-            modelMap.put("status",-1);
-            modelMap.put("msg","权限不足");
-        }else{
+        if (exam.getPublisherId().equals(user.getOpenId())){
             if(exam.getStatus()==0||exam.getStatus()==1||exam.getStatus()==2){
-            modelMap.put("examName",exam.getName());
+                modelMap.put("examName",exam.getName());
             //groupId已经分离，这里要改写
             List<String> groupList = groupToExamMapper.selectByExamId(examId);
             modelMap.put("examId",examId);
@@ -65,9 +62,11 @@ public class PageController {
                 modelMap.put("status",2);
                 modelMap.put("msg","考试已经结束，请重定向");
             }
+        }else{
+            modelMap.put("status",-1);
+            modelMap.put("msg","权限不足");
         }
-    }
-        else{modelMap.put("status",0);
+    } else{modelMap.put("status",0);
             modelMap.put("msg","未登录");
     }return modelMap;
 }

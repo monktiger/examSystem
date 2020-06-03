@@ -56,13 +56,16 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public int solveUserAndExamAssociation(int examId, User user) {
+    public int  solveUserAndExamAssociation(int examId, User user) {
         Exam exam = examMapper.selectByPrimaryKey(examId);
         int min1=TimeUtil.BetweenMin(exam.getEndTime().getTime());
         int min2=TimeUtil.BetweenMin(exam.getBeginTime().getTime());
         //如果是出题人
         //status由mysql event控制
-        if(exam.getPublisherId()==user.getOpenId()){
+        /**
+         * status
+         */
+        if(exam.getPublisherId().equals(user.getOpenId())){
             if(exam.getStatus()==0){
               return 10001;
             }else if(exam.getStatus()==1){
@@ -122,7 +125,7 @@ public class ExamServiceImpl implements ExamService {
             if(copy==null)
                 return null;
              exam = examMapper.selectByPrimaryKey(copy.getExamId());
-            if(exam==null||exam.getPublisherId()!=user.getOpenId()){
+            if(exam==null||!exam.getPublisherId().equals(user.getOpenId())){
                 return null;
             }
         }else if(examId!=null&&copyId==null){//相当于学生
@@ -140,6 +143,7 @@ public class ExamServiceImpl implements ExamService {
         if(exam.getStatus()!=3){
             return null;
         }
+
         List<CopyToQuestion> copyToQuestionList = copyToQuestionMapper.selectByCopyId(copy.getCopyId());
         List<ExamToQuestion> examToQuestionList = examToQuestionMapper.selectByExamKey(exam.getId());
         List<WrongBookQuestion> wrongBookQuestionList = new ArrayList<>();

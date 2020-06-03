@@ -33,7 +33,7 @@
     </select>
   <select id="getQuestion" resultMap="BaseResultMap">
     select *
-    from tb_user
+    from tb_question
     <where>
       <if test="type !=null">`type`=#{type}</if>
       <if test="category !=null">and locate(#{category},category)&gt;0</if>
