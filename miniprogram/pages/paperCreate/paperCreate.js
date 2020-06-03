@@ -6,20 +6,26 @@ var currentMinute = date.getMinutes();
 Page({
     data: {},
 
-    examName: function(e) {
+    examName: function (e) {
         this.setData({
             examName: e.detail.value
         })
         console.log("examName", e.detail.value);
     },
 
-    detail: function(e) {
+    detail: function (e) {
         this.setData({
             detail: e.detail.value
         })
     },
 
-    createPaper: function(e) {
+    back: function (e) {
+        wx.redirectTo({
+            url: "../manageGroup/manageGroup.wxml"
+        })
+    },
+
+    createPaper: function (e) {
         var that = this;
         var groupId = [this.data.groupId];
         var examId = this.data.examId;
@@ -49,7 +55,7 @@ Page({
                     "Content-Type": "application/json"
                 },
                 data: JSON.stringify(data),
-                success: function(res) {
+                success: function (res) {
                     console.log(res);
                     if (res.data.status == 1) {
                         app.globalData.examName = name;
@@ -69,14 +75,14 @@ Page({
                         console.log(res.data.info);
                     }
                 },
-                fail: function(error) {
+                fail: function (error) {
                     console.log(error);
                 }
             })
         }
     },
 
-    onLoad: function(options) {
+    onLoad: function (options) {
         var createExamUrl = app.globalData.url + "exam/createExam";
         this.setData({
             createExamUrl: createExamUrl,

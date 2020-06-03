@@ -1,4 +1,4 @@
-/* components/showShort/showShort.wxss */
+/* components/showFill/showFill.wxss */
 .que-container{
   margin-top: 10rpx;
   padding: 30rpx 20rpx;

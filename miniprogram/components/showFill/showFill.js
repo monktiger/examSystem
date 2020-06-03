@@ -1,4 +1,4 @@
-// components/multiQue/multiQue.js
+// components/showFill/showFill.js
 Component({
   /**
    * 组件的属性列表
@@ -11,6 +11,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+
   },
 
   /**
@@ -19,22 +20,23 @@ Component({
   methods: {
     getStorage:function(e){
       this.setData({
-        multiQues:e.detail.newStorage
+        fillQues:e.detail.newStorage
       })
       console.log("newStorage",e.detail)
     },
   },
   lifetimes: {
     attached: function (e) {
-      // 获取多选题缓存
+      // 获取简答题缓存
+      var fillQues = wx.getStorageSync('fill_ques');
       var multiQues = wx.getStorageSync('multi_ques');
       var SingleQus = wx.getStorageSync('single_ques');
-      var SingleQusLen=SingleQus.length
+      var judgeQues = wx.getStorageSync('judge_ques');
+      var quesLen=SingleQus.length+multiQues.length+judgeQues.length;
       this.setData({
-        multiQues: multiQues,
-        SingleQusLen:SingleQusLen
+        fillQues: fillQues,
+        quesLen:quesLen
       })
-      console.log("multiQues",multiQues)
     }
   },
 })
