@@ -26,7 +26,11 @@ Component({
     changePage(e) {
       let data={
         examId:e.currentTarget.dataset.examid,
+        beginTime:e.currentTarget.dataset.begintime,
+        endTime:e.currentTarget.dataset.endtime,
       }
+      console.log(data);
+      
       this.triggerEvent('changePage',data)
       // console.log("examId",app.globalData.examId)
     },

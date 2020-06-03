@@ -16,11 +16,17 @@ Component({
     cur: '',
   },
   observers: {
-    'question.answer': function(answer) {
+    'question': function(answer) {
       let that = this
-      that.setData({
-        cur: that.data.question.answer || ''
-      })
+      if(that.data.question.current){
+        that.setData({
+          cur: that.data.question.current || ''
+        })
+      }else{
+        that.setData({
+          cur: that.data.question.answer || ''
+        })
+      }
     },
     },
   /**

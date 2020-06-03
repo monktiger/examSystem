@@ -5,6 +5,8 @@
   class="paper padding flex  margin-top bg-white" 
   catch:tap="changePage"
   data-examid="{{item.id}}"
+  data-begintime="{{item.beginTime}}"
+  data-endtime="{{item.endTime}}"
   >
   <!-- 图标 -->
     <view 
