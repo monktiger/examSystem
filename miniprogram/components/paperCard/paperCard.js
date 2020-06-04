@@ -66,8 +66,10 @@ Component({
         },
         success: function (result) {
           console.log(result);
+          let paperList = that.data.paperList;
+          paperList.splice(that.data.index,1);
           that.setData({
-            paperList: that.data.paperList.splice(that.data.index,1),   
+            paperList:paperList,   
           })
           that.hideModal()
         }, fail(e) {
