@@ -44,5 +44,37 @@ Component({
         modalName: null
       })
     },
+    showbottomModal(e){
+      console.log(e.currentTarget.dataset.examid);
+      
+      this.setData({
+        examId:e.currentTarget.dataset.examid,
+        index:e.currentTarget.dataset.index,
+        modalName: e.currentTarget.dataset.target,
+      })
+    },
+    deleteExam(e){
+      let that = this
+      wx.request({
+        url: 'http://monktiger.natapp1.cc/exam/deleteExam',
+        method: 'GET',
+        data: {
+          examId: that.data.examId,
+        },
+        header: {
+          "token": app.globalData.token
+        },
+        success: function (result) {
+          console.log(result);
+          that.setData({
+            paperList: that.data.paperList.splice(that.data.index,1),   
+          })
+          that.hideModal()
+        }, fail(e) {
+          console.log(e);
+  
+        }
+      })
+    }
     }
 })

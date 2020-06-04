@@ -100,7 +100,7 @@ Page({
       method: 'GET',
       data: {
         groupId: app.globalData.groupId,
-        status:app.globalData.pageId
+        status:0
       },
       header: {
         "token": app.globalData.token
