@@ -89,10 +89,15 @@
     <view class="flex justify-center border two-btn" bind:tap="preQuestion">上一题</view>
     <!-- status:10004&&isScore=false 弹出评论框 -->
     <view 
-    wx:if="{{status==10004&&isScore==false?true:false}}"
+    wx:if="{{status==10004&&isJudge==false?true:false}}"
     class="flex justify-center two-btn" 
     data-target="showJudgeModal"
-    bind:tap="showJudge">写评论</view>
+    bind:tap="showJudge">写评价</view>
+    <view 
+    wx:elif="{{status==10004&&isScore==false?true:false}}"
+    class="flex justify-center two-btn" 
+    data-target="showJudgeModal"
+    bind:tap="addScore">提交</view>
     <view 
     wx:else
     class="flex justify-center two-btn" bind:tap="lastQuestion">{{btn}}</view>
@@ -120,7 +125,7 @@
                 <view class="flex align-center justify-between margin-top-lg margin-lr-lg margin-bottom-sm">
                         <view class="cuIcon-close text-lg " catchtap="hideModal"></view>
                         <view class="text-xl">评价</view>
-                        <view class="cu-btn bg-olive shadow-blur round m-submit" bindtap="submitJudge">提交</view>
+                        <view class="cu-btn bg-gradual-blue shadow-blur round m-submit" bindtap="submitJudge">提交</view>
                 </view>
                 <view class="flex justify-center">
                         <textarea maxlength="300" 

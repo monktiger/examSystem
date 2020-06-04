@@ -26,7 +26,8 @@ Page({
     // 问题列表
     questionList: [],
     //是否需要进行判分
-    isScore: app.globalData.isScore,
+    isScore: true,
+    isJudge:true,
     score: 0
   },
 
@@ -146,9 +147,10 @@ Page({
   },
   // 判断是否进行成绩上传并上传
   judgeScore(e) {
+    let that = this
     if (that.data.status == '10004' && that.data.isScore == false && that.data.displayQuestion.type == 5) {
       wx.request({
-        url: 'http://monktiger.natapp1.cc/exam/judge/score',
+        url: 'http://monktiger.natapp1.cc/judge/score',
         method: 'GET',
         data: {
           copyId: app.globalData.copyId,
@@ -166,6 +168,12 @@ Page({
       })
     }
   },
+  addScore(e){
+    this.judgeScore();
+    wx.navigateBack({
+      delta: 2
+    })
+  },
   // 弹出写评论的弹框
   showJudge(e) {
     this.judgeScore();
@@ -181,8 +189,9 @@ Page({
   },
   // 提交评价
   submitJudge(e) {
+    let that = this
       wx.request({
-        url: 'http://monktiger.natapp1.cc/exam/judge/score',
+        url: 'http://monktiger.natapp1.cc/judge/judge',
         method: 'GET',
         data: {
           copyId: app.globalData.copyId,
@@ -249,7 +258,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    console.log(app.globalData.isJudge);
+    
     this.setData({
+      isJudge:app.globalData.isJudge,
       isScore: app.globalData.isScore,
       inputJudge:'',
       score:0

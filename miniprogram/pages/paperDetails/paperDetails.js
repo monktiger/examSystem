@@ -137,27 +137,33 @@ Page({
           let score = 0;
           let btnName = '查看试卷';
           let isScore = true;
+          let isJudge = true;
           console.log(paperDetails);
-          
+          // 判断是否需要进行评论
+          if (paperDetails.judge == null) {
+            isJudge = false
+          }
           for (i = 0; i < paperDetails.questionList.length; i++) {
             // 试卷总分
             score = score + paperDetails.questionList[i].score;
             // 判断是否需要进行批改
             if (paperDetails.questionList[i].getScore == null) {
               console.log(paperDetails.questionList[i].getScore);
-              
+
               btnName = '批改试卷';
               isScore = false
             } else {
               console.log(paperDetails.questionList[i].getScore);
-              
+
               // 学生得分
               sum = sum + paperDetails.questionList[i].getScore;
             }
           }
-          app.globalData.isScore=isScore;
+          app.globalData.isJudge = isJudge;
+          app.globalData.isScore = isScore;
           that.setData({
-            isScore:isScore,// 是否需要进行批改
+            isJudge:isJudge,
+            isScore: isScore,// 是否需要进行批改
             status: status,
             paperDetails: paperDetails,
             btnName: btnName,
@@ -235,9 +241,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-this.setData({
-  isScore:true
-})
+    this.setData({
+      isScore: true
+    })
   },
 
   /**

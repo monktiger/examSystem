@@ -2,25 +2,37 @@
     <view slot="backText">返回</view>
     <view slot="content">试卷库</view>
 </cu-custom>
-<view class="cu-bar  search margin-top-sm ">
+<view style="width:100%" class="cu-bar  search margin-top-sm flex justify-center">
     <view bind:tap="showSearchModal" data-target="searchModal" class="search-form round padding padding-left-xl bg-white flex justify-between">
         <view class="text-gray">搜索</view>
         <text class="cuIcon-search text-blue" style="font-size:40rpx" bindtap="toSearch"></text>
     </view>
 </view>
-<view wx:for="{{}}">
-    
+<view class="margin-bottom-lg" wx:for="{{questionList}}" wx:key="index">
+    <!-- 单选 -->
+    <singleAnswer wx:if="{{item.type == 1}}" question="{{item}}" index="{{index + 1}}"></singleAnswer>
+    <!-- 多选 -->
+    <multipleChoice wx:if="{{item.type == 2}}" question="{{item}}" index="{{index + 1}}"></multipleChoice>
+    <!-- 判断 -->
+    <judge wx:if="{{item.type == 4}}" question="{{item}}" index="{{index + 1}}"></judge>
+    <!-- 填空 -->
+    <fill wx:if="{{item.type == 3}}" question="{{item}}" index="{{index + 1}}"></fill>
+    <!-- 主观 -->
+    <subjective wx:if="{{item.type == 5}}" question="{{item}}" index="{{index + 1}}"></subjective>
+    <view class="flex justify-center">
+        <button class="cu-btn bg-gradual-blue round shadow-blur lg  btn" bindtap="toCopy" data-question="{{item}}">
+            添加到试卷
+        </button>
+    </view>
 </view>
-<singleAnswer></singleAnswer>
-<multipleChoice></multipleChoice>
-<judge></judge>
-<fill></fill>
-<subjective></subjective>
+<view wx:if="{{isEnd}}" class="text-gray text-lg margin-lr margin-tb-xl bottom-end" hover-class="none" hover-stop-propagation="false">
+    ——（＞人＜；）到底啦不要再刷啦——
+</view>
 <!-- // 考试已经结束，等待老师批改 -->
 <view class="cu-modal  {{modalName=='searchModal'?'show':''}}" catchtouchmove>
     <view style="border-radius: 50rpx;" class="cu-dialog middle-modal">
         <view class="box padding " hover-class="none" hover-stop-propagation="false">
-            <view class="flex justify-end ">
+            <view class="flex justify-end margin-right">
                 <view class="cuIcon-close " style="font-size:40rpx" catchtap="hideModal"></view>
             </view>
             <view class="flex justify-center" style="text-align:left">

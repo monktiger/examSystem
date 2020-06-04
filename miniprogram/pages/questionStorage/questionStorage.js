@@ -14,6 +14,7 @@ Page({
     search: null,
     category: null,
     type: 1,
+    isEnd: false,
   },
   // type下拉列表
   typeChange(e) {
@@ -48,7 +49,7 @@ Page({
   toSearch(e) {
     let that = this
     let data = {};
-    if (that.data.search != null) {
+    if (that.data.search != null || that.data.search == '') {
       data.search = that.data.search;
     }
     if (that.data.category != null) {
@@ -57,23 +58,10 @@ Page({
     if (that.data.typeIndex != 0) {
       data.type = that.data.typeIndex
     }
-    data.pageNum=1
+    data.pageNum = 1
     console.log(data);
-
-    wx.request({
-      url: 'http://monktiger.natapp1.cc/question/getQuestionList',
-      method: 'GET',
-      data: data,
-      header: {
-        "token": app.globalData.token
-      },
-      success: function (result) {
-        console.log(result);
-        that.hideModal();
-      }, fail(e) {
-        console.log(e);
-      }
-    })
+    // 获得搜索列表
+    that.getQuestionList(data);
   },
   // 模态窗
   showSearchModal(e) {
@@ -84,6 +72,37 @@ Page({
   hideModal(e) {
     this.setData({
       modalName: null
+    })
+  },
+  toCopy(e) {
+    let question = e.detail.question
+    app.globalData.question = question;
+    wx.wx.navigateBack({
+      delta: 1
+    });
+  },
+  // 获得列表
+  getQuestionList(data) {
+    let that = this
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/question/getQuestionList',
+      method: 'GET',
+      data: data,
+      header: {
+        "token": app.globalData.token
+      },
+      success: function (result) {
+        console.log(result);
+        let paperDetails = result.data;
+        that.setData({
+          // 试卷的题
+          questionList: paperDetails.questionList,
+          pageNum: 1
+        })
+        that.hideModal();
+      }, fail(e) {
+        console.log(e);
+      }
     })
   },
   /**
@@ -99,30 +118,14 @@ Page({
   onReady: function () {
 
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
-    wx.request({
-      url: 'http://monktiger.natapp1.cc/question/getQuestionList',
-      method: 'GET',
-      data: {
-        pageNum: 1,
-        search: null,
-        category: null,
-        type: '2'
-      },
-      header: {
-        "token": app.globalData.token
-      },
-      success: function (result) {
-        console.log(result);
-      }, fail(e) {
-        console.log(e);
-      }
-    })
+    let that = this
+    let data = {}
+    data.pageNum = 1
+    that.getQuestionList(data)
   },
 
   /**
@@ -150,7 +153,51 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    console.log("ddd");
+    let that = this
+    that.setData({
+      pageNum: that.data.pageNum + 1
+    })
+    let data = {};
+    if (that.data.search != null || that.data.search == '') {
+      data.search = that.data.search;
+    }
+    if (that.data.category != null) {
+      data.category = that.data.category;
+    }
+    if (that.data.typeIndex != 0) {
+      data.type = that.data.typeIndex
+    }
+    data.pageNum = that.data.pageNum
+    console.log(data);
+    // 获得搜索列表
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/question/getQuestionList',
+      method: 'GET',
+      data: data,
+      header: {
+        "token": app.globalData.token
+      },
+      success: function (result) {
+        console.log(result);
+        let paperDetails = result.data;
+        that.setData({
+          // 试卷的题
+          questionList: that.data.questionList.concat(paperDetails.questionList),
+          pageNum: 1
+        })
+        if (paperDetails.questionList.length == 0) {
+          console.log(that.data.isEnd);
+          console.log(that.data.questionList);
+          that.setData({
+            isEnd: true
+          })
+        }
+        that.hideModal();
+      }, fail(e) {
+        console.log(e);
+      }
+    })
   },
 
   /**
