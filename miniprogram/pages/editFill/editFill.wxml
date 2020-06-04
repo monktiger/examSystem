@@ -1,14 +1,14 @@
-<!--pages/editShort/editShort.wxml-->
+<!--pages/editFill/editFill.wxml-->
 <view>
   <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
     <view slot="backText" catchtap="back">返回</view>
-    <view slot="content">编辑简答题</view>
+    <view slot="content">编辑填空题</view>
   </cu-custom>
 </view>
 <que-cmp />
 <view class="ans-container">
   <text class="current flex margin-xs">答案</text>
-  <textarea maxlength="300" class="text flex" placeholder="请输入答案"  value="{{current}}" bindinput='getAns'></textarea>
+  <textarea maxlength="300" class="text flex" placeholder="请输入答案" value="{{current}}" bindinput='getAns'></textarea>
 </view>
 <view class="cu-form-group margin-top">
   <view class="title">题目分值</view>
@@ -19,4 +19,3 @@
   </picker>
 </view>
 <button class="cu-btn block bg-pink shadow margin-tb-sm lg" catchtap="confirm">确认</button>
-

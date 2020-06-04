@@ -1,4 +1,4 @@
-// pages/editSingle/editSingle.js
+// pages/editJudge/editJudge.js
 const _UTIL = require("../../utils/util.js");
 var app = getApp();
 Page({
@@ -7,7 +7,7 @@ Page({
         picker: ['1', '2', '3', '4', '5'],
         array: [0, 0], //默认显示一个
         inputVal: [], //所有input的内容
-        checked:[]
+        checked: []
     },
 
     PickerChange(e) {
@@ -20,73 +20,64 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function (options) {
         var addQuestionUrl = app.globalData.url + "exam/addQuestion";
         this.setData({
             addQuestionUrl: addQuestionUrl,
-            examId: app.globalData.examId
+            examId: app.globalData.examId,
         });
 
         // 如果有editQueNum则是修改题目：先取出原数据，赋值
-        var editQueNum=app.globalData.editQueNum;
-        if(editQueNum){
-            var editques=wx.getStorageSync('single_ques');
-            var editData=editques[editQueNum].data;
-            var currentIdx=editData.currentIdx;
-            var score=editData.score;
-            var queId=editData.queId;
-            wx.setStorageSync("title",editData.title);
-            var checkedArr=[];
-            for(var i=0;i<4;i++){
-                if(i==currentIdx){
+        var editQueNum = app.globalData.editQueNum;
+        if (editQueNum) {
+            var editques = wx.getStorageSync('judge_ques');
+            var editData = editques[editQueNum].data;
+            var currentIdx = editData.currentIdx;
+            var score = editData.score;
+            var queId = editData.queId;
+            wx.setStorageSync("title", editData.title);
+            var checkedArr = [];
+            for (var i = 0; i < 2; i++) {
+                if (i == currentIdx) {
                     checkedArr.push(true)
-                } else{
+                } else {
                     checkedArr.push(false)
                 }
             };
             this.setData({
-                inputVal:[editData.answerA,editData.answerB,editData.answerC||"",editData.answerD||""],
-                checked:checkedArr,
-                index:parseInt(score)-1,
-                current:editData.current,
-                editQueNum:editQueNum,
-                queId:queId
+                checked: checkedArr,
+                index: parseInt(score) - 1,
+                current: editData.current,
+                editQueNum: editQueNum,
+                queId: queId
             })
-            console.log("index",this.data.index)
+            console.log("index", this.data.index)
         }
     },
 
     //返回
-    back: function(e) {
+    back: function (e) {
         wx.redirectTo({
             url: "/pages/editPaper/editPaper"
         })
     },
 
     // 提交单选题
-    confirm: function(e) {
+    confirm: function (e) {
         var that = this;
         var title = wx.getStorageSync("title");
         var score = parseInt(this.data.index) + 1;
-        var answerA = this.data.inputVal[0];
-        var answerB = this.data.inputVal[1];
-        var answerC = this.data.inputVal[2];
-        var answerD = this.data.inputVal[3];
         var current = this.data.current;
         var currentIdx = this.data.currentIdx;
         var data = {
             "title": title,
             "score": score,
-            "type": 1,
+            "type": 4,
             "current": current,
-            "answerA": answerA,
-            "answerB": answerB,
-            "answerC": answerC,
-            "answerD": answerD,
             "examId": this.data.examId,
-            "questionId":this.data.queId||""
+            "questionId": this.data.queId||""
         };
-        if (!title || !score || !answerA || !answerB || !current) {
+        if (!title || !score || !current) {
             wx.showToast({
                 title: '请填写所有题目信息！', // 标题
                 icon: 'none', // 图标类型，默认success
@@ -102,17 +93,17 @@ Page({
                     "Content-Type": "application/json"
                 },
                 data: JSON.stringify(data),
-                success: function(res) {
+                success: function (res) {
                     console.log(res)
                     if (res.data.status == 1) {
-                        data.id=res.data.id; 
-                        data.type=res.data.type;
+                        data.id = res.data.id;
+                        data.type = res.data.type;
                         // 设置题目缓存
-                        var singleQues = wx.getStorageSync('single_ques');
+                        var judgeQues = wx.getStorageSync('judge_ques');
                         var arr = []
-                        for (let i in singleQues) {
+                        for (let i in judgeQues) {
                             let o = {};
-                            o[i] = singleQues[i];
+                            o[i] = judgeQues[i];
                             arr.push(o[i])
                         }
                         data.currentIdx = currentIdx;
@@ -126,13 +117,13 @@ Page({
                             data: data,
                         })
                         wx.removeStorage({
-                            key: 'single_ques',
+                            key: 'judge_ques',
                             success(res) {
                                 console.log(res)
                             }
                         })
                         console.log("arr:", arr);
-                        wx.setStorageSync('single_ques', arr);
+                        wx.setStorageSync('judge_ques', arr);
                         wx.setStorageSync('title', "");
                         if(app.globalData.isEdit){
                             wx.redirectTo({
@@ -147,7 +138,7 @@ Page({
                         console.log(res.msg);
                     }
                 },
-                fail: function(error) {
+                fail: function (error) {
                     console.log(error);
                 }
             })
@@ -155,7 +146,7 @@ Page({
     },
 
     //获取input的值
-    getInputVal: function(e) {
+    getInputVal: function (e) {
         var nowIdx = e.currentTarget.dataset.idx; //获取当前索引
         var val = e.detail.value; //获取输入的值
         var oldVal = this.data.inputVal;
@@ -167,7 +158,7 @@ Page({
     },
 
     //添加input
-    addInput: function() {
+    addInput: function () {
         var old = this.data.array;
         var oldLen = old.length;
         if (oldLen > 3) {
@@ -187,7 +178,7 @@ Page({
     },
 
     //删除input
-    delInput: function(e) {
+    delInput: function (e) {
         var old = this.data.array;
         var oldLen = old.length;
         if (oldLen < 3) {
@@ -224,26 +215,18 @@ Page({
 
     // 获取check值
     radioChange(e) {
-        console.log('radio发生change事件，携带value值为：', e)
-        var currentIdx, current;
-        const items = this.data.inputVal
-        for (let i = 0, len = items.length; i < len; ++i) {
-            if (items[i] === e.detail.value) {
-                currentIdx = i;
-            }
-        }
-        if (currentIdx == 0) {
-            current = "A"
-        } else if (currentIdx == 1) {
-            current = "B"
-        } else if (currentIdx == 2) {
-            current = "C"
-        } else if(currentIdx == 3){
-            current = "D"
+        console.log('radio发生change事件，携带value值为：', e.detail.value)
+        var current = "";
+        if (e.detail.value == 0) {
+            var currentIdx = 0;
+            current = "A";
+        } else if (e.detail.value == 1) {
+            var currentIdx = 1;
+            current = "B";
         }
         this.setData({
             current: current,
-            currentIdx: currentIdx
+            currentIdx:currentIdx
         })
 
     }

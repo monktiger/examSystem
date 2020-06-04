@@ -1,6 +1,6 @@
 <!--pages/paperCreate/paperCreate.wxml-->
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-  <view slot="backText">返回</view>
+  <view slot="backText" catchtap="back">返回</view>
   <view slot="content">新建试题</view>
 </cu-custom>
 <view>

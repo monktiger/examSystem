@@ -20,11 +20,11 @@ Page({
       deleteMemberUrl: deleteMemberUrl,
       groupId: app.globalData.groupId
     });
-    this.getMemberListData(showMemberUrl,0);
+    this.getMemberListData(showMemberUrl);
   },
 
   // 获得组成员列表
-  getMemberListData: function (showMemberUrl,memberName) {
+  getMemberListData: function (showMemberUrl) {
     var that = this;
     var groupId = JSON.stringify(this.data.groupId);
     console.log(this.data.groupId)
@@ -41,10 +41,11 @@ Page({
       success: function (res) {
         console.log("getMemberListData",res);
         if (res.data.state == 1) {
-          that.processMemberData(res.memberList,memberName);
+          // that.processMemberData(res.memberList,memberName);
           that.setData({
             memberList: res.data.memberList
           });
+          wx.setStorageSync('memberList', res.data.memberList);
         } else {
           console.log(res.msg);
         }
@@ -53,40 +54,6 @@ Page({
         console.log(error);
       }
     })
-  },
-
-  // 展示组成员列表
-  processMemberData: function (memberList, memberName) {
-    var members = [];
-    for (var idx in memberList) {
-      if (memberName) {
-        var names = memberList.filter((p) => {
-          return p.name == memberName;
-        });
-        pushMemberList(names,members);
-      } else {
-        pushMemberList(memberList,members);
-      }
-    }
-    this.setData({
-      members: members
-    });
-  },
-
-  // push成员列表
-  pushMemberList: function(memberList,members){
-    var subject = memberList[idx];
-    var name = subject.name;
-    if (name.length >= 6) {
-      name = name.substring(0, 6) + "...";
-    }
-    var temp = {
-      name: name,
-      avatarUrl: subject.avatarUrl,
-      openId: subject.openId,
-    }
-    members.push(temp);
-    return members;
   },
 
   // ListTouch触摸开始
@@ -129,15 +96,24 @@ Page({
   // 展示相应成员
   onBindConfirm: function (event) {
     var text = event.detail.value;
-    var showMemberUrl = this.data.showMemberUrl
-    this.getMemberListData(showMemberUrl,text);
+    let memberList=wx.getStorageSync('memberList');
+    let searchList=[];
+    for(let i in memberList){
+      if(memberList[i].name.indexOf(text)!=-1){
+        searchList.push(memberList[i]);
+      }
+    }
+    this.setData({
+      memberList: searchList
+    })
+    console.log("searchList",searchList)
   },
 
   onCancelImgTap: function (event) {
     this.setData({
       searchPanelShow: false,
-      // 把所有成员展示
-      searchResult: {}
+      searchVal:"",
+      memberList: wx.getStorageSync('memberList')
     })
   },
 

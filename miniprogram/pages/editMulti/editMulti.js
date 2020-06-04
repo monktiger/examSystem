@@ -1,4 +1,5 @@
 // pages/editMulti/editMulti.js
+const _UTIL = require("../../utils/util.js");
 var app = getApp();
 Page({
     data: {
@@ -6,6 +7,7 @@ Page({
         picker: ['1', '2', '3', '4', '5'],
         array: [0, 0], //默认显示一个
         inputVal: [], //所有input的内容
+        checked: []
     },
 
     PickerChange(e) {
@@ -24,6 +26,48 @@ Page({
             addQuestionUrl: addQuestionUrl,
             examId: app.globalData.examId
         });
+
+        // 如果有editQueNum则是修改题目：先取出原数据，赋值
+        var editQueNum = app.globalData.editQueNum;
+        if (editQueNum) {
+            var editques = wx.getStorageSync('multi_ques');
+            var editData = editques[editQueNum].data;
+            var current = editData.current;
+            var score = editData.score;
+            var queId = editData.queId;
+            wx.setStorageSync("title", editData.title);
+            var checkedArr = [];
+            if(current.indexOf('A')!=-1){
+                checkedArr.push(true)
+            } else{
+                checkedArr.push(false)
+            }
+            if(current.indexOf('B')!=-1){
+                checkedArr.push(true)
+            } else{
+                checkedArr.push(false)
+            }
+            if(current.indexOf('C')!=-1){
+                checkedArr.push(true)
+            } else{
+                checkedArr.push(false)
+            }
+            if(current.indexOf('D')!=-1){
+                checkedArr.push(true)
+            } else{
+                checkedArr.push(false)
+            }
+            console.log("checkedArr",checkedArr)
+            this.setData({
+                inputVal: [editData.answerA, editData.answerB, editData.answerC || "", editData.answerD || ""],
+                checked: checkedArr,
+                index: parseInt(score) - 1,
+                current: editData.current,
+                editQueNum: editQueNum,
+                queId: queId
+            })
+            console.log("index", this.data.index)
+        }
     },
 
     //返回
@@ -53,6 +97,7 @@ Page({
             "answerC": answerC,
             "answerD": answerD,
             "examId": this.data.examId,
+            "questionId":this.data.queId||""
         };
         if (!title || !score || !answerA || !answerB || !current) {
             wx.showToast({
@@ -73,6 +118,8 @@ Page({
                 success: function (res) {
                     console.log(res)
                     if (res.data.status == 1) {
+                        data.id = res.data.id;
+                        data.type = res.data.type;
                         // 设置题目缓存
                         var multiQues = wx.getStorageSync('multi_ques');
                         var arr = []
@@ -80,6 +127,12 @@ Page({
                             let o = {};
                             o[i] = multiQues[i];
                             arr.push(o[i])
+                        }
+                        // 如果是修改，则先把storage对应的题删掉 再重新push
+                        console.log("editQueNum",app.globalData.editQueNum)
+                        if(app.globalData.editQueNum){
+                            var editQueNum = that.data.editQueNum;
+                            _UTIL.arrRemoveObj(arr, arr[editQueNum]);
                         }
                         arr.push({
                             data: data,
@@ -92,9 +145,16 @@ Page({
                         })
                         console.log("arr:", arr);
                         wx.setStorageSync('multi_ques', arr);
-                        wx.redirectTo({
-                            url: "../editPaper/editPaper"
-                        })
+                        wx.setStorageSync('title', "");
+                        if(app.globalData.isEdit){
+                            wx.redirectTo({
+                                url: "../paper/paper"
+                            })
+                        } else{
+                            wx.redirectTo({
+                                url: "../editPaper/editPaper"
+                            })
+                        }
                     } else {
                         console.log(res.msg);
                     }

@@ -1,4 +1,4 @@
-// pages/editShort/editShort.js
+// pages/editFill/editFill.js
 const _UTIL = require("../../utils/util.js");
 var app = getApp();
 Page({
@@ -36,7 +36,7 @@ Page({
     var data = {
       title: title,
       score: score,
-      type: 5,
+      type: 3,
       current: current,
       questionId: this.data.queId||"",
       "examId": this.data.examId,
@@ -63,11 +63,11 @@ Page({
             data.id = res.data.id;
             data.type = res.data.type;
             // 设置题目缓存
-            var shortQues = wx.getStorageSync('short_ques');
+            var fillQues = wx.getStorageSync('fill_ques');
             var arr = []
-            for (let i in shortQues) {
+            for (let i in fillQues) {
               let o = {};
-              o[i] = shortQues[i];
+              o[i] = fillQues[i];
               arr.push(o[i])
             }
             // 如果是修改，则先把storage对应的题删掉 再重新push
@@ -77,17 +77,22 @@ Page({
               _UTIL.arrRemoveObj(arr, arr[editQueNum]);
             }
             arr.push({
-              data: data
+              data: data,
             })
             wx.removeStorage({
-              key: 'short_ques',
+              key: 'fill_ques',
               success(res) {
                 console.log(res)
               }
             })
             console.log("arr:", arr);
-            wx.setStorageSync('short_ques', arr);
-            wx.setStorageSync('title', "");
+            wx.setStorageSync('fill_ques', arr);
+            wx.removeStorage({
+              key: 'title',
+              success(res) {
+                console.log(res)
+              }
+            })
             if (app.globalData.isEdit) {
               wx.redirectTo({
                 url: "../paper/paper"
@@ -115,10 +120,11 @@ Page({
     });
     // 如果有editQueNum则是修改题目：先取出原数据，赋值
     var editQueNum = app.globalData.editQueNum;
+    console.log("editQueNum",editQueNum)
     if (editQueNum) {
-      var editques = wx.getStorageSync('short_ques');
+      var editques = wx.getStorageSync('fill_ques');
+      console.log("editques",editques);
       var editData = editques[editQueNum].data;
-      console.log("editData",editData)
       var score = editData.score;
       var queId = editData.queId;
       wx.setStorageSync("title", editData.title);
