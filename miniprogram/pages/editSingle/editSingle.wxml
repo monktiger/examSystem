@@ -13,7 +13,7 @@
     <radio-group class="radio-group" bindchange="radioChange">
       <block wx:for="{{array}}" wx:for-index='idx'>
         <view class="option-group">
-          <radio class="margin-right-sm" checked="{{checked[idx]}}" data-idx="{{idx}}" value='{{inputVal[idx]}}'></radio>
+          <radio class="margin-right-sm" data-idx="{{idx}}" value='{{inputVal[idx]}}'></radio>
           <!-- input -->
           <input class="basis-xl" placeholder="输入选项" data-idx='{{idx}}' value='{{inputVal[idx]}}' bindinput='getInputVal'></input>
           <!-- 删除按钮 -->

@@ -2,8 +2,6 @@
   "usingComponents": {
     "showShort-cmp": "/components/showShort/showShort",
     "optionQue-cmp": "/components/showSingle/showSingle",
-    "multiQue-cmp": "/components/showMulti/showMulti",
-    "showFill-cmp": "/components/showFill/showFill",
-    "judgeQue-cmp": "/components/showJudge/showJudge"
+    "multiQue-cmp": "/components/showMulti/showMulti"
   }
 }

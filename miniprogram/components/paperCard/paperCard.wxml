@@ -5,13 +5,17 @@
   class="paper padding flex  margin-top bg-white" 
   catch:tap="changePage"
   data-examid="{{item.id}}"
+  data-begintime="{{item.beginTime}}"
+  data-endtime="{{item.endTime}}"
   >
   <!-- 图标 -->
     <view 
     wx:if="{{pageId==0?true:false}}"
     class="cuIcon-moreandroid more text-blue" 
     style="font-size:40rpx"
-    catch:tap="showModal"
+    catch:tap="showbottomModal"
+    data-examid="{{item.id}}"
+    data-index="{{index}}"
     data-target="deleteModal"
     ></view>
     <!-- 分数 -->
@@ -29,8 +33,11 @@
     <view class="cu-dialog modal ">
         <view class="cu-list menu text-center ">
             <view class="cu-item">
-                <view class="content text-lg text-gray padding-top-sm" bindtap="showModal" data-target="deleteTipsModal">
-                    解散出组
+                <view 
+                class="content text-lg text-gray padding-top-sm" 
+                bindtap="showModal" 
+                data-target="deleteTipsModal">
+                    删除试卷
                 </view>
             </view>
             <view class="cu-item margin-top-sm">
@@ -43,11 +50,11 @@
 <view class="cu-modal  {{modalName=='deleteTipsModal'?'show':''}}" catchtouchmove>
     <view class="cu-dialog middle-modal ">
         <view class="box margin-lr margin-top padding" hover-class="none" hover-stop-propagation="false">
-            <view class="text-lg" hover-class="none" hover-stop-propagation="false">确定退出组？</view>
+            <view class="text-lg" hover-class="none" hover-stop-propagation="false">确定删除试卷？</view>
             <view class="flex justify-between padding-lr btn-box margin-top" hover-class="none" hover-stop-propagation="false">
                 <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" 
                 style="letter-spacing:3rpx "
-                catch:tap="hideModal" 
+                catch:tap="deleteExam" 
                 >
                     确定
                 </button>

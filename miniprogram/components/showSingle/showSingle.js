@@ -18,16 +18,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    edit:function(e){
-      app.globalData.queId=e.currentTarget.dataset.num; //这道题在这套试卷里的题号
-      app.globalData.queNum=e.currentTarget.dataset.quenum; //这道题在这个题型里的题号
-    },
-    getStorage:function(e){
-      this.setData({
-        singleQues:e.detail.newStorage
-      })
-      console.log("newStorage",e.detail)
-    },
   },
   lifetimes: {
     attached: function (e) {
@@ -39,5 +29,4 @@ Component({
       console.log("singleQues",singleQues)
     }
   },
-
 })

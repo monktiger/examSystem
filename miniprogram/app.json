@@ -19,8 +19,7 @@
     "pages/editShort/editShort",
     "pages/editNickName/editNickName",
     "pages/editName/editName",
-    "pages/editFill/editFill",
-    "pages/editJudge/editJudge"
+    "pages/questionStorage/questionStorage"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F6F6F6",

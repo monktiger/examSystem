@@ -1,8 +1,4 @@
 /* pages/my/my.wxss */
-@import "/colorui/icon.wxss";
-@import "/colorui/main.wxss";
-@import "/colorui/animation.wxss";
-
 .UCenter-bg {
   height: 550rpx;
   position: relative;

@@ -25,13 +25,5 @@ Component({
       var title=e.detail.value;
       wx.setStorageSync("title",title);
     },
-  },
-  lifetimes: {
-    ready: function (e) {
-      var title=wx.getStorageSync("title");
-      this.setData({
-        title:title
-      })
-    }
-  },
+  }
 })

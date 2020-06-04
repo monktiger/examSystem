@@ -1,11 +1,9 @@
 <!--components/optionQue/optionQue.wxml-->
 <optionQue-cmp>
 	<block wx:for="{{singleQues}}" wx:key="{{singleQues.title}}" wx:for-index="idx">
-		<view class="container" >
+		<view class="container">
 			<view class="que-container">
 				<view>
-					<text>{{idx+1}}</text>
-					<text>. </text>
 					<text>{{singleQues[idx].data.title}}</text>
 				</view>
 				<view class="score-container">
@@ -37,6 +35,5 @@
 				</view>
 			</radio-group>
 		</view>
-		<button-cmp bind:toNewStorage="getStorage" quesId="{{singleQues[idx].data.id}}" examId="{{singleQues[idx].data.examId}}" quesIdx="{{idx}}" quesType="{{singleQues[idx].data.type}}"></button-cmp>
 	</block>
 </optionQue-cmp>

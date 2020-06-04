@@ -2,6 +2,6 @@
 <que-cmp>
   <view class="container">
     <text class="title">标题</text>
-    <textarea maxlength="300" class="text" placeholder="请输入标题" bindinput='getTitle' value="{{title?title:''}}"></textarea>
+    <textarea maxlength="300" class="text" placeholder="请输入标题" bindinput='getTitle'></textarea>
   </view>
 </que-cmp>

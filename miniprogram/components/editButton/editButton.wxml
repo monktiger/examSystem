@@ -1,8 +1,0 @@
-<!--components/editButton/editButton.wxml-->
-<button-cmp>
-	<view class="buttons" bindtap="getType">
-		<view bindtap="edit"><text class="cuIcon-writefill"></text>修改</view>
-		<view><text class="cuIcon-shopfill"></text>添加到试题库</view>
-		<view bindtap="delete"><text class="cuIcon-deletefill"></text>删除</view>
-	</view>
-</button-cmp>

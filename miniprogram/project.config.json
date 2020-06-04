@@ -165,24 +165,17 @@
 					"query": ""
 				},
 				{
-					"id": -21,
-					"name": "editJudge",
-					"pathName": "pages/editJudge/editJudge",
-					"query": ""
-				},
-				{
-					"id": -22,
-					"name": "editFill",
-					"pathName": "pages/editFill/editFill",
-					"query": ""
-				},
-				{
 					"id": -20,
 					"name": "welcome",
 					"pathName": "pages/welcome/welcome",
 					"query": ""
+				},
+				{
+					"id": -21,
+					"name": "questionStorage",
+					"pathName": "pages/questionStorage/questionStorage",
+					"query": ""
 				}
-
 			]
 		}
 	}

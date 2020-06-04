@@ -45,6 +45,7 @@ Page({
             app.globalData.avatarUrl = result.data.userInfo.avatarurl;
             wx.navigateTo({
               url: '/pages/nav/nav'
+              // url: '/pages/questionStorage/questionStorage'
             })        
           }, fail(e) {
             console.log(e);

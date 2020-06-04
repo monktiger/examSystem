@@ -15,11 +15,17 @@ Component({
     answerContent:''
   },
   observers: {
-    'question.answer': function(answer) {
+    'question': function(answer) {
       let that = this
-      that.setData({
-        answerContent: that.data.question.answer || ''
-      })
+      if (that.data.question.current) {
+        that.setData({
+          answerContent: that.data.question.current || ''
+        })
+      } else {
+        that.setData({
+          answerContent: that.data.question.answer || ''
+        })
+      }
     },
     },
   /**

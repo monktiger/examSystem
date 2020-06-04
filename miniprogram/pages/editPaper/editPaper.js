@@ -25,24 +25,6 @@ Page({
     })
   },
 
-  judge(e){
-    wx.redirectTo({
-      url: "/pages/editJudge/editJudge"
-    })
-  },
-
-  fill(e){
-    wx.redirectTo({
-      url: "/pages/editFill/editFill"
-    })
-  },
-
-  toStore(e){
-    wx.redirectTo({
-      url: "" // 试题库地址
-    })
-  },
-
   showType(e) {
     this.setData({
       show: true
@@ -80,18 +62,6 @@ Page({
       }
     })
     wx.removeStorage({
-      key: 'judge_ques',
-      success(res) {
-        console.log(res)
-      }
-    })
-    wx.removeStorage({
-      key: 'fill_ques',
-      success(res) {
-        console.log(res)
-      }
-    })
-    wx.removeStorage({
       key: 'short_ques',
       success(res) {
         console.log(res)
@@ -105,14 +75,13 @@ Page({
       icon: 'success', // 图标类型，默认success
       duration: 1500 // 提示窗停留时间，默认1500ms
     });
-    app.globalData.examName="";
     app.globalData.startDate="";
     app.globalData.endDate="";
   },
 
   // 修改试卷信息
   setPaperMsg: function (e) {
-    wx.redirectTo({
+    wx.navigateTo({
       url: "../paperCreate/paperCreate"
     })
   }

@@ -5,5 +5,6 @@
     "judge":"/components/question/judge/judge",
     "fill":"/components/question/fill/fill",
     "subjective":"/components/question/subjective/subjective"
-  }
+  },
+  "onReachBottomDistance": 50
 }

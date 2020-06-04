@@ -23,8 +23,6 @@
 <!-- 题目列表 -->
 <optionQue-cmp />
 <multiQue-cmp />
-<judgeQue-cmp />
-<showFill-cmp />
 <showShort-cmp />
 
 <view class="justify-center padding-tb-xl margin-bottom-xl">
@@ -46,27 +44,10 @@
 			<text>多选题</text>
 		</button>
 	</view>
-	<view class="margin-xl" catchtap="judge">
-		<button class="cu-btn line-mauve round shadow flex">
-			<text class="cuIcon-question lg margin-right-sm"></text>
-			<text>判断题</text>
-		</button>
-	</view>
-	<view class="margin-xl" catchtap="fill">
-		<button class="cu-btn line-mauve round shadow flex">
-			<text class="cuIcon-square lg margin-right-sm"></text>
-			<text>填空题</text>
-		</button>
-	</view>
 	<view class="margin-xl" catchtap="short">
 		<button class="cu-btn line-mauve round shadow flex">
 			<text class="cuIcon-edit lg margin-right-sm"></text>
 			<text>简答题</text>
-		</button>
-	</view>
-	<view class="margin-xl" catchtap="toStore">
-		<button class="cu-btn round shadow flex bg-mauve button-hover">
-			<text>从试题库添加</text>
 		</button>
 	</view>
 </view>
