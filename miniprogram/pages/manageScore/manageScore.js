@@ -14,9 +14,11 @@ Page({
   },
 
   // 获得成绩列表
-  getScoreList: function (url) {
+  getScoreList: function(url){
     var that = this;
     // 发起网络请求
+    console.log(app.globalData.groupId);
+    
     wx.request({
       url: url,
       method: "get",
@@ -28,10 +30,10 @@ Page({
         groupId: app.globalData.groupId,
       },
       success: function (res) {
-        console.log("getScoreList", res);
+        console.log("getScoreList",res);
         // that.processScore(res.scoreList);
         that.setData({
-          scoreList: res.data.scoreList
+          scoreList:res.data.scoreList
         })
         console.log(res.data.scoreList)
       },
@@ -60,12 +62,11 @@ Page({
   //     scores: scores
   //   });
   // },
-
+  
   // 查看详情
-  detail: function (e) {
-    app.globalData.copyId=e.currentTarget.dataset.copyid
-      wx.navigateTo({
-        url:'/pages/paperDetails/paperDetails'
-      })
+  detail:function(e){
+    wx.navigateTo({
+      url: '/pages/paperDetail/paperDetail',
+    })
   }
 })

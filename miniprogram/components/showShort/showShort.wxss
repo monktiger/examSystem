@@ -6,6 +6,10 @@
   display: flex;
   flex-direction: row;
 }
+.ans-container{
+  padding: 10rpx 20rpx;
+  background-color: #fff;
+}
 .score-container{
   margin-left: 10rpx;
   vertical-align: middle;

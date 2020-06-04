@@ -13,11 +13,8 @@
     <view class="solids-bottom flex">
       <view class="flex-sub text-center padding-sm margin-xs">{{scoreList[idx].studentName}}</view>
       <view class="flex-sub text-center padding-sm margin-xs">{{scoreList[idx].score}}</view>
-      <view class="flex-sub text-center padding-sm margin-xs cu-btn line-grey" 
-      catchtap="detail"
-      data-copyId="{{item.copyId}}"
-      >
-        查看
+      <view class="flex-sub text-center padding-sm margin-xs cu-btn line-grey" catchtap="detail">
+        <navigator url="/pages/paperDetails/paperDetails">查看</navigator>
       </view>
     </view>
   </block>

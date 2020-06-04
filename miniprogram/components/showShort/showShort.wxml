@@ -3,13 +3,20 @@
 	<block wx:for="{{shortQues}}" wx:key="{{shortQues.title}}" wx:for-index="idx">
 		<view class="que-container">
 			<view>
-				<text>{{shortQues[idx].title}}</text>
+				<text>{{idx+1+quesLen}}</text>
+				<text>. </text>
+				<text>{{shortQues[idx].data.title}}</text>
 			</view>
 			<view class="score-container">
 				<text>( 分值：</text>
-				<text class="score">{{shortQues[idx].score}}</text>
+				<text class="score">{{shortQues[idx].data.score}}</text>
 				<text> )</text>
 			</view>
 		</view>
+		<view class="ans-container">
+			<text class="score-container">答案： </text>
+			<text>{{shortQues[idx].data.current}}</text>
+		</view>
+		<button-cmp bind:toNewStorage="getStorage" quesId="{{shortQues[idx].data.id}}" examId="{{shortQues[idx].data.examId}}" quesIdx="{{idx}}" quesType="{{shortQues[idx].data.type}}"></button-cmp>
 	</block>
 </showShort-cmp>

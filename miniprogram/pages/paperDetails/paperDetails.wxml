@@ -3,70 +3,89 @@
   <view slot="backText">返回</view>
   <view slot="content">试卷详情</view>
 </cu-custom>
-<!-- 总分 -->
+<!-- <text class="text-xl">试卷详情页面</text> -->
+<!-- <navigator url="/pages/paper/paper">试卷</navigator> -->
+<!-- <view class="total text-lg margin-top padding-lr-xl text-black text-bold" hover-class="none" hover-stop-propagation="false">
+  总分4.0（满分5.0）
+</view>
+<view class="objective padding-xl">
+  <view class="title flex justify-between align-center">
+    <view class="text-lg text-bold text-gray">客观题</view>
+    <view class="text-df">
+      <text class="text-lg">18</text>
+      /20
+    </view>
+  </view>
+  <view class="grid col-5 text-center margin-top">
+    <view wx:for="{{10}}" wx:key="index">
+      <view class="box padding margin-lr-sm margin-tb-sm text-blue">
+        {{index+1}}
+        <view class="cu-tag bg-blue tag">
+          <text class="cuIcon-check text-white" selectable="false" space="false" decode="false"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="subjective padding-xl">
+  <view class="title flex justify-between align-center">
+    <view class="text-lg text-bold text-gray">主观题</view>
+    <view class="text-df">未批阅</view>
+  </view>
+  <view class="grid col-5 text-center margin-top">
+    <view wx:for="{{10}}" wx:key="index">
+      <view class="box padding margin-lr-sm margin-tb-sm text-blue">
+        {{index+1}}
+        <view class="cu-tag bg-red tag">
+          <text class="cuIcon-close text-white" selectable="false" space="false" decode="false"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="flex justify-center">
+  <button class="cu-btn bg-blue round shadow-blur sub  btn" bindtap="goPaper" data-target="Modal1">
+  查看试卷
+  </button>
+</view> -->
 <view class="total text-xl margin-top padding-lr-xl text-black">
   {{paperDetails.examName}}
-  <text class="text-df margin-left">(总分{{score}}分)</text>
+  <text class="text-df margin-left">(总分8分)</text>
 </view>
 <view class="box">
-<!-- 题目的数量 -->
   <view class="text-lg">
     <text class="text-gray">题目数量</text>
     <text class="margin-left">{{length}}道题</text>
   </view>
-  <!-- status为10001，10002，10003，20002时显示 -->
   <view 
-  wx:if="{{status!='10004'&&status!='20003'?true:false}}"
+  wx:if="{{status=='20002'?true:false}}"
   class="margin-top text-lg">
     <text class="text-gray">开始时间</text>
     <text class="margin-left">{{paperDetails.beginTime}}</text>
   </view> 
-   <!-- status为10001，10002，10003，20002时显示 -->
     <view 
-    wx:if="{{status!='10004'&&status!='20003'?true:false}}"
+    wx:if="{{status=='20002'?true:false}}"
     class="margin-top text-lg">
     <text class="text-gray">结束时间</text>
     <text class="margin-left">{{paperDetails.endTime}}</text>
   </view>
-  <!-- 评价 20003时显示和10004阅卷之后显示 -->
   <view 
-    wx:if="{{status=='20003'||status=='10004'?true:false}}"
+    wx:if="{{status!='20002'?true:false}}"
     class="margin-top text-lg">
     <text class="text-gray">评价</text>
-    <text class="margin-left">{{isJudge==true?judge:'未进行评价'}}</text>
+    <text class="margin-left">{{judge}}</text>
   </view>
-  <!-- 显示是否批改 -->
     <view 
-    wx:if="{{status=='10004'}}"
+    wx:if="{{status!='20002'?true:false}}"
     class="margin-top text-lg">
-    <text class="text-gray">批阅状态</text>
-    <text class="margin-left">{{isScore==false?'主观题未批阅':'批阅完毕'}}</text>
-  </view>
-  <!-- 最终得分 status为20003和10004阅卷后显示 -->
-   <!-- 这里还没偶写好 -->
-    <view 
-    wx:if="{{status=='20003'||status=='10004'?true:false}}"
-    class="margin-top text-lg">
-    <text class="text-bold text-orange ">{{status=='10004'&&isScore==false?'未加主观题得分':'最终得分'}}</text>
+    <text class="text-bold text-orange ">最终得分</text>
     <text class="margin-left text-bold text-orange">{{sum}}分（总分{{score}}）</text>
   </view>
 </view>
-<!-- 查看试卷/开始答题 -->
 <view class="flex justify-center">
   <button class="cu-btn bg-blue round shadow-blur lg  btn"
    bindtap="goPaper"
    >
   {{btnName}}
-  </button>
-</view> 
-
-<!-- 添加试题 status为10001-->
-<view 
-  wx:if="{{status=='10001'}}"
-  class="flex justify-center">
-  <button class="cu-btn bg-blue round shadow-blur lg  btn"
-   bindtap="goCreate"
-   >
-  添加试题
   </button>
 </view> 

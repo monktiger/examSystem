@@ -5,18 +5,9 @@
 </cu-custom>
 <view class="flex align-center solid padding-sm margin bg-white radius text-left">
   <text class="cuIcon-search lg text-gray padding-right"></text>
-  <input class="search" placeholder="请输入成员名称" bindconfirm="onBindConfirm" bindfocus="onBindFocus" />
+  <input class="search" placeholder="请输入成员名称" bindconfirm="onBindConfirm" bindfocus="onBindFocus" value="{{searchVal}}" />
   <text class="cuIcon-close lg text-gray padding-left" bindtap="onCancelImgTap"  wx:if="{{searchPanelShow}}"></text>
 </view>
-<!-- <view class="margin padding bg-white">
-  <view class="margin-bottom-sm">
-    <text class="text-xl text-black text-bold">组长</text>
-  </view>
-  <view>
-    <image class="cu-avatar lg round margin-right-sm" src="/image/logo.jpg"></image>
-    <text class="text-xl">Suppasit</text>
-  </view>
-</view> -->
 <view class="margin padding bg-white">
   <view class="flex align-center justify-between margin-bottom-sm">
     <text class="text-xl text-black text-bold">成员</text>
@@ -38,7 +29,3 @@
     </block>
   </view>
 </view>
-<!-- <view class="flex bar bg-white text-xl align-center justify-center shadow">
-  <text class="cuIcon-settings lg text-gray margin-right-sm"></text>
-  <text>管理</text>
-</view> -->

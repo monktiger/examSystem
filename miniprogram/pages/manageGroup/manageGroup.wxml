@@ -22,9 +22,6 @@
     <view class="text-lg margin-top-xs">设置</view>
   </view>
 </view>
-<view class="margin-bottom" hover-class="none" hover-stop-propagation="false">
-    <papercard class="papercard" bind:changePage="goManageScore" paperList="{{paperList}}" ></papercard>
-</view>
-
+  <papercard class="papercard" bind:changePage="goManageScore" paperList="{{paperList}}" ></papercard>
 
 

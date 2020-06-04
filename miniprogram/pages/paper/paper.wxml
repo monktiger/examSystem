@@ -5,137 +5,64 @@
 </cu-custom>
 <!-- <text class="text-xl">试卷页面</text> -->
 <!-- 单选 -->
-<singleAnswer id="singleAnswer" wx:if="{{displayQuestion.type == 1}}" question="{{displayQuestion}}" index="{{questionIndex + 1}}" bind:updateAnswer="submitAnwer"></singleAnswer>
+<singleAnswer
+id="singleAnswer" 
+wx:if="{{displayQuestion.type == 1}}" 
+question="{{displayQuestion}}" 
+index="{{questionIndex + 1}}" 
+bind:updateAnswer="submitAnwer"></singleAnswer>
 <!-- 多选 -->
-<multipleChoice id="multipleChoice" wx:if="{{displayQuestion.type == 2}}" question="{{displayQuestion}}" index="{{questionIndex + 1}}" bind:updateAnswer="submitAnwer"></multipleChoice>
+<multipleChoice
+ id="multipleChoice"
+ wx:if="{{displayQuestion.type == 2}}" 
+ question="{{displayQuestion}}" 
+ index="{{questionIndex + 1}}"
+ bind:updateAnswer="submitAnwer"></multipleChoice>
 <!-- 判断 -->
-<judge id="judge" wx:if="{{displayQuestion.type == 4}}" question="{{displayQuestion}}" index="{{questionIndex + 1}}" bind:updateAnswer="submitAnwer"></judge>
+<judge
+id="judge" 
+wx:if="{{displayQuestion.type == 4}}" 
+question="{{displayQuestion}}" 
+index="{{questionIndex + 1}}"
+bind:updateAnswer="submitAnwer"></judge>
 <!-- 填空 -->
-<fill id="fill" wx:if="{{displayQuestion.type == 3}}" question="{{displayQuestion}}" index="{{questionIndex + 1}}" bind:updateAnswer="submitAnwer"></fill>
-<!-- 主观 -->
-<subjective id="subjective" wx:if="{{displayQuestion.type == 5}}" question="{{displayQuestion}}" index="{{questionIndex + 1}}" bind:updateAnswer="submitAnwer"></subjective>
-<!-- 10004 20003答案 -->
-<view wx:if="{{(status == '20003'||status == '10004')&&displayQuestion.correct!=null}}">
+<fill
+id="fill"
+ wx:if="{{displayQuestion.type == 3}}" 
+ question="{{displayQuestion}}" 
+ index="{{questionIndex + 1}}"
+ bind:updateAnswer="submitAnwer"></fill>
+<!-- 主观 --> 
+<subjective 
+id="subjective"
+wx:if="{{displayQuestion.type == 5}}" 
+question="{{displayQuestion}}" 
+index="{{questionIndex + 1}}"
+bind:updateAnswer="submitAnwer"></subjective>
+<!-- 答案 -->
+<view wx:if="{{status == '20003'}}">
   <view class="score margin-top-xl margin-left text-lg">
-    <view wx:if="{{displayQuestion.judge==true}}" class="text-green">
-      答对了,正确答案 {{displayQuestion.correct}}
-    </view>
-    <view wx:if="{{displayQuestion.judge==false}}" class="text-red text-lg">
-      答错了,正确答案 {{displayQuestion.correct}}
-    </view>
+    <view 
+    wx:if="{{displayQuestion.judge==true}}"
+    class="text-green">你答对了,正确答案 {{displayQuestion.correct}}  </view>
+    <view 
+    wx:if="{{displayQuestion.judge==false}}"
+    class="text-red text-lg">你答错了,正确答案 {{displayQuestion.correct}} </view>
   </view>
 </view>
-<!-- status:10001 10002 10003 教师查看试卷 -->
-<view wx:if="{{status == '10003'||status == '10002'||status == '10001'}}">
-  <view class="score margin-top-xl margin-left text-lg">
-    <view class="text-green">答案：{{displayQuestion.current}}</view>
-  </view>
-</view>
-
-<!-- status:10001 编辑删除按钮 -->
-<view
-  wx:if="{{status=='10001'}}"
-  class="flex justify-around margin-top-lg">
-  <!-- 删除 -->
-  <button class="cu-btn bg-blue round shadow-blur lg " 
-  bindtap="showModal"
-  data-target="deleteTipsModal"
-   style="width:200rpx">
-    删除
-  </button>
-  <!-- 编辑 -->
-  <button class="cu-btn bg-blue round shadow-blur lg" bindtap="goPaperCreate" style="width:200rpx">
-    编辑
-  </button>
-</view>
-<!-- status:10004&&isScore=false 判分框 -->
-<view 
-  wx:if="{{status==10004&&isScore==false&&displayQuestion.type==5?true:false}}"
-  class=" margin-top-lg flex align-center margin-left">
-  <view 
-  style="line-height:40rpx"
-  class="text-lg margin-right">
-  判分:
-</view>
-<view
-  style="width: 40%;border: 1rpx solid #4b93c4;line-height: 40rpx;letter-spacing: 2rpx;border-radius: 20rpx;"
-  class="flex flex justify-center text-lg  ">
-      <textarea 
-    maxlength="20" 
-    placeholder="请输入分数" 
-    cursor-spacing="10" 
-    class="padding"
-    style="height: 100rpx !important;width: 95%;line-height: 40rpx;" 
-    focus="{{focus}}" 
-    show-confirm-bar="{{false}}"
-    bindinput="inputHd"></textarea>
-  </view>
-</view>
-
-
-
 <view class="bottom text-lg">
   <!-- 第一个状态 -->
-  <view class="flex justify-center one-btn" wx:if="{{questionIndex == 0?true:false}}" bind:tap="nextQuestion">
-    下一题
-  </view>
+    <view class="flex justify-center one-btn"
+    wx:if="{{questionIndex == 0?true:false}}"
+     bind:tap="nextQuestion">下一题</view>
   <!-- 第二个状态 -->
   <view wx:elif="{{questionIndex < length}}" style="width:100%" class="flex">
-    <view class="flex justify-center border two-btn" bind:tap="preQuestion">上一题</view>
-    <view class="flex justify-center two-btn" bind:tap="nextQuestion">下一题</view>
+    <view class="flex justify-center border two-btn" bind:tap="preQuestion">上一题 </view>
+    <view class="flex justify-center two-btn" bind:tap="nextQuestion">下一题 </view>
   </view>
-  <!-- 第三个状态 -->
+    <!-- 第三个状态 -->
   <view wx:elif="{{questionIndex == length}}" style="width:100%" class="flex">
     <view class="flex justify-center border two-btn" bind:tap="preQuestion">上一题</view>
-    <!-- status:10004&&isScore=false 弹出评论框 -->
-    <view 
-    wx:if="{{status==10004&&isJudge==false?true:false}}"
-    class="flex justify-center two-btn" 
-    data-target="showJudgeModal"
-    bind:tap="showJudge">写评价</view>
-    <view 
-    wx:elif="{{status==10004&&isScore==false?true:false}}"
-    class="flex justify-center two-btn" 
-    data-target="showJudgeModal"
-    bind:tap="addScore">提交</view>
-    <view 
-    wx:else
-    class="flex justify-center two-btn" bind:tap="lastQuestion">{{btn}}</view>
-  </view>
-</view>
-<!-- 删除提示模态框 -->
-<view class="cu-modal  {{modalName=='deleteTipsModal'?'show':''}}" catchtouchmove>
-  <view class="cu-dialog middle-modal ">
-    <view class="box margin-lr margin-top padding" hover-class="none" hover-stop-propagation="false">
-      <view class="text-lg" hover-class="none" hover-stop-propagation="false">确定删除试题？</view>
-      <view class="flex justify-between padding-lr btn-box margin-top" hover-class="none" hover-stop-propagation="false">
-        <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" style="letter-spacing:3rpx " catch:tap="delete">
-          确定
-        </button>
-        <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" style="letter-spacing:3rpx" bindtap="hideModal">
-          取消
-        </button>
-      </view>
-    </view>
-  </view>
-</view>
-<!-- 写评价模态框 -->
-<view class="cu-modal bottom-modal {{modalName=='showJudgeModal'?'show':''}}" catchtouchmove>
-        <view class="cu-dialog comment-modal" wx:if="{{modalName=='showJudgeModal'}}">
-                <view class="flex align-center justify-between margin-top-lg margin-lr-lg margin-bottom-sm">
-                        <view class="cuIcon-close text-lg " catchtap="hideModal"></view>
-                        <view class="text-xl">评价</view>
-                        <view class="cu-btn bg-gradual-blue shadow-blur round m-submit" bindtap="submitJudge">提交</view>
-                </view>
-                <view class="flex justify-center">
-                        <textarea maxlength="300" 
-                        cursor-spacing="10" 
-                        class="comment-text padding" 
-                        focus="{{focus}}" 
-                        show-confirm-bar="{{false}}" 
-                        bindinput="inputJudge"
-                        placeholder="请输入评价" 
-                        value="{{messageContent}}"></textarea>
-                </view>
-        </view>
+    <view class="flex justify-center two-btn" bind:tap="lastQuestion">{{btn}}</view>
+  </view> 
 </view>

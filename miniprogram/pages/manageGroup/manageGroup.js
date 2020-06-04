@@ -8,82 +8,25 @@ Page({
   data: {
     paperList: []
   },
-  // 去管理人员界面
   goManagePeople(e) {
     wx.navigateTo({
       url: '/pages/managePeople/managePeople',
     });
   },
-  // 去添加试题界面
   goPaperCreate(e) {
     wx.navigateTo({
       url: '/pages/paperCreate/paperCreate',
     });
   },
-  // 去设置界面
   goSetting(e) {
     wx.navigateTo({
       url: '/pages/groupSetting/groupSetting',
-    }); 
+    });
   },
-  // 去管理成绩页面
-  goManageScore(e) {  
-    wx.request({
-      url: 'http://monktiger.natapp1.cc/exam/inExam',
-      method: 'GET',
-      data: {
-        examId:e.detail.examId
-      },
-      header: {
-        "token": app.globalData.token
-      },
-      success: function (result) {
-        console.log(result.data.status);
-        let status = result.data.status
-        // let status = '10001'
-        if(status=='10001'){
-          // 跳转到试卷编辑页
-          app.globalData.stuStatus='10001'
-          app.globalData.beginTime=e.detail.beginTime,
-          app.globalData.endTime=e.detail.endTime,
-          app.globalData.examId=e.detail.examId
-          wx.navigateTo({
-            url:'/pages/paperDetails/paperDetails'
-          })
-        }else if(status=='10002'){
-          // 考试即将开始，跳转到试卷查看页
-        app.globalData.stuStatus='10002'
-        app.globalData.beginTime=e.detail.beginTime,
-        app.globalData.endTime=e.detail.endTime,
-        app.globalData.examId=e.detail.examId
-        wx.navigateTo({
-          url:'/pages/paperDetails/paperDetails'
-        })
-        }
-        else if(status=='10003'){
-          // 考试已经开始，跳转到试卷查看页
-          console.log(e.detail.beginTime);
-          
-          app.globalData.stuStatus='10003',
-          app.globalData.beginTime=e.detail.beginTime,
-          app.globalData.endTime=e.detail.endTime,
-          app.globalData.examId=e.detail.examId
-          wx.navigateTo({
-            url:'/pages/paperDetails/paperDetails'
-          })
-        }
-        else if(status=='10004'){
-          // 跳转到成绩排行页
-          app.globalData.stuStatus='10004'
-          app.globalData.examId=e.detail.examId
-          wx.navigateTo({
-            url: '/pages/manageScore/manageScore'
-          })
-        }
-      }, fail(e) {
-        console.log(e);
-
-      }
+  goManageScore(e) {
+    app.globalData.examId=e.detail.examId
+    wx.navigateTo({
+      url: '/pages/manageScore/manageScore'
     })
   },
   formatDate(now) { 

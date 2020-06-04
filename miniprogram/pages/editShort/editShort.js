@@ -1,16 +1,10 @@
 // pages/editShort/editShort.js
+const _UTIL = require("../../utils/util.js");
 var app = getApp();
 Page({
   data: {
     index: null,
     picker: ['1', '2', '3', '4', '5'],
-
-    //样例
-    short: {
-      "title": "这是一道多选题",
-      "score": 20,
-      "type": 5,
-    },
   },
 
   PickerChange(e) {
@@ -44,7 +38,7 @@ Page({
       score: score,
       type: 5,
       current: current,
-      questionId: "",
+      questionId: this.data.queId||"",
       "examId": this.data.examId,
     }
     if (!title || !score || !current) {
@@ -66,6 +60,8 @@ Page({
         success: function (res) {
           console.log("res:", res);
           if (res.data.status == 1) {
+            data.id = res.data.id;
+            data.type = res.data.type;
             // 设置题目缓存
             var shortQues = wx.getStorageSync('short_ques');
             var arr = []
@@ -74,9 +70,14 @@ Page({
               o[i] = shortQues[i];
               arr.push(o[i])
             }
+            // 如果是修改，则先把storage对应的题删掉 再重新push
+            console.log("editQueNum", app.globalData.editQueNum)
+            if (app.globalData.editQueNum) {
+              var editQueNum = that.data.editQueNum;
+              _UTIL.arrRemoveObj(arr, arr[editQueNum]);
+            }
             arr.push({
-              title: title,
-              score: score,
+              data: data
             })
             wx.removeStorage({
               key: 'short_ques',
@@ -86,9 +87,16 @@ Page({
             })
             console.log("arr:", arr);
             wx.setStorageSync('short_ques', arr);
-            wx.navigateTo({
-              url: "../editPaper/editPaper"
-            })
+            wx.setStorageSync('title', "");
+            if (app.globalData.isEdit) {
+              wx.redirectTo({
+                url: "../paper/paper"
+              })
+            } else {
+              wx.redirectTo({
+                url: "../editPaper/editPaper"
+              })
+            }
           } else {
             console.log("errorMsg:" + res.msg);
           }
@@ -105,6 +113,22 @@ Page({
       addQuestionUrl: addQuestionUrl,
       examId: app.globalData.examId
     });
-
+    // 如果有editQueNum则是修改题目：先取出原数据，赋值
+    var editQueNum = app.globalData.editQueNum;
+    if (editQueNum) {
+      var editques = wx.getStorageSync('short_ques');
+      var editData = editques[editQueNum].data;
+      console.log("editData",editData)
+      var score = editData.score;
+      var queId = editData.queId;
+      wx.setStorageSync("title", editData.title);
+      this.setData({
+        index: parseInt(score) - 1,
+        current: editData.current,
+        editQueNum: editQueNum,
+        queId: queId
+      })
+      console.log("index", this.data.index)
+    }
   }
 })

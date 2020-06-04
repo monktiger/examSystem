@@ -6,11 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    paperList:[],
+    paperList:[]
   },
   goPaperDetails(e){
-    
-    let that=this;
+   
     wx.request({
       url: 'http://monktiger.natapp1.cc/exam/inExam',
       method: 'GET',
@@ -23,14 +22,8 @@ Page({
       success: function (result) {
         console.log(result.data.status);
         let status = result.data.status
-        // let status = '20004';
         if(status=='20001'){
-          // 试卷还未开放，请耐心等待
-          that.setData({
-            modalName:'tipsModal',
-          })
         }else if(status=='20002'){
-          // 可以作答，跳转到作答页
         app.globalData.stuStatus='20002'
         app.globalData.examId=e.detail.examId
         wx.navigateTo({
@@ -38,7 +31,6 @@ Page({
         })
         }
         else if(status=='20003'){
-          // 考试已经结束，可以查看成绩，跳转到错题查看页
           app.globalData.stuStatus='20003'
           app.globalData.examId=e.detail.examId
           wx.navigateTo({
@@ -46,21 +38,14 @@ Page({
           })
         }
         else if(status=='20004'){
-          // 考试已经结束，等待老师批改
-          that.setData({
-            modalName:'tipsMarkModal',
-          })
+
         }
       }, fail(e) {
         console.log(e);
 
       }
     })
-  },
-  hideModal(e) {
-    this.setData({
-      modalName: null
-    })
+
   },
  formatDate(now) { 
     var year=now.getFullYear();  //取得4位数的年份
@@ -100,7 +85,7 @@ Page({
       method: 'GET',
       data: {
         groupId: app.globalData.groupId,
-        status:0
+        status:app.globalData.pageId
       },
       header: {
         "token": app.globalData.token

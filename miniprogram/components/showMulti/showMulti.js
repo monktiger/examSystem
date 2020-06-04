@@ -17,14 +17,22 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    getStorage:function(e){
+      this.setData({
+        multiQues:e.detail.newStorage
+      })
+      console.log("newStorage",e.detail)
+    },
   },
   lifetimes: {
     attached: function (e) {
       // 获取多选题缓存
       var multiQues = wx.getStorageSync('multi_ques');
+      var SingleQus = wx.getStorageSync('single_ques');
+      var SingleQusLen=SingleQus.length
       this.setData({
-        multiQues: multiQues
+        multiQues: multiQues,
+        SingleQusLen:SingleQusLen
       })
       console.log("multiQues",multiQues)
     }

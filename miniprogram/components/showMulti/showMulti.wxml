@@ -4,6 +4,8 @@
 		<view class="container">
 			<view class="que-container">
 				<view>
+					<text>{{idx+1+SingleQusLen}}</text>
+					<text>. </text>
 					<text>{{multiQues[idx].data.title}}</text>
 				</view>
 				<view class="score-container">
@@ -40,5 +42,6 @@
 				</view>
 			</checkbox-group>
 		</view>
+		<button-cmp bind:toNewStorage="getStorage" quesId="{{multiQues[idx].data.id}}" examId="{{multiQues[idx].data.examId}}" quesIdx="{{idx}}" quesType="{{multiQues[idx].data.type}}"></button-cmp>
 	</block>
 </multiQue-cmp>

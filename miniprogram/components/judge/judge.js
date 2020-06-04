@@ -15,19 +15,11 @@ Component({
     cur:''
   },
   observers: {
-    'question': function(answer) {
+    'question.answer': function(answer) {
       let that = this
-      console.log(that.data.question.current);
-      
-      if(that.data.question.current){
-        that.setData({
-          cur: that.data.question.current=='对'?'A':'B' || ''
-        })
-      }else{
-        that.setData({
-          cur: that.data.question.answer || ''
-        })
-      }
+      that.setData({
+        cur: that.data.question.answer || ''
+      })
     },
     },
   /**

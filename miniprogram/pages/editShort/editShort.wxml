@@ -8,7 +8,7 @@
 <que-cmp />
 <view class="ans-container">
   <text class="current flex margin-xs">答案</text>
-  <textarea maxlength="300" class="text flex" placeholder="请输入答案" bindinput='getAns'></textarea>
+  <textarea maxlength="300" class="text flex" placeholder="请输入答案"  value="{{current}}" bindinput='getAns'></textarea>
 </view>
 <view class="cu-form-group margin-top">
   <view class="title">题目分值</view>
