@@ -338,7 +338,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             User user = userJson.toJavaObject(User.class);
             Exam exam = examMapper.selectByPrimaryKey(examId);
             if(exam!=null){
-                if(user.getOpenId()==exam.getPublisherId()){
+                if(user.getOpenId().equals(exam.getPublisherId())){
                     if(exam.getStatus()==0){
                         examMapper.deleteByPrimaryKey(examId);
                         examToQuestionMapper.deletByExamId(examId);

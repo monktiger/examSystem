@@ -62,6 +62,9 @@ public class QuestionBankController {
         if(pageNum==0){
             pageNum = 1;
         }
+        if(type==0){
+            type=null;
+        }
         int total = questionMapper.getTotalQuestion(search,category,type);
         Page page = new Page(pageNum,total);
         List<Question> questionList = questionMapper.getQuestion(page.getStartIndex(),

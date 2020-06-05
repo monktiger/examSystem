@@ -5,10 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.cache.JedisUtil;
 import com.monktiger.examsystem.entity.Copy;
 import com.monktiger.examsystem.entity.CopyToQuestion;
+import com.monktiger.examsystem.entity.Exam;
 import com.monktiger.examsystem.entity.User;
 import com.monktiger.examsystem.mapper.CopyMapper;
 import com.monktiger.examsystem.mapper.CopyToQuestionMapper;
 import com.monktiger.examsystem.mapper.ExamMapper;
+import com.monktiger.examsystem.mapper.ExamToQuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,8 @@ import java.util.Map;
 @CrossOrigin
 @RequestMapping("/judge")
 public class JudgeController {
+    @Autowired
+    private ExamToQuestionMapper examToQuestionMapper;
     @Autowired
     private CopyToQuestionMapper copyToQuestionMapper;
     @Autowired
@@ -44,13 +48,16 @@ public class JudgeController {
         String userString = jedisUtilStrings.get(token);
         JSONObject userJSON = JSON.parseObject(userString);
         User user = userJSON.toJavaObject(User.class);
-        int check = copyMapper.checkCopyPublisher(copyId,user.getOpenId());
-        if(check==0){
+        //int check = copyMapper.checkCopyPublisher(copyId,user.getOpenId());
+        Copy copy = copyMapper.selectByPrimaryKey(copyId);
+        Exam exam = examMapper.selectByPrimaryKey(copy.getExamId());
+        if(!exam.getPublisherId().equals(user.getOpenId())){
             modelMap.put("status",-1);
             modelMap.put("msg","无权限");
             return modelMap;
         }
-        int type = copyToQuestionMapper.checkQuestionType(copyId,id);
+//        int type = copyToQuestionMapper.checkQuestionType(copyId,id);
+        int type = examToQuestionMapper.selectByPrimaryKey(exam.getId(),id).getType();
         if(type!=5){
             modelMap.put("status",-2);
             modelMap.put("msg","非主观题");
@@ -58,10 +65,18 @@ public class JudgeController {
         }
         CopyToQuestion copyToQuestion = new CopyToQuestion(copyId,id);
         copyToQuestion.setScore(score);
+        CopyToQuestion copyToQuestion1=copyToQuestionMapper.selectByPrimaryKey(copyId,id);
+        Integer oldScore=0;
+        if(copyToQuestion1!=null)
+          oldScore=copyToQuestion1.getScore();
+        if(oldScore==null){
+            oldScore=1;
+        }
         copyToQuestionMapper.updateByPrimaryKey(copyToQuestion);
-        Copy copy = copyMapper.selectByPrimaryKey(copyId);
         int totalScore = copy.getScore();
+        totalScore = totalScore-oldScore;
         totalScore = totalScore+score;
+        copy.setScore(totalScore);
         copyMapper.updateByPrimaryKeySelective(copy);
         int count=copyToQuestionMapper.selectCopyIdScore(copyId);
         if(count==0){
@@ -75,6 +90,7 @@ public class JudgeController {
         modelMap.put("msg","未登录");
     }
     return modelMap;
+
 }
 @RequestMapping(value = "/judge",method = RequestMethod.GET)
     public Map<String,Object> putJudge(HttpServletRequest request,
@@ -86,8 +102,9 @@ public class JudgeController {
         String userString = jedisUtilStrings.get(token);
         JSONObject userJSON = JSON.parseObject(userString);
         User user = userJSON.toJavaObject(User.class);
-        int check = copyMapper.checkCopyPublisher(copyId,user.getOpenId());
-        if(check==0){
+        Copy copy = copyMapper.selectByPrimaryKey(copyId);
+        Exam exam = examMapper.selectByPrimaryKey(copy.getExamId());
+        if(!exam.getPublisherId().equals(user.getOpenId())){
             modelMap.put("status",-1);
             modelMap.put("msg","无权限");
             return modelMap;

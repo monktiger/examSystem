@@ -1,10 +1,7 @@
 package com.monktiger.examsystem.service;
 
 import com.monktiger.examsystem.entity.*;
-import com.monktiger.examsystem.mapper.CopyMapper;
-import com.monktiger.examsystem.mapper.CopyToQuestionMapper;
-import com.monktiger.examsystem.mapper.ExamMapper;
-import com.monktiger.examsystem.mapper.ExamToQuestionMapper;
+import com.monktiger.examsystem.mapper.*;
 import com.monktiger.examsystem.service.impl.ExamServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
@@ -16,16 +13,27 @@ import java.util.List;
 
 @SpringBootTest
 public class ExamTest {
-//    @Autowired
-//    ExamServiceImpl examService;
-//    @Autowired
-//    ExamMapper examMapper;
-//    @Autowired
-//    ExamToQuestionMapper examToQuestionMapper;
-//    @Autowired
-//    CopyMapper copyMapper;
-//    @Autowired
-//    CopyToQuestionMapper copyToQuestionMapper;
+    @Autowired
+    ExamServiceImpl examService;
+    @Autowired
+    ExamMapper examMapper;
+    @Autowired
+    ExamToQuestionMapper examToQuestionMapper;
+    @Autowired
+    CopyMapper copyMapper;
+    @Autowired
+    CopyToQuestionMapper copyToQuestionMapper;
+    @Autowired
+    QuestionMapper questionMapper;
+
+    @Test
+    public void testQuestion(){
+        int total = questionMapper.getTotalQuestion(null,null,null);
+        Page page = new Page(1,total);
+        List<Question> questionList = questionMapper.getQuestion(page.getStartIndex(),
+                page.getPageSize(),null,null,null);
+    }
+
 //
 //    @Test
 //    public void selectExamByGroupAndStatus(){

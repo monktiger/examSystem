@@ -35,7 +35,8 @@
   </select>
   <select id="checkCopyPublisher" resultType="integer">
     select
-    count (*)
+    count(*)
+    from tb_copy
     where copyId = #{copyId,jdbcType=INTEGER}
     and openId = #{openId,jdbcType=VARCHAR}
   </select>
