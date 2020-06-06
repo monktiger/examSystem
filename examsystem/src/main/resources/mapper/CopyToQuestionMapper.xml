@@ -26,7 +26,7 @@
     and id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectCopyIdScore" resultType="java.lang.Integer">
-    select count (*)
+    select count(*)
     from tb_copy_to_question
     where copyId = #{copyId} and score is null;
   </select>

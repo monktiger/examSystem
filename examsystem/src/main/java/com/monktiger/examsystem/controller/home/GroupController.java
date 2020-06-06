@@ -1,5 +1,6 @@
 package com.monktiger.examsystem.controller.home;
 
+import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.cache.JedisUtil;
 import com.monktiger.examsystem.entity.Group;
 import com.monktiger.examsystem.entity.User;
@@ -9,7 +10,18 @@ import com.monktiger.examsystem.service.impl.GroupServiceImpl;
 import com.monktiger.examsystem.util.MD5Util;
 import com.monktiger.examsystem.utils.resultHander.CommonErrorEnum;
 import com.monktiger.examsystem.utils.resultHander.ResponseBean;
+import org.apache.http.Header;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +29,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +42,18 @@ import java.util.UUID;
 @RestController
 @CrossOrigin
 public class GroupController {
+
+    @Value("${wechat.appId}")
+    private String appId;
+
+    @Value("${wechat.appSecret}")
+    private String appSecret;
+
+    private String openId;
+
+    private String sessionKey;
+
+    private String accessToken;
 
     @Autowired
     private GroupServiceImpl groupService;
@@ -45,7 +73,6 @@ public class GroupController {
     private JedisUtil.Strings jedistUtilStrings;
 
     private Map<String,Object> modelMap = new HashMap<>();
-
 
 
     /**
@@ -311,4 +338,120 @@ public class GroupController {
     }
 
 
+    @RequestMapping("/QRCode")
+    public Map<String,Object> getQRCode(String groupId) throws UnsupportedEncodingException {
+
+        String getAccessToken = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appId+"&secret="+appSecret;
+        String getTicket = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=";
+        String json = "" +
+                "{\"expire_seconds\": 604800, " +
+                "\"action_name\": \"QR_STR_SCENE\", " +
+                "\"action_info\": {\"scene\": {\"groupId\": "+groupId+"}}} ";
+        String QRUel = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=";
+
+        /**
+         * 解析 resultString 获得 accessToken
+         */
+        JSONObject jsonObject = (JSONObject)JSONObject.parse(GetAction(getAccessToken));
+        String accessToken = (String)jsonObject.get("access_token");
+        getTicket = getTicket+accessToken;
+
+        System.out.println(getTicket);
+
+        /**
+         * 解析 resultString 获得 ticket expire_seconds url
+         */
+         jsonObject = (JSONObject)JSONObject.parse(PostAction(getTicket ,json));
+        String ticket = (String) jsonObject.get("ticket");
+        String expire_seconds = (String) jsonObject.get("expire_seconds");
+        String url = (String)jsonObject.get("url");
+
+
+        modelMap.put("expire_seconds",expire_seconds);
+        if(url!=null&&ticket!=null)
+        modelMap.put("url",url+URLEncoder.encode(ticket,"utf-8"));
+
+        return modelMap;
+    }
+
+    private static String GetAction(String url){
+        String resultString=null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = null;
+        try {
+            /**
+             * 创建url
+             */
+            URIBuilder builder = new URIBuilder(url);
+            URI uri = builder.build();
+
+            /**
+             * 创建 http GET请求
+             */
+            HttpGet httpGet = new HttpGet(uri);
+
+
+            /**
+             * 执行请求
+             */
+            response = httpClient.execute(httpGet);
+
+            /**
+             * 判断返回请求是否为 200
+             */
+            if (response.getStatusLine().getStatusCode() == 200) {
+                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return resultString;
+    }
+
+    private static String PostAction(String url,String json){
+        String resultString=null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = null;
+
+        /**
+         * 获取二维码
+         */
+        try {
+            /**
+             * 创建url
+             */
+            URIBuilder builder = new URIBuilder(url);
+            URI uri = builder.build();
+
+            /**
+             * 创建 http POST请求
+             */
+            HttpPost httpPost = new HttpPost(url);
+
+
+            StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+            httpPost.setEntity(entity);
+
+            /**
+             * 执行请求
+             */
+            response = httpClient.execute(httpPost);
+
+            /**
+             * 判断返回请求是否为 200
+             */
+            if (response.getStatusLine().getStatusCode() == 200) {
+                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+
 }
+
+

@@ -57,8 +57,8 @@ public class JudgeController {
             modelMap.put("msg","无权限");
             return modelMap;
         }
+//        int type = copyToQuestionMapper.checkQuestionType(copyId,id);
         int type = examToQuestionMapper.selectByPrimaryKey(exam.getId(),id).getType();
-        //int type = copyToQuestionMapper.checkQuestionType(copyId,id);
         if(type!=5){
             modelMap.put("status",-2);
             modelMap.put("msg","非主观题");
@@ -66,7 +66,10 @@ public class JudgeController {
         }
         CopyToQuestion copyToQuestion = new CopyToQuestion(copyId,id);
         copyToQuestion.setScore(score);
-        Integer oldScore=copyToQuestionMapper.selectByPrimaryKey(copyId,id).getScore();
+        CopyToQuestion copyToQuestion1=copyToQuestionMapper.selectByPrimaryKey(copyId,id);
+        Integer oldScore=0;
+        if(copyToQuestion1!=null)
+          oldScore=copyToQuestion1.getScore();
         if(oldScore==null){
             oldScore=0;
         }
@@ -88,6 +91,7 @@ public class JudgeController {
         modelMap.put("msg","未登录");
     }
     return modelMap;
+
 }
 @RequestMapping(value = "/judge",method = RequestMethod.GET)
     public Map<String,Object> putJudge(HttpServletRequest request,

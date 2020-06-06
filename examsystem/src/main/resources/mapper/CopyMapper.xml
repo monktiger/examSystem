@@ -37,6 +37,7 @@
   <select id="checkCopyPublisher" resultType="integer">
     select
     count(*)
+    from tb_copy
     where copyId = #{copyId,jdbcType=INTEGER}
     and openId = #{openId,jdbcType=VARCHAR}
   </select>
@@ -123,7 +124,7 @@
       values
       <if test="groupList!=null">
         <foreach collection="groupList" item="group" index="index" separator=",">
-          (#{groupList.groupId,jdbcType=VARCHAR},#{id,jdbcType=INTEGER},#{group.openId,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+          (#{group.groupId,jdbcType=VARCHAR},#{id,jdbcType=INTEGER},#{group.openId,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
         </foreach>
       </if>
     </insert>

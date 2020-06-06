@@ -167,6 +167,9 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 }
                 copyMapper.updateByPrimaryKeySelective(copy);
                 ctq.setAnswer(answer);
+
+
+
                 ctq.setAlready(true);
                 copyToQuestionMapper.updateByPrimaryKey(ctq);
                 modelMap.put("status",1);
@@ -220,6 +223,15 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 examToQuestionMapper.updateByPrimaryKeySelective(examToQuestion);
             }
             modelMap.put("status",1);
+            modelMap.put("id",examToQuestion.getId());
+            modelMap.put("title",examToQuestion.getTitle());
+            modelMap.put("score",examToQuestion.getScore());
+            modelMap.put("type",examToQuestion.getType());
+            modelMap.put("current",examToQuestion.getCurrent());
+            modelMap.put("answerA",examToQuestion.getAnswerA());
+            modelMap.put("answerB",examToQuestion.getAnswerB());
+            modelMap.put("answerC",examToQuestion.getAnswerC());
+            modelMap.put("answerD",examToQuestion.getAnswerD());
             modelMap.put("msg","题目插入成功");
         }else{
             modelMap.put("status",0);
@@ -252,7 +264,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 groupToExamMapper.UpdateAssociation(exam.getId(),groupList);
             }else {
                 Exam oldExam = examMapper.selectByPrimaryKey(exam.getId());
-                if(oldExam.getPublisherId()!=user.getOpenId()){
+                if(oldExam.getPublisherId().equals(user.getOpenId())){
                     modelMap.put("status",-2);
                     modelMap.put("info","无权操作");
                     return modelMap;
@@ -260,6 +272,9 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
                 examMapper.updateByPrimaryKey(exam);
                 groupToExamMapper.UpdateAssociation(exam.getId(),groupList);
             }
+            modelMap.put("examName",exam.getName());
+            modelMap.put("beginTime",exam.getBeginTime());
+            modelMap.put("endTime",exam.getEndTime());
             modelMap.put("status",1);
             modelMap.put("examId",exam.getId());
             modelMap.put("info","创建成功");
@@ -280,18 +295,19 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             User user = userJson.toJavaObject(User.class);
             Exam exam = examMapper.selectByPrimaryKey(examId);
             if(exam!=null){
-                if(user.getOpenId()==exam.getPublisherId()){
+                if(user.getOpenId().equals(exam.getPublisherId())){
                     if(exam.getStatus()==0){
                         ExamToQuestion examToQuestion=examToQuestionMapper.selectByPrimaryKey(examId,id);
                         if(examToQuestion!=null){
                         examToQuestionMapper.deletByExamId(examId);
                         modelMap.put("status",1);
-                        modelMap.put("msg","删除成功");}else{
+                        modelMap.put("msg","删除成功");
+                        }else{
                             modelMap.put("status",-4);
                             modelMap.put("msg","找不到该试题");
                             return modelMap;
                         }
-                    }else {
+                    }else{
                         modelMap.put("status",-3);
                         modelMap.put("msg","无法删除试题");
                     }
@@ -311,6 +327,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
         }
         return modelMap;
     }
+
     @RequestMapping(value = "deleteExam",method = RequestMethod.GET)
     public Map<String,Object> deleteExam(HttpServletRequest request,@RequestParam("examId")int examId){
         Map<String,Object> modelMap = new HashMap<>();
@@ -321,7 +338,7 @@ public Map<String,Object> inExam(@RequestParam("examId")int examId,HttpServletRe
             User user = userJson.toJavaObject(User.class);
             Exam exam = examMapper.selectByPrimaryKey(examId);
             if(exam!=null){
-                if(user.getOpenId()==exam.getPublisherId()){
+                if(user.getOpenId().equals(exam.getPublisherId())){
                     if(exam.getStatus()==0){
                         examMapper.deleteByPrimaryKey(examId);
                         examToQuestionMapper.deletByExamId(examId);

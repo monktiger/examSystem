@@ -64,6 +64,7 @@ private CopyToQuestionMapper copyToQuestionMapper;
        /**
         *  计算总分 exam
         */
+       if(examToQuestions!=null)
        for (ExamToQuestion etq: examToQuestions){
            totalScore+=etq.getScore();
            if(etq.getType()==5){
@@ -86,8 +87,7 @@ private CopyToQuestionMapper copyToQuestionMapper;
          */
          //copyMapper.createCopyList(groupId,groupList,e.getId(),0);
           copyMapper.createCopyList2(groupList,e.getId(),0);
-           System.out.println(groupId);
-          System.out.println(groupList.toString());
+
         /**
          *  生成对应的题目
          */
@@ -106,12 +106,12 @@ private CopyToQuestionMapper copyToQuestionMapper;
      */
     @Scheduled(cron = "0/10 * * * * ? ")
     public void beginExam(){
-//    List<Exam> examList= examMapper.getbeginExam();
-//        if(examList.size()==0){
-//            return;
-//        }
-//    examMapper.updateExamListStatus(examList,2);
-//    copyMapper.updateByExamList(examList);
+    List<Exam> examList= examMapper.getbeginExam();
+        if(examList.size()==0){
+            return;
+        }
+    examMapper.updateExamListStatus(examList,2);
+    copyMapper.updateByExamList(examList);
     }
 
 
@@ -120,16 +120,16 @@ private CopyToQuestionMapper copyToQuestionMapper;
      */
     @Scheduled(cron = "0/10 * * * * ? ")
     public void endExam(){
-//    System.out.println("hello i'm in endExam");
-//    List<Exam> examList = examMapper.getEndExam();
-//    if(examList.size()==0){
-//        return;
-//    }
-//    examMapper.updateExamListStatus(examList,3);
-//    for(Exam e:examList){
-//        if (e.getType()==true){
-//            copyMapper.updateByExam(e.getId(),2);
-//        }else copyMapper.updateByExam(e.getId(),3);
-//    }
+    System.out.println("hello i'm in endExam");
+    List<Exam> examList = examMapper.getEndExam();
+    if(examList.size()==0){
+        return;
+    }
+    examMapper.updateExamListStatus(examList,3);
+    for(Exam e:examList){
+        if (e.getType()==true){
+            copyMapper.updateByExam(e.getId(),2);
+        }else copyMapper.updateByExam(e.getId(),3);
+    }
     }
 }
