@@ -243,7 +243,7 @@ Component({
       var getDay = day < 10 ? ('0' + day) : day;
       var getHours = hours < 10 ? ('0' + hours) : hours;
       var getMins = minute < 10 ? ('0' + minute) : minute;
-      app.globalData.startDateTime = getYear + "-" + getMonth + "-" + getDay + " " + getHours + ":" + getMins + ":" + "00";
+      app.globalData.beginTime = getYear + "-" + getMonth + "-" + getDay + " " + getHours + ":" + getMins + ":" + "00";
       console.log(getYear + "-" + getMonth + "-" + getDay + " " + getHours + ":" + getMins + ":" + "00");
 
       var startDate = monthDay + " " + getHours + ":" + getMins;

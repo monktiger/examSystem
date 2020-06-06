@@ -33,5 +33,8 @@ page{
   text-align: center;
   line-height: 80rpx;
 }
-
+/* .modal-btn button{
+  width: 60rpx;
+  margin-right: 30rpx;
+} */
 

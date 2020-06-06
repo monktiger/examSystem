@@ -74,12 +74,80 @@ Page({
       modalName: null
     })
   },
+  //由type获得缓存名称
+  getType: function (quesType) {
+    if (quesType == 1) {
+      var storage = "single_ques";
+    } else if (quesType == 2) {
+      var storage = "multi_ques";
+    } else if (quesType == 3) {
+      var storage = "fill_ques";
+    } else if (quesType == 4) {
+      var storage = "judge_ques";
+    } else if (quesType == 5) {
+      var storage = "short_ques";
+    }
+    return storage;
+  },
+
   toCopy(e) {
-    let question = e.detail.question
-    app.globalData.question = question;
-    wx.wx.navigateBack({
-      delta: 1
-    });
+    // let question = e.detail.question
+    // app.globalData.question = question;
+    var that = this;
+    var question = e.currentTarget.dataset.question;
+    console.log(question);
+    // var data={
+    //   data:question
+    // }
+    question.examId=app.globalData.examId;
+    //添加到后台
+    // 发起网络请求
+    wx.request({
+      url: that.data.addQuestionUrl,
+      method: "post",
+      header: {
+        "token": app.globalData.token,
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(question),
+      success: function (res) {
+        console.log("res:", res);
+        if (res.data.status == 1) {
+          question.id = res.data.id;
+          question.type = res.data.type;
+          var storage = that.getType(res.data.type);
+          // 设置题目缓存
+          var storageQues = wx.getStorageSync(storage);
+          var arr = []
+          for (let i in storageQues) {
+            let o = {};
+            o[i] = storageQues[i];
+            arr.push(o[i])
+          }
+          arr.push({
+            data: question
+          })
+          wx.removeStorage({
+            key: storage,
+            success(res) {
+              console.log(res)
+            }
+          })
+          console.log("arr:", arr);
+          wx.setStorageSync(storage, arr);
+          wx.setStorageSync('title', "");
+          app.globalData.editQueNum = "";
+          wx.redirectTo({
+            url: "../editPaper/editPaper"
+          })
+        } else {
+          console.log("errorMsg:" + res.msg);
+        }
+      },
+      fail: function (error) {
+        console.log("errorMsg:" + error);
+      }
+    })
   },
   // 获得列表
   getQuestionList(data) {
@@ -109,7 +177,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var addQuestionUrl = app.globalData.url + "exam/addQuestion";
+    this.setData({
+      addQuestionUrl: addQuestionUrl,
+    });
   },
 
   /**

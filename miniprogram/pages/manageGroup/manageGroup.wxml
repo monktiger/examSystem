@@ -1,6 +1,6 @@
 <!-- pages/manageGroup/manageGroup.wxml -->
 <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
-  <view slot="backText">返回</view>
+  <view slot="backText" catchtap="back">返回</view>
   <view slot="content">{{groupname}}</view>
 </cu-custom>
 <!-- <view class="text-xl">我创建的组页面</view>

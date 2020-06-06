@@ -29,6 +29,9 @@ Page({
 
   // 提交简答题
   confirm: function (e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     var title = wx.getStorageSync("title");
     var score = parseInt(this.data.index) + 1;
@@ -38,7 +41,7 @@ Page({
       score: score,
       type: 3,
       current: current,
-      questionId: this.data.queId||"",
+      id: this.data.queId||"",
       "examId": this.data.examId,
     }
     if (!title || !score || !current) {
@@ -60,6 +63,7 @@ Page({
         success: function (res) {
           console.log("res:", res);
           if (res.data.status == 1) {
+            wx.hideLoading();
             data.id = res.data.id;
             data.type = res.data.type;
             // 设置题目缓存
@@ -97,6 +101,7 @@ Page({
               wx.redirectTo({
                 url: "../paper/paper"
               })
+              app.globalData.isEdit=0
             } else {
               wx.redirectTo({
                 url: "../editPaper/editPaper"
@@ -121,12 +126,12 @@ Page({
     // 如果有editQueNum则是修改题目：先取出原数据，赋值
     var editQueNum = app.globalData.editQueNum;
     console.log("editQueNum",editQueNum)
-    if (editQueNum) {
+    if (editQueNum||editQueNum==0) {
       var editques = wx.getStorageSync('fill_ques');
       console.log("editques",editques);
       var editData = editques[editQueNum].data;
       var score = editData.score;
-      var queId = editData.queId;
+      var queId = editData.id;
       wx.setStorageSync("title", editData.title);
       this.setData({
         index: parseInt(score) - 1,

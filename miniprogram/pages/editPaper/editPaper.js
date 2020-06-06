@@ -39,7 +39,7 @@ Page({
 
   toStore(e){
     wx.redirectTo({
-      url: "" // 试题库地址
+      url: "/pages/questionStorage/questionStorage"
     })
   },
 
@@ -56,6 +56,8 @@ Page({
   },
 
   onLoad: function (options) {
+
+    app.pageScrollToBottom("#view"); // 默认停留在页面底部 方便添加题目
     var addQuestionUrl = app.globalData.url + "exam/addQuestion";
     this.setData({
       addQuestionUrl: addQuestionUrl,
@@ -115,5 +117,15 @@ Page({
     wx.redirectTo({
       url: "../paperCreate/paperCreate"
     })
-  }
+  },
+  // showModal(e) {
+  //   this.setData({
+  //     modalName: e.currentTarget.dataset.target
+  //   })
+  // },
+  // hideModal(e) {
+  //   this.setData({
+  //     modalName: null
+  //   })
+  // },
 })

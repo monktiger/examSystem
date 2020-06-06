@@ -8,6 +8,11 @@ Page({
   data: {
     paperList: []
   },
+  back: function (e) {
+    wx.redirectTo({
+      url: "../nav/nav"
+    })
+  },
   // 去管理人员界面
   goManagePeople(e) {
     wx.navigateTo({
@@ -24,15 +29,15 @@ Page({
   goSetting(e) {
     wx.navigateTo({
       url: '/pages/groupSetting/groupSetting',
-    }); 
+    });
   },
   // 去管理成绩页面
-  goManageScore(e) {  
+  goManageScore(e) {
     wx.request({
       url: 'http://monktiger.natapp1.cc/exam/inExam',
       method: 'GET',
       data: {
-        examId:e.detail.examId
+        examId: e.detail.examId
       },
       header: {
         "token": app.globalData.token
@@ -41,41 +46,41 @@ Page({
         console.log(result.data.status);
         let status = result.data.status
         // let status = '10001'
-        if(status=='10001'){
+        if (status == '10001') {
           // 跳转到试卷编辑页
-          app.globalData.stuStatus='10001'
-          app.globalData.beginTime=e.detail.beginTime,
-          app.globalData.endTime=e.detail.endTime,
-          app.globalData.examId=e.detail.examId
+          app.globalData.stuStatus = '10001'
+          app.globalData.beginTime = e.detail.beginTime,
+            app.globalData.endTime = e.detail.endTime,
+            app.globalData.examId = e.detail.examId
           wx.navigateTo({
-            url:'/pages/paperDetails/paperDetails'
+            url: '/pages/paperDetails/paperDetails'
           })
-        }else if(status=='10002'){
+        } else if (status == '10002') {
           // 考试即将开始，跳转到试卷查看页
-        app.globalData.stuStatus='10002'
-        app.globalData.beginTime=e.detail.beginTime,
-        app.globalData.endTime=e.detail.endTime,
-        app.globalData.examId=e.detail.examId
-        wx.navigateTo({
-          url:'/pages/paperDetails/paperDetails'
-        })
+          app.globalData.stuStatus = '10002'
+          app.globalData.beginTime = e.detail.beginTime,
+            app.globalData.endTime = e.detail.endTime,
+            app.globalData.examId = e.detail.examId
+          wx.navigateTo({
+            url: '/pages/paperDetails/paperDetails'
+          })
         }
-        else if(status=='10003'){
+        else if (status == '10003') {
           // 考试已经开始，跳转到试卷查看页
           console.log(e.detail.beginTime);
-          
-          app.globalData.stuStatus='10003',
-          app.globalData.beginTime=e.detail.beginTime,
-          app.globalData.endTime=e.detail.endTime,
-          app.globalData.examId=e.detail.examId
+
+          app.globalData.stuStatus = '10003',
+            app.globalData.beginTime = e.detail.beginTime,
+            app.globalData.endTime = e.detail.endTime,
+            app.globalData.examId = e.detail.examId
           wx.navigateTo({
-            url:'/pages/paperDetails/paperDetails'
+            url: '/pages/paperDetails/paperDetails'
           })
         }
-        else if(status=='10004'){
+        else if (status == '10004') {
           // 跳转到成绩排行页
-          app.globalData.stuStatus='10004'
-          app.globalData.examId=e.detail.examId
+          app.globalData.stuStatus = '10004'
+          app.globalData.examId = e.detail.examId
           wx.navigateTo({
             url: '/pages/manageScore/manageScore'
           })
@@ -86,20 +91,20 @@ Page({
       }
     })
   },
-  formatDate(now) { 
-    var year=now.getFullYear();  //取得4位数的年份
-    var month=now.getMonth()+1;  //取得日期中的月份，其中0表示1月，11表示12月
-    var date=now.getDate();      //返回日期月份中的天数（1到31）
-    var hour=now.getHours();     //返回日期中的小时数（0到23）
-    var minute=now.getMinutes(); //返回日期中的分钟数（0到59）
-    var second=now.getSeconds(); //返回日期中的秒数（0到59）
-    if(month<'10') month='0'+month;
-    if(date<'10') date='0'+date;
-    if(hour<'10') hour='0'+hour;
-    if(minute<'10') minute='0'+minute;
-    if(second<'10') second='0'+second;
-    return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
-},
+  formatDate(now) {
+    var year = now.getFullYear();  //取得4位数的年份
+    var month = now.getMonth() + 1;  //取得日期中的月份，其中0表示1月，11表示12月
+    var date = now.getDate();      //返回日期月份中的天数（1到31）
+    var hour = now.getHours();     //返回日期中的小时数（0到23）
+    var minute = now.getMinutes(); //返回日期中的分钟数（0到59）
+    var second = now.getSeconds(); //返回日期中的秒数（0到59）
+    if (month < '10') month = '0' + month;
+    if (date < '10') date = '0' + date;
+    if (hour < '10') hour = '0' + hour;
+    if (minute < '10') minute = '0' + minute;
+    if (second < '10') second = '0' + second;
+    return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -145,7 +150,7 @@ Page({
           }
         }
         that.setData({
-          paperList: paperList,
+          paperList: paperList.reverse(),
         })
       }, fail(e) {
         console.log(e);

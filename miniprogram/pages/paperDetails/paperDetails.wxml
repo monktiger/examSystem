@@ -65,7 +65,7 @@
   wx:if="{{status=='10001'}}"
   class="flex justify-center">
   <button class="cu-btn bg-blue round shadow-blur lg  btn"
-   bindtap="goCreate"
+   bindtap="goPaperCreate"
    >
   添加试题
   </button>
