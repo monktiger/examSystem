@@ -10,7 +10,6 @@ import com.monktiger.examsystem.service.ExamService;
 import com.monktiger.examsystem.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.plugin2.main.client.WMozillaServiceDelegate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;

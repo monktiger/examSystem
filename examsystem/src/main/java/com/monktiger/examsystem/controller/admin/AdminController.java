@@ -1,8 +1,11 @@
 package com.monktiger.examsystem.controller.admin;
 
+import com.alibaba.fastjson.JSON;
+import com.monktiger.examsystem.cache.JedisUtil;
 import com.monktiger.examsystem.entity.Admin;
 import com.monktiger.examsystem.mapper.AdminMapper;
 import com.monktiger.examsystem.util.HttpServletRequestUtil;
+import com.monktiger.examsystem.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,8 @@ import java.util.Map;
 public class   AdminController {
     @Autowired
     private AdminMapper adminMapper;
+    @Autowired
+    private JedisUtil.Strings jedisUtilStrings;
     @RequestMapping("/login")
     public Map<String,Object> adminLogin(HttpServletRequest request){
         Map<String,Object> modelMap = new HashMap<>();
@@ -26,7 +31,8 @@ public class   AdminController {
         String password = HttpServletRequestUtil.getString(request,"password");
         Admin admin=adminMapper.checkUser(username,password);
         if(admin!=null){
-            request.getSession().setAttribute("admin",admin);
+          String token = TokenUtil.createToken(admin);
+            jedisUtilStrings.setEx(token, 2 * 60 * 60, JSON.toJSONString(admin));
         }else {
             modelMap.put("status",0);
             modelMap.put("msg","登录失败");

@@ -1,14 +1,17 @@
 package com.monktiger.examsystem.service.impl;
 
-import com.monktiger.examsystem.dto.CopyQuestion;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.monktiger.examsystem.dto.WrongBookQuestion;
 import com.monktiger.examsystem.entity.*;
 import com.monktiger.examsystem.mapper.*;
 import com.monktiger.examsystem.service.ExamService;
+import com.monktiger.examsystem.util.HttpServletRequestUtil;
 import com.monktiger.examsystem.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -155,6 +158,50 @@ public class ExamServiceImpl implements ExamService {
         modelMap.put("judge",copy.getJudge());
         modelMap.put("getScore",copy.getScore());
         modelMap.put("questionList",wrongBookQuestionList);
+        return modelMap;
+    }
+
+    @Override
+    public Map<String, Object> getExam(HttpServletRequest request) {
+        Map<String,Object> modelMap = new HashMap<>();
+        String search = HttpServletRequestUtil.getString(request,"search");
+        int pageNum  = HttpServletRequestUtil.getInt(request,"pageNum");
+        if(pageNum==0)pageNum=1;
+        int total = examMapper.selectExamCount(search);
+        Page page = new Page(pageNum,total);
+        List<Exam> examList=examMapper.selcetExam(page.getStartIndex(),page.getPageSize(),search);
+        modelMap.put("examList",examList);
+        modelMap.put("pageNum",pageNum);
+        modelMap.put("pages",page.getTotalPage());
+        modelMap.put("total",page.getTotalRecord());
+        modelMap.put("status",1);
+        modelMap.put("msg","返回成功");
+        return modelMap;
+    }
+
+    @Override
+    public Map<String, Object> deleteExam(int examId) {
+        Map<String,Object> modelMap = new HashMap<>();
+        examMapper.deleteByPrimaryKey(examId);
+        examToQuestionMapper.deletByExamId(examId);
+        List<Copy> copy = copyMapper.selectByGroupAndExam(examId,null);
+        if(copy.size()!=0){
+        copyMapper.deleteByexam(examId);
+        copyToQuestionMapper.deleteByCopyList(copy);}
+        modelMap.put("status",1);
+        modelMap.put("msg","返回成功");
+        return modelMap;
+    }
+
+    @Override
+    public Map<String, Object> updateExam(int examId, String jsonString) {
+        Map<String,Object> modelMap = new HashMap<>();
+        JSONObject json = JSON.parseObject(jsonString);
+        Exam exam = json.toJavaObject(Exam.class);
+        exam.setId(examId);
+        examMapper.updateByPrimaryKeySelective(exam);
+        modelMap.put("status",1);
+        modelMap.put("msg","返回成功");
         return modelMap;
     }
 }

@@ -41,6 +41,31 @@
     </where>
     limit #{index},#{size};
   </select>
+    <select id="getQuestionCount" resultType="java.lang.Integer">
+      select count(*)
+      from tb_question
+      <where>
+        <if test="search !=null"> locate(#{search},category)&gt;0
+         or locate(#{search},title)&gt;0
+         or locate(#{search},answerA)&gt;0
+          or locate(#{search},answerB)&gt;0
+          or locate(#{search},answerC)&gt;0
+          or locate(#{search},answerD)&gt;0</if>
+      </where>
+    </select>
+  <select id="getTotal" resultType="com.monktiger.examsystem.entity.Question">
+    select *
+    from tb_question
+    <where>
+      <if test="search !=null"> locate(#{search},category)&gt;0
+        or locate(#{search},title)&gt;0
+        or locate(#{search},answerA)&gt;0
+        or locate(#{search},answerB)&gt;0
+        or locate(#{search},answerC)&gt;0
+        or locate(#{search},answerD)&gt;0</if>
+        limit #{startIndex},#{pageSize};
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_question
     where id = #{id,jdbcType=INTEGER}

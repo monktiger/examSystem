@@ -8,7 +8,6 @@ import com.monktiger.examsystem.dto.Score;
 import com.monktiger.examsystem.entity.*;
 import com.monktiger.examsystem.mapper.*;
 import com.monktiger.examsystem.service.ExamService;
-import com.monktiger.examsystem.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

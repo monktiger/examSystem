@@ -54,6 +54,25 @@
     where `name` like "%"#{name,jdbcType=VARCHAR}"%"
       and status = 1
   </select>
+    <select id="getGroupCount" resultType="java.lang.Integer">
+      select count(*)
+      from tb_group
+      where
+      `status`=1
+      <if test="search!=null">
+      and  locate(#{search},`name`)&gt;0;
+      </if>
+    </select>
+  <select id="getGroup" resultType="com.monktiger.examsystem.entity.Group">
+    select group_id,`name`
+    from tb_group
+    where
+    `status`=1
+    <if test="search!=null">
+      and  locate(#{search},`name`)&gt;0
+    </if>
+    limit #{startIndex},#{pageSize};
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.monktiger.examsystem.entity.Group">
     delete from tb_group
     where group_id = #{groupId,jdbcType=VARCHAR}
@@ -124,5 +143,10 @@
     update tb_group
     set 'status' = 0
     where group_id = #{groupId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateGroupList">
+    update tb_group
+    set `name` = #{name}
+    where group_id=#{groupId}
   </update>
 </mapper>

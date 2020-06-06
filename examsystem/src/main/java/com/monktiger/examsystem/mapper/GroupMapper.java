@@ -2,6 +2,7 @@ package com.monktiger.examsystem.mapper;
 
 import com.monktiger.examsystem.entity.Group;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,5 +41,12 @@ public interface GroupMapper  {
 
     int updateByPrimaryKey(Group group);
 
-    int updatePermission(String openId, String groupId);
+    int updatePermission(@Param("openId") String openId, @Param("groupId") String groupId);
+
+    int getGroupCount(@Param("search") String search);
+
+    List<Group> getGroup(int startIndex, int pageSize, String search);
+
+    int updateGroupList(@Param("groupId") String groupId, @Param("name") String name);
+
 }

@@ -29,6 +29,23 @@
       </if>
     </where>
   </select>
+  <select id="getUserCount" resultType="java.lang.Integer">
+    select count(*)
+    from tb_user
+    where <if test="search!=null">
+    locate(#{search},`name`)&gt;0
+    or locate(#{search},nickName)&gt;0
+  </if>
+  </select>
+  <select id="getCountUser" resultType="com.monktiger.examsystem.entity.User">
+    select open_id, nickName, `name`, available
+    from tb_user
+    where <if test="search!=null">
+    locate(#{search},`name`)&gt;0
+    or locate(#{search},nickName)&gt;0
+  </if>
+  limit #{startIndex},#{pageSize};
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_user
     where open_id = #{openId,jdbcType=VARCHAR}
@@ -78,10 +95,11 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.monktiger.examsystem.entity.User">
     update tb_user
-    set nickName = #{nickname,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      avatarUrl = #{avatarurl,jdbcType=VARCHAR},
-      available = #{available,jdbcType=BIT}
-    where open_id = #{openId,jdbcType=VARCHAR}
-  </update>
+    set
+    <if test="nickname!=null">nickName = #{nickname,jdbcType=VARCHAR},</if>
+  <if test="name!=null">  `name` = #{name,jdbcType=VARCHAR},</if>
+ <if test="avatarurl!=null"> avatarUrl = #{avatarurl,jdbcType=VARCHAR},</if>
+ <if test="available!=null">       available = #{available,jdbcType=BIT},</if>
+        where open_id = #{openId,jdbcType=VARCHAR}
+        </update>
 </mapper>

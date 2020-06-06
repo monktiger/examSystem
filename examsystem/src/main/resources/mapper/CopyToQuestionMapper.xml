@@ -41,7 +41,19 @@
     where copyId = #{copyId,jdbcType=INTEGER}
       and id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.monktiger.examsystem.entity.CopyToQuestion">
+    <delete id="deleteByCopyList">
+      delete from tb_copy_to_question
+      where copyId in
+      <foreach collection="copyList" item="copy" index="index" open="(" separator="," close=")" >
+        #{copy.copyId}
+      </foreach>
+    </delete>
+    <delete id="deleteByGroup">
+      delete tb_copy_to_question from tb_copy_to_question,tb_copy
+      where tb_copy.copy_id = tb_copy_to_question.copy_id
+      and tb_copy.group_id = #{groupId}
+    </delete>
+    <insert id="insert" parameterType="com.monktiger.examsystem.entity.CopyToQuestion">
     insert into tb_copy_to_question (copyId, id, score,
       answer, already)
     values (#{copyId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 

@@ -2,7 +2,9 @@ package com.monktiger.examsystem.service;
 
 import com.monktiger.examsystem.entity.Group;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 public interface GroupService {
 
@@ -79,4 +81,9 @@ public interface GroupService {
     public int updateGroup(Group group)throws Exception;
 
     public Group selectGroupByKey(Group group)throws Exception;
+
+    //管理员行为
+    Map<String, Object> getGroup(HttpServletRequest request);
+    Map<String, Object> updateGroup(String groupId, HttpServletRequest request);
+    Map<String,Object> deleteGroup(String groupId);
 }

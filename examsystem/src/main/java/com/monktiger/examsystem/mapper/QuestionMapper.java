@@ -25,4 +25,8 @@ public interface QuestionMapper {
     int getTotalQuestion(@Param("search") String search, @Param("category") String category, @Param("type") Integer type);
 
     List<Question> getQuestion(@Param("index") int index, @Param("size") int size, @Param("search") String search, @Param("category") String category, @Param("type") Integer type);
+
+    int getQuestionCount(String search);
+
+    List<Question> getTotal(@Param("startIndex") int startIndex, @Param("pageSize") int pageSize, @Param("search") String search);
 }

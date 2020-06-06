@@ -31,11 +31,12 @@
     <include refid="Base_Column_List"/>
     from tb_copy
     where examId = #{examId}
-    and groupId = #{groupId}
+    <if test="groupId!=null">
+    and groupId = #{groupId}</if>
   </select>
   <select id="checkCopyPublisher" resultType="integer">
     select
-    count (*)
+    count(*)
     where copyId = #{copyId,jdbcType=INTEGER}
     and openId = #{openId,jdbcType=VARCHAR}
   </select>
@@ -43,7 +44,15 @@
     delete from tb_copy
     where copyId = #{copyId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.monktiger.examsystem.entity.Copy">
+  <delete id="deleteByexam">
+    delete from tb_copy
+    where examId=#{examId}
+  </delete>
+    <delete id="deleteByGroup">
+      delete from tb_copy
+      where groupId = #{groupId}
+    </delete>
+    <insert id="insert" parameterType="com.monktiger.examsystem.entity.Copy">
     insert into tb_copy (copyId, groupId, examId, 
       openId, `status`, judge, 
       score)

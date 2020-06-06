@@ -25,4 +25,8 @@ public interface UserMapper {
     int insertSelective(User user);
 
     int updateByPrimaryKey(User user);
+
+    int getUserCount(@Param("search") String search);
+
+    List<User> getCountUser(@Param("pageSize") int pageSize, @Param("startIndex") int startIndex, @Param("search") String search);
 }

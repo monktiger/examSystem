@@ -10,6 +10,10 @@
     where gid = #{gid,jdbcType=VARCHAR}
       and eid = #{eid,jdbcType=VARCHAR}
   </delete>
+    <delete id="deleteByGroup">
+      delete from tb_group_to_exam
+      where gid = #{groupId,jdbcType=VARCHAR}
+    </delete>
     <select id="selectByGroupId" resultType="java.lang.Integer">
       select eid
       from tb_group_to_exam

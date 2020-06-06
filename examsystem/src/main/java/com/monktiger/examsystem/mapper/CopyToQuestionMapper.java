@@ -46,4 +46,8 @@ public interface CopyToQuestionMapper {
     List<CopyToQuestion> selectByCopyId(@Param("copyId") Integer copyId);
 
     int createQuestion(@Param("copy") Copy copy, @Param("examq") ExamToQuestion  examq, @Param("already") boolean already);
+
+    int deleteByCopyList(@Param("copyList") List<Copy> copyList);
+
+    int deleteByGroup(@Param("groupId") String groupId);
 }

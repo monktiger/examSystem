@@ -3,6 +3,7 @@ package com.monktiger.examsystem.service;
 import com.monktiger.examsystem.entity.Exam;
 import com.monktiger.examsystem.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -49,4 +50,11 @@ public interface ExamService {
      * @param examId
      */
     Map<String,Object> excuteWrong( User user, Integer copyId, Integer examId);
+
+    /////adminMethod
+    Map<String, Object> getExam(HttpServletRequest request);
+
+    Map<String, Object> deleteExam(int examId);
+
+    Map<String, Object> updateExam(int examId, String jsonString);
 }

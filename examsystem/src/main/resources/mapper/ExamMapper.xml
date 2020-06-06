@@ -62,6 +62,27 @@
     where status = 1 and
     TIMESTAMPDIFF(SECOND,beginTime,now())&gt;=0
   </select>
+  <select id="selectExamCount" resultType="java.lang.Integer">
+    select COUNT(*)
+    from tb_exam
+    <where>
+      <if test="search!=null">
+        locate(#{search},id)&gt;0
+        or locate(#{search},`name`)&gt;0
+      </if>
+    </where>
+  </select>
+  <select id="selcetExam" resultType="com.monktiger.examsystem.entity.Exam">
+    select *
+    from tb_exam
+    <where>
+      <if test="search!=null">
+        locate(#{search},id)&gt;0
+        or locate(#{search},`name`)&gt;0
+      </if>
+    </where>
+    limit #{startIndex},#{pageSize};
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_exam
     where id = #{id,jdbcType=INTEGER}

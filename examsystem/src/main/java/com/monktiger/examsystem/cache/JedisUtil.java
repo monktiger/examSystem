@@ -148,6 +148,24 @@ public class JedisUtil {
 			return status;
 		}
 
+		/**
+		 * 添加有过期时间的记录
+		 *
+		 * @param String
+		 *            key
+		 * @param int
+		 *            seconds 过期时间，以秒为单位
+		 * @param String
+		 *            value
+		 * @return String 操作状态
+		 */
+		public String setEx(String key, int seconds, String value) {
+			Jedis jedis = getJedis();
+			String str = jedis.setex(key, seconds, value);
+			jedis.close();
+			return str;
+		}
+
 	}
 
 }

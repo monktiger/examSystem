@@ -41,4 +41,7 @@ public interface   ExamMapper {
 
     int updateExamListStatus(@Param("examList") List<Exam> examList, @Param("status") Integer status);
 
+    int selectExamCount(@Param("search") String search);
+
+    List<Exam> selcetExam(@Param("startIndex") int startIndex, @Param("pageSize") int pageSize, @Param("search") String search);
 }

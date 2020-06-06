@@ -2,6 +2,9 @@ package com.monktiger.examsystem.service;
 
 import com.monktiger.examsystem.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
 /**
  *  获取个人信息
  *
@@ -34,4 +37,10 @@ public interface UserService {
     public int updateUser(User user)throws Exception;
 
     public User selectUserByKey(String openId)throws Exception;
+
+    Map<String, Object> updateUser(String openId, HttpServletRequest request);
+
+    Map<String, Object> banUser(String openId);
+
+    Map<String, Object> getUser(HttpServletRequest request);
 }
