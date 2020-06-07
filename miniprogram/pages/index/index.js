@@ -23,40 +23,44 @@ Component({
     })
     // type 0自己创建的组
     // type 1自己加入的组
-    // 获得组列表
-    wx.request({
-      url: 'http://monktiger.natapp1.cc/group/getList',
-      method: 'GET',
-      data: {
-        type: that.data.TabCur
-      },
-      header: {
-        "token": that.data.token
-      },
-      success: function (result) {
-        // console.log(result);
-        let elements = result.data.groups;
-        let color = that.data.color;
-        let i;
-        // console.log(elements.length);
-        if (elements) {
-          for (i = 0; i < elements.length; i++) {
-            elements[i].color = color[i % 4];
-          }
-        }
-        that.setData({
-          elements: result.data.groups,
-          modalName: null
-        })
-      }, fail(e) {
-        console.log(e);
-      }
-    })
+    this.getList()
   },
   /**
    * 组件的方法列表
    */
   methods: {
+    // 获得组列表
+    getList(e) {
+      let that = this
+      wx.request({
+        url: 'http://monktiger.natapp1.cc/group/getList',
+        method: 'GET',
+        data: {
+          type: that.data.TabCur
+        },
+        header: {
+          "token": that.data.token
+        },
+        success: function (result) {
+          // console.log(result);
+          let elements = result.data.groups;
+          let color = that.data.color;
+          let i;
+          // console.log(elements.length);
+          if (elements) {
+            for (i = 0; i < elements.length; i++) {
+              elements[i].color = color[i % 4];
+            }
+          }
+          that.setData({
+            elements: result.data.groups,
+            modalName: null
+          })
+        }, fail(e) {
+          console.log(e);
+        }
+      })
+    },
     // 去组页面
     clickCard(e) {
       app.globalData.groupId = e.detail.groupid;
@@ -145,35 +149,7 @@ Component({
         },
         success: function (result) {
           console.log(result);
-          wx.request({
-            url: 'http://monktiger.natapp1.cc/group/getList',
-            method: 'GET',
-            data: {
-              type: that.data.TabCur
-            },
-            header: {
-              "token": that.data.token
-            },
-            success: function (result) {
-              console.log(result);
-              let elements = result.data.groups;
-              let color = that.data.color;
-              let i;
-              // console.log(elements.length);
-              if (elements) {
-                for (i = 0; i < elements.length; i++) {
-                  elements[i].color = color[i % 4];
-                }
-              }
-              that.setData({
-                elements: result.data.groups,
-                modalName: null
-              })
-            },
-            fail(e) {
-              console.log(e);
-            }
-          })
+          that.getList()
         },
         fail(e) {
           console.log(e);
@@ -202,34 +178,7 @@ Component({
           that.setData({
             modalName: null
           })
-          wx.request({
-            url: 'http://monktiger.natapp1.cc/group/getList',
-            method: 'GET',
-            data: {
-              type: that.data.TabCur
-            },
-            header: {
-              "token": that.data.token
-            },
-            success: function (result) {
-              console.log(result);
-              let elements = result.data.groups;
-              let color = that.data.color;
-              let i;
-              // console.log(elements.length);
-              if (elements) {
-                for (i = 0; i < elements.length; i++) {
-                  elements[i].color = color[i % 4];
-                }
-              }
-              that.setData({
-                elements: result.data.groups,
-                modalName: null
-              })
-            }, fail(e) {
-              console.log(e);
-            }
-          })
+          that.getList()
         },
         fail(e) {
           console.log(e);
@@ -239,7 +188,6 @@ Component({
     // 解散组
     delete(e) {
       let that = this;
-      console.log(e.detail.groupid);
       wx.request({
         url: 'http://monktiger.natapp1.cc/group/quit',
         method: 'GET',
@@ -247,16 +195,11 @@ Component({
           groupId: e.detail.groupid
         },
         header: {
-          // "Content-Type": "application/x-www-form-urlencoded",
           "token": that.data.token
         },
         success: function (result) {
           // console.log(result);
-          let elements = that.data.elements;
-          elements.splice(e.detail.index, 1);
-          that.setData({
-            elements:elements
-          }) 
+          that.getList();
         },
         fail(e) {
           console.log(e);

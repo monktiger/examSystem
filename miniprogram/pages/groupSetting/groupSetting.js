@@ -32,34 +32,34 @@ Page({
   },
 
   // 获得组成员人数
-  getMemberCount: function (e) {
-    var that = this;
-    // 发起网络请求
-    wx.request({
-      url: that.data.showMemberUrl,
-      method: "get",
-      header: {
-        "token": app.globalData.token
-      },
-      data: {
-        groupId: that.data.groupId
-      },
-      success: function (res) {
-        if (res.data.status == 1) {
-          var count = res.memberList.length;
-          this.setData({
-            count: count
-          })
-        }
-        else {
-          console.log("status:" + res.status + ";msg:" + res.msg);
-        }
-      },
-      fail: function (error) {
-        console.log(error);
-      }
-    })
-  },
+  // getMemberCount: function (e) {
+  //   var that = this;
+  //   // 发起网络请求
+  //   wx.request({
+  //     url: that.data.showMemberUrl,
+  //     method: "get",
+  //     header: {
+  //       "token": app.globalData.token
+  //     },
+  //     data: {
+  //       groupId: that.data.groupId
+  //     },
+  //     success: function (res) {
+  //       if (res.data.status == 1) {
+  //         var count = res.memberList.length;
+  //         this.setData({
+  //           count: count
+  //         })
+  //       }
+  //       else {
+  //         console.log("status:" + res.status + ";msg:" + res.msg);
+  //       }
+  //     },
+  //     fail: function (error) {
+  //       console.log(error);
+  //     }
+  //   })
+  // },
 
   // 获取组名
   getGroupName: function (e) {

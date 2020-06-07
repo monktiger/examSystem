@@ -21,7 +21,7 @@ Page({
 
     back: function (e) {
         wx.redirectTo({
-            url: "../manageGroup/manageGroup.wxml"
+            url: "../manageGroup/manageGroup"
         })
     },
 
