@@ -1,0 +1,16 @@
+{
+    "questionList": [
+        {
+            "title": "假设px=a/3",
+            "type": "5",
+            "category": "高中数学",
+            "id": 10000012,
+            "openId": "asdasdwe123123"
+        }
+    ],
+    "pageNum": 1,
+    "pages": 12,
+    "total": 172,
+    "status": 1,
+    "msg": "试题库获取成功"
+}

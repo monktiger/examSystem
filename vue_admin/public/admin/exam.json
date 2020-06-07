@@ -1,0 +1,21 @@
+{
+    "examList": [
+        {
+            "name": "东北师大数学学院小测",
+            "ExamId": 160001,
+            "groupId": [
+                "AX1V7T",
+                "BVC234"
+            ],
+            "beginTime": "1577811661",
+            "endTime": "1577811661",
+            "publisherId": "sdasdasfwerewqe123123sads",
+            "status": 0
+        }
+    ],
+    "pageNum": 1,
+    "pages": 12,
+    "total": 172,
+    "status": 1,
+    "msg": "试卷列获取成功"
+}

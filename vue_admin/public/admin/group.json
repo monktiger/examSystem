@@ -1,0 +1,19 @@
+{
+    "groupList": [
+        {
+            "name": "高三数学特训",
+            "group_id": "XHZE46",
+            "open_id": "asdasdwqe123414werwer"
+        },
+        {
+            "name": "高三数学特训",
+            "group_id": "81V2SD",
+            "open_id": "asd1312333asdwqezxer"
+        }
+    ],
+    "pageNum": 1,
+    "pages": 12,
+    "total": 172,
+    "status": 1,
+    "msg": "组列获取成功"
+}
