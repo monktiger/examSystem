@@ -15,3 +15,7 @@
   padding: 10rpx 0;
   border: 1px dotted rgb(206, 163, 255);
 }
+.modal-btn button{
+  width: 60rpx;
+  margin-right: 30rpx;
+}

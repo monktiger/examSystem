@@ -27,6 +27,9 @@ Page({
   },
 
   confirm: function (e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     // 发起网络请求
     wx.request({
@@ -42,6 +45,7 @@ Page({
       success: function (res) {
         console.log("nickname", res)
         if (res.data.status == 1) {
+          wx.hideLoading();
           app.globalData.nickname = that.data.nickname;
           // 跳转
           wx.navigateTo({

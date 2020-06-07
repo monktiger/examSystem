@@ -1,4 +1,5 @@
 // pages/paper/paper.js
+const _UTIL = require("../../utils/util.js");
 const app = getApp()
 let singleAnswer
 let multipleChoice
@@ -27,9 +28,16 @@ Page({
     questionList: [],
     //是否需要进行判分
     isScore: true,
-    isJudge:true,
+    isJudge: true,
     score: 0
   },
+
+  //返回
+  // back: function (e) {
+  //   wx.redirectTo({
+  //     url: '/pages/manageGroup/manageGroup',
+  //   })
+  // },
 
   // 上一道题
   preQuestion(e) {
@@ -121,11 +129,16 @@ Page({
   },
   // 去试题编辑页
   goPaperCreate(e) {
-    let that = this
-    app.globalData.examId = that.data.examId
+    let that = this;
+    // app.globalData.examId = this.data.examId;
+    console.log("app.globalData.examId",app.globalData.examId)
     app.globalData.displayQuestion = that.data.displayQuestion
-    wx.navigateTo({
-      url: '/pages/paperCreate/paperCreate',
+    app.globalData.isEdit = 1;
+    // 判断跳转的页面
+    var typeUrl = this.getType().typeUrl;
+    app.globalData.editQueNum=this.getType().quesIdx;
+    wx.redirectTo({
+      url: typeUrl,
     })
   },
   // 模态窗
@@ -168,7 +181,7 @@ Page({
       })
     }
   },
-  addScore(e){
+  addScore(e) {
     this.judgeScore();
     wx.navigateBack({
       delta: 2
@@ -190,32 +203,193 @@ Page({
   // 提交评价
   submitJudge(e) {
     let that = this
-      wx.request({
-        url: 'http://monktiger.natapp1.cc/judge/judge',
-        method: 'GET',
-        data: {
-          copyId: app.globalData.copyId,
-          judge: that.data.inputJudge
-        },
-        header: {
-          "token": app.globalData.token
-        },
-        success: function (result) {
-          console.log(result)
-          wx.navigateBack({
-            delta: 2
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/judge/judge',
+      method: 'GET',
+      data: {
+        copyId: app.globalData.copyId,
+        judge: that.data.inputJudge
+      },
+      header: {
+        "token": app.globalData.token
+      },
+      success: function (result) {
+        console.log(result)
+        wx.navigateBack({
+          delta: 2
+        })
+      }, fail(e) {
+        console.log(e);
+      }
+    })
+  },
+
+  // 获得缓存前 把数组对象转为数组
+  toArr: function (storage) {
+    console.log("storage", storage);
+    var ques = wx.getStorageSync(storage);
+    console.log("ques", ques);
+    var arr = []
+    for (let i in ques) {
+      let o = {};
+      o[i] = ques[i];
+      arr.push(o[i])
+    }
+    return arr;
+  },
+
+  // 删除题目
+  delete: function (e) {
+    var that = this;
+    console.log("app.globalData.examId", app.globalData.examId)
+    wx.request({
+      url: app.globalData.url + "exam/deleteQuestion",
+      method: "get",
+      header: {
+        "token": app.globalData.token,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        examId: app.globalData.examId,
+        id: e.currentTarget.dataset.idx,
+      },
+      success: function (res) {
+        console.log("res:", res);
+        if (res.data.status == 1) {
+          // 确定本题在该题型中是第几题，更新缓存内容
+          var quesIdx = that.getType().quesIdx;
+          var storage = that.getType().storage;
+          // 设置题目缓存
+          var arr = that.toArr(storage);
+          _UTIL.arrRemoveObj(arr, arr[quesIdx]);
+          wx.removeStorage({
+            key: storage,
+            success(res) {
+              console.log(res)
+            }
           })
-        }, fail(e) {
-          console.log(e);
+          console.log("arr:", arr);
+          wx.setStorageSync(storage, arr);
+
+          that.hideModal();
+          // 刷新页面
+          var questionList = app.globalData.questionList;
+          var questionIndex = that.data.questionIndex;
+          _UTIL.arrRemoveObj(questionList, questionList[questionIndex]);
+          app.globalData.questionList = questionList;
+          // 如果没有题目，用户选择删除试卷或继续编辑
+          wx.showModal({
+            title: '提示',
+            content: '已无剩余题目',
+            cancelText: '删除试卷',
+            confirmText: "编辑试卷",
+            success(res) {
+              if (res.confirm) {
+                console.log('编辑试卷')
+                wx.redirectTo({
+                  url: '/pages/paperDetails/paperDetails',
+                })
+              } else if (res.cancel) {
+                console.log('删除试卷')
+                wx.request({
+                  url: app.globalData.url + "exam/deleteExam",
+                  method: "get",
+                  header: {
+                    "token": app.globalData.token,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                  },
+                  data: {
+                    examId: app.globalData.examId
+                  },
+                  success: function (res) {
+                    wx.showToast({
+                      title: '删除成功',
+                      icon: "none"
+                    })
+                    wx.redirectTo({
+                      url: '/pages/manageGroup/manageGroup',
+                    })
+                  },
+                  fail: function (error) {
+                    wx.showToast({
+                      title: '删除失败',
+                      icon: "none"
+                    })
+                    console.log("errorMsg:" + error);
+                  }
+                })
+              }
+            }
+          })
+          that.onLoad();
+        } else {
+          console.log("errorMsg:" + res.msg);
         }
-      })  
+      },
+      fail: function (error) {
+        console.log("errorMsg:" + error);
+      }
+    })
+  },
+
+  //由type获得本题在该题型中是第几题,跳转相应的修改页面url,缓存名称
+  getType: function (e) {
+    var quesType = this.data.displayQuestion.type;
+    var quesIdx;
+    if (quesType == 1) {
+      var storage = "single_ques";
+      quesIdx = this.data.questionIndex;//题号
+      var typeUrl = "/pages/editSingle/editSingle"
+    } else if (quesType == 2) {
+      var storage = "multi_ques";
+      var arrLen = this.toArr("single_ques").length;
+      quesIdx = this.data.questionIndex - arrLen;
+      var typeUrl = "/pages/editMulti/editMulti"
+    } else if (quesType == 3) {
+      var storage = "fill_ques";
+      var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length + this.toArr("judge_ques").length;
+      quesIdx = this.data.questionIndex - arrLen;
+      var typeUrl = "/pages/editFill/editFill"
+    } else if (quesType == 4) {
+      var storage = "judge_ques";
+      var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length;
+      quesIdx = this.data.questionIndex - arrLen;
+      var typeUrl = "/pages/editJudge/editJudge"
+    } else if (quesType == 5) {
+      var storage = "short_ques";
+      var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length + this.toArr("judge_ques").length + this.toArr("fill_ques").length;
+      quesIdx = this.data.questionIndex - arrLen;
+      var typeUrl = "/pages/editShort/editShort"
+    }
+    var info = {
+      storage: storage,
+      quesIdx: quesIdx,
+      typeUrl: typeUrl,
+    }
+    return info;
   },
   /**
    * 生命周期函数--监听页面加载
    */
 
   onLoad: function (options) {
-    console.log(app.globalData.questionList);
+    wx.request({
+      url: 'http://monktiger.natapp1.cc/in/toAdminShow',
+      method: 'GET',
+      data: {
+        examId: app.globalData.examId
+      },
+      header: {
+        "token": app.globalData.token
+      },
+      success: function (result) {
+        console.log(result);
+        app.globalData.questionList = result.data.questionList;
+      }, fail(e) {
+        console.log(e);
+      }
+    })
+    console.log("app.globalData.questionList", app.globalData.questionList);
     let that = this;
     let btn = that.data.btn;
     let status = app.globalData.stuStatus;
@@ -259,12 +433,12 @@ Page({
    */
   onShow: function () {
     console.log(app.globalData.isJudge);
-    
+
     this.setData({
-      isJudge:app.globalData.isJudge,
+      isJudge: app.globalData.isJudge,
       isScore: app.globalData.isScore,
-      inputJudge:'',
-      score:0
+      inputJudge: '',
+      score: 0
     })
 
   },

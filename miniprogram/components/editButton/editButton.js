@@ -67,11 +67,80 @@ Component({
       } else if (quesType == 5) {
         var typeUrl = "../../pages/editShort/editShort";
       }
-      app.globalData.editQueNum=this.data.quesIdx; //在对应题型里是第n题
+      app.globalData.editQueNum = this.data.quesIdx; //在对应题型里是第n题
       wx.redirectTo({
-        url: typeUrl 
+        url: typeUrl
       })
-      console.log("typeUrl",typeUrl)
+      console.log("typeUrl", typeUrl)
+    },
+
+    hideModal(e) {
+      this.setData({
+        modalName: null
+      })
+    },
+
+    showModal(e) {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    },
+
+    // 获得学科名称
+    getMajor(e){
+      var val=e.detail.value;
+      this.setData({
+        majorVal:val
+      })
+    },
+
+    // 添加到试题库
+    toStore(e) {
+      var that=this;
+      var storage = this.data.storage;
+      var quesIdx = this.data.quesIdx;
+      // 获取所属学科
+      // app.globalData.modalName = e.currentTarget.dataset.target;
+      var majorVal = this.data.majorVal;
+      // 题目缓存
+      var storage = wx.getStorageSync(storage);
+      var data={
+        title:storage[quesIdx].data.title,
+        type:storage[quesIdx].data.type,
+        category:majorVal,
+        current:storage[quesIdx].data.current,
+        answerA:storage[quesIdx].data.answerA||"",
+        answerB:storage[quesIdx].data.answerB||"",
+        answerC:storage[quesIdx].data.answerC||"",
+        answerD:storage[quesIdx].data.answerD||"",
+      }
+      console.log("addstorage",data)
+      wx.request({
+        url: app.globalData.url+"question/addQuestion",
+        method: "post",
+        header: {
+          "token": app.globalData.token,
+          "Content-Type": "application/json"
+        },
+        data: JSON.stringify(data),
+        success: function (res) {
+          console.log(res)
+          if (res.data.status == 1) {
+            this.setData({
+              majorVal:""
+            })
+            that.hideModal();
+            wx.showToast({
+              title: '添加成功'
+            })
+          } else {
+            console.log(res.msg);
+          }
+        },
+        fail: function (error) {
+          console.log(error);
+        }
+      })
     },
 
     // 删除题目
@@ -100,9 +169,9 @@ Component({
                 if (res.data.status == 1) {
                   // 设置题目缓存
                   var storage = that.data.storage;
-                  console.log("storage",storage);
+                  console.log("storage", storage);
                   var ques = wx.getStorageSync(storage);
-                  console.log("ques",ques);
+                  console.log("ques", ques);
                   var arr = []
                   for (let i in ques) {
                     let o = {};
@@ -120,9 +189,9 @@ Component({
                   wx.setStorageSync(storage, arr);
 
                   // 刷新页面
-                  var newStorage = { newStorage: arr};
-                  that.triggerEvent("toNewStorage", newStorage )
-            
+                  var newStorage = { newStorage: arr };
+                  that.triggerEvent("toNewStorage", newStorage)
+
                 } else {
                   console.log("errorMsg:" + res.msg);
                 }

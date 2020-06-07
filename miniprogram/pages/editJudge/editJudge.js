@@ -29,12 +29,12 @@ Page({
 
         // 如果有editQueNum则是修改题目：先取出原数据，赋值
         var editQueNum = app.globalData.editQueNum;
-        if (editQueNum) {
+        if (editQueNum || editQueNum == 0) {
             var editques = wx.getStorageSync('judge_ques');
             var editData = editques[editQueNum].data;
             var currentIdx = editData.currentIdx;
             var score = editData.score;
-            var queId = editData.queId;
+            var queId = editData.id;
             wx.setStorageSync("title", editData.title);
             var checkedArr = [];
             for (var i = 0; i < 2; i++) {
@@ -62,8 +62,11 @@ Page({
         })
     },
 
-    // 提交单选题
+    // 提交判断题
     confirm: function (e) {
+        wx.showLoading({
+            title: '加载中...',
+        })
         var that = this;
         var title = wx.getStorageSync("title");
         var score = parseInt(this.data.index) + 1;
@@ -75,7 +78,7 @@ Page({
             "type": 4,
             "current": current,
             "examId": this.data.examId,
-            "questionId": this.data.queId||""
+            "id": this.data.queId || ""
         };
         if (!title || !score || !current) {
             wx.showToast({
@@ -96,6 +99,7 @@ Page({
                 success: function (res) {
                     console.log(res)
                     if (res.data.status == 1) {
+                        wx.hideLoading();
                         data.id = res.data.id;
                         data.type = res.data.type;
                         // 设置题目缓存
@@ -108,8 +112,8 @@ Page({
                         }
                         data.currentIdx = currentIdx;
                         // 如果是修改，则先把storage对应的题删掉 再重新push
-                        console.log("editQueNum",app.globalData.editQueNum)
-                        if(app.globalData.editQueNum){
+                        console.log("editQueNum", app.globalData.editQueNum)
+                        if (app.globalData.editQueNum) {
                             var editQueNum = that.data.editQueNum;
                             _UTIL.arrRemoveObj(arr, arr[editQueNum]);
                         }
@@ -125,11 +129,12 @@ Page({
                         console.log("arr:", arr);
                         wx.setStorageSync('judge_ques', arr);
                         wx.setStorageSync('title', "");
-                        if(app.globalData.isEdit){
+                        if (app.globalData.isEdit) {
                             wx.redirectTo({
                                 url: "../paper/paper"
                             })
-                        } else{
+                            app.globalData.isEdit = 0
+                        } else {
                             wx.redirectTo({
                                 url: "../editPaper/editPaper"
                             })
@@ -226,7 +231,7 @@ Page({
         }
         this.setData({
             current: current,
-            currentIdx:currentIdx
+            currentIdx: currentIdx
         })
 
     }

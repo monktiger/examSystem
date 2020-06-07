@@ -29,35 +29,35 @@ Page({
 
         // 如果有editQueNum则是修改题目：先取出原数据，赋值
         var editQueNum = app.globalData.editQueNum;
-        if (editQueNum) {
+        if (editQueNum || editQueNum == 0) {
             var editques = wx.getStorageSync('multi_ques');
             var editData = editques[editQueNum].data;
             var current = editData.current;
             var score = editData.score;
-            var queId = editData.queId;
+            var queId = editData.id;
             wx.setStorageSync("title", editData.title);
             var checkedArr = [];
-            if(current.indexOf('A')!=-1){
+            if (current.indexOf('A') != -1) {
                 checkedArr.push(true)
-            } else{
+            } else {
                 checkedArr.push(false)
             }
-            if(current.indexOf('B')!=-1){
+            if (current.indexOf('B') != -1) {
                 checkedArr.push(true)
-            } else{
+            } else {
                 checkedArr.push(false)
             }
-            if(current.indexOf('C')!=-1){
+            if (current.indexOf('C') != -1) {
                 checkedArr.push(true)
-            } else{
+            } else {
                 checkedArr.push(false)
             }
-            if(current.indexOf('D')!=-1){
+            if (current.indexOf('D') != -1) {
                 checkedArr.push(true)
-            } else{
+            } else {
                 checkedArr.push(false)
             }
-            console.log("checkedArr",checkedArr)
+            console.log("checkedArr", checkedArr)
             this.setData({
                 inputVal: [editData.answerA, editData.answerB, editData.answerC || "", editData.answerD || ""],
                 checked: checkedArr,
@@ -79,6 +79,9 @@ Page({
 
     // 提交多选题
     confirm: function (e) {
+        wx.showLoading({
+            title: '加载中...',
+        })
         var that = this;
         var title = wx.getStorageSync("title");
         var score = parseInt(this.data.index) + 1;
@@ -97,11 +100,28 @@ Page({
             "answerC": answerC,
             "answerD": answerD,
             "examId": this.data.examId,
-            "questionId":this.data.queId||""
+            "id": this.data.queId || ""
         };
+        // 判断选项是否重复
+        var isflag = true; //没有重复
+        var array = this.data.inputVal;
+        for (var i = 0; i < array.length; i++) {
+            for (var j = i + 1; j < array.length; j++) {
+                if (array[i] != "" && array[i] == array[j]) {
+                    isflag = false; //有重复
+                    break;
+                }
+            }
+        }
         if (!title || !score || !answerA || !answerB || !current) {
             wx.showToast({
                 title: '请填写所有题目信息！', // 标题
+                icon: 'none', // 图标类型，默认success
+                duration: 1500 // 提示窗停留时间，默认1500ms
+            })
+        } else if (isflag == false) {
+            wx.showToast({
+                title: '请检查是否有相同选项！', // 标题
                 icon: 'none', // 图标类型，默认success
                 duration: 1500 // 提示窗停留时间，默认1500ms
             })
@@ -118,6 +138,7 @@ Page({
                 success: function (res) {
                     console.log(res)
                     if (res.data.status == 1) {
+                        wx.hideLoading();
                         data.id = res.data.id;
                         data.type = res.data.type;
                         // 设置题目缓存
@@ -129,8 +150,8 @@ Page({
                             arr.push(o[i])
                         }
                         // 如果是修改，则先把storage对应的题删掉 再重新push
-                        console.log("editQueNum",app.globalData.editQueNum)
-                        if(app.globalData.editQueNum){
+                        console.log("editQueNum", app.globalData.editQueNum)
+                        if (app.globalData.editQueNum) {
                             var editQueNum = that.data.editQueNum;
                             _UTIL.arrRemoveObj(arr, arr[editQueNum]);
                         }
@@ -146,11 +167,12 @@ Page({
                         console.log("arr:", arr);
                         wx.setStorageSync('multi_ques', arr);
                         wx.setStorageSync('title', "");
-                        if(app.globalData.isEdit){
+                        if (app.globalData.isEdit) {
                             wx.redirectTo({
                                 url: "../paper/paper"
                             })
-                        } else{
+                            app.globalData.isEdit = 1
+                        } else {
                             wx.redirectTo({
                                 url: "../editPaper/editPaper"
                             })

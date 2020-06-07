@@ -30,8 +30,8 @@ Page({
         var groupId = [this.data.groupId];
         var examId = this.data.examId;
         var name = this.data.examName;
-        var beginTime = app.globalData.startDateTime;
-        var endTime = app.globalData.endDateTime;
+        var beginTime = app.globalData.beginTime;
+        var endTime = app.globalData.endTime;
         if (!name || !beginTime || !endTime) {
             wx.showToast({
                 title: '请填写所有试卷信息！', // 标题

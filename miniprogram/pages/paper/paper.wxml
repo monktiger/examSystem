@@ -1,6 +1,6 @@
 <!-- pages/paper/paper.wxml -->
-<cu-custom bgColor="bg-gradual-blue">
-  <!-- <view slot="backText">返回</view> -->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
   <view slot="content">试卷</view>
 </cu-custom>
 <!-- <text class="text-xl">试卷页面</text> -->
@@ -109,7 +109,7 @@
     <view class="box margin-lr margin-top padding" hover-class="none" hover-stop-propagation="false">
       <view class="text-lg" hover-class="none" hover-stop-propagation="false">确定删除试题？</view>
       <view class="flex justify-between padding-lr btn-box margin-top" hover-class="none" hover-stop-propagation="false">
-        <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" style="letter-spacing:3rpx " catch:tap="delete">
+        <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" style="letter-spacing:3rpx " catch:tap="delete" data-idx="{{displayQuestion.id}}">
           确定
         </button>
         <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" style="letter-spacing:3rpx" bindtap="hideModal">

@@ -46,9 +46,18 @@ App({
       }
     })
   },
+  // 获取容器高度，使页面滚动到容器底部
+  pageScrollToBottom: function (viewId) {
+    wx.createSelectorQuery().select(viewId).boundingClientRect(function (rect) {
+      // 使页面滚动到底部
+      wx.pageScrollTo({
+        scrollTop: rect.bottom
+      })
+    }).exec()
+  },
   globalData: {
     userInfo: null,
     url: "http://monktiger.natapp1.cc/",
-    pageId:0,
+    pageId: 0,
   }
 })

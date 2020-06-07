@@ -9,20 +9,20 @@ Page({
     btnName: '',
     status: '20002',
     sum: 0,
-    examId: app.globalData.examId
+    examId: app.globalData.examId,
   },
   // 去试卷界面
   goPaper(e) {
     app.globalData.copyId = this.data.paperDetails.copyId;
     app.globalData.questionList = this.data.paperDetails.questionList;
-    wx.navigateTo({
-      url: '/pages/paper/paper'
+    wx.redirectTo({
+      url: '/pages/paper/paper',
     })
   },
   // 去添加试题界面
   goPaperCreate(e) {
-    wx.navigateTo({
-      url: '/pages/paperCreate/paperCreate',
+    wx.redirectTo({
+      url: '/pages/editPaper/editPaper',
     });
   },
   formatDate(now) {
@@ -162,7 +162,7 @@ Page({
           app.globalData.isJudge = isJudge;
           app.globalData.isScore = isScore;
           that.setData({
-            isJudge:isJudge,
+            isJudge: isJudge,
             isScore: isScore,// 是否需要进行批改
             status: status,
             paperDetails: paperDetails,
@@ -203,7 +203,72 @@ Page({
           paperDetails.beginTime = app.globalData.beginTime;
           paperDetails.endTime = app.globalData.endTime;
           if (status == "10001") {
-            btnName = '编辑试卷'
+            btnName = '编辑试卷';
+            // 传入paperCreate的试卷名称
+            app.globalData.examName = paperDetails.examName;
+            // 分配类型，传入storage
+            var questionList = paperDetails.questionList;
+            var arr_single = [];
+            var idx_single = -1;
+            var arr_multi = [];
+            var idx_multi = -1;
+            var arr_judge = [];
+            var idx_judge = -1;
+            var arr_fill = [];
+            var idx_fill = -1;
+            var arr_short = [];
+            var idx_short = -1;
+            var arr = [];
+            for (let i in questionList) {
+              var data = {
+                answerA: questionList[i].answerA,
+                answerB: questionList[i].answerB,
+                answerC: questionList[i].answerC,
+                answerD: questionList[i].answerD,
+                current: questionList[i].current,
+                examId: questionList[i].examId,
+                id: questionList[i].id,
+                score: questionList[i].score,
+                title: questionList[i].title,
+                type: questionList[i].type,
+              }
+              arr.push({
+                data: data
+              })
+            }
+            for (let i in arr) {
+              if (arr[i].data.type == 1) {
+                var idx_single = idx_single + 1;
+                var o_single = {};
+                o_single[idx_single] = arr[i];
+                arr_single.push(o_single[idx_single])
+              } else if (arr[i].data.type == 2) {
+                var idx_multi = idx_multi + 1;
+                var o = {};
+                o[idx_multi] = arr[i];
+                arr_multi.push(o[idx_multi])
+              } else if (arr[i].data.type == 4) {
+                var idx_judge = idx_judge + 1;
+                var o = {};
+                o[idx_judge] = arr[i];
+                arr_judge.push(o[idx_judge])
+              } else if (arr[i].data.type == 3) {
+                var idx_fill = idx_fill + 1;
+                var o = {};
+                o[idx_fill] = arr[i];
+                arr_fill.push(o[idx_fill])
+              } else if (arr[i].data.type == 5) {
+                var idx_short = idx_short + 1;
+                var o = {};
+                o[idx_short] = arr[i];
+                arr_short.push(o[idx_short])
+              }
+              wx.setStorageSync('single_ques', arr_single);
+              wx.setStorageSync('multi_ques', arr_multi);
+              wx.setStorageSync('judge_ques', arr_judge);
+              wx.setStorageSync('fill_ques', arr_fill);
+              wx.setStorageSync('short_ques', arr_short);
+            }
           } else {
             btnName = '查看试卷'
           }
