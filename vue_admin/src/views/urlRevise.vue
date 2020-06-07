@@ -13,10 +13,10 @@
       <i class="el-icon-search" @click="search"></i>
     </div>
     <el-table :data="tableData" style="width: 100%" border>
-      <el-table-column fixed="type" prop="url" label="题目类型" ></el-table-column>
+      <el-table-column prop="type" label="题目类型" align="center" width="140"></el-table-column>
       <el-table-column prop="category" label="学课类型"></el-table-column>
       <el-table-column prop="title" label="问题"></el-table-column>
-      <el-table-column prop="current" label="正确答案" ></el-table-column>
+      <el-table-column prop="current" label="正确答案"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140" align="center">
         <template slot-scope="scope">
           <el-button
@@ -47,11 +47,7 @@
           <el-input v-model="form.groupId" auto-complete="off" style="margin-left:10px;width:200px"></el-input>
         </el-form-item>
         <el-form-item label="开始时间">
-          <el-time-picker
-            arrow-control
-            v-model="form.beginTime"
-            placeholder="任意时间点"
-          ></el-time-picker>
+          <el-time-picker arrow-control v-model="form.beginTime" placeholder="任意时间点"></el-time-picker>
           <el-date-picker
             v-model="form.beginDate"
             type="date"
@@ -60,11 +56,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="结束时间">
-          <el-time-picker
-            arrow-control
-            v-model="form.endTime"
-            placeholder="任意时间点"
-          ></el-time-picker>
+          <el-time-picker arrow-control v-model="form.endTime" placeholder="任意时间点"></el-time-picker>
           <el-date-picker
             v-model="form.endDate"
             type="date"
@@ -135,9 +127,9 @@ export default {
         name: "", //组名
         examId: "", //试卷id
         beginTime: "", //开始时间
-        beginDate:"",
-        endTime: "" ,//结束时间
-        endDate:""
+        beginDate: "",
+        endTime: "", //结束时间
+        endDate: ""
       }
     };
   },
@@ -206,9 +198,7 @@ export default {
     // 编辑按钮
     handleEdit(index, row) {
       console.log(row);
-      this.form.name = row.name;
-      this.form.openId = row.openId;
-      this.dialogFormVisible = true;
+       this.$emit("questionType", row);
     },
     //确定按钮
     confirm() {
@@ -216,10 +206,10 @@ export default {
       //网络请求，传递后端
       let data = {
         examName: this.form.name,
-        examId:this.form.examId
+        examId: this.form.examId
       };
       console.log(this.form);
-      
+
       editeQuestion(data)
         .then(res => {
           console.log("dd");

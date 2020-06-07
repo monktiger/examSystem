@@ -22,7 +22,7 @@
 
 <script>
 import XLSX from "xlsx";
-import { uploadUrl } from "../api/index";
+import { uploadQuestion } from "../api/temp";
 
 export default {
   name: "upload",
@@ -89,26 +89,27 @@ export default {
     submit() {
       this.detailData.forEach(item => {
         this.listFinal.push({
-          type: item["类别"] ? item["类别"] : "",
-          creatTime: this.formatDate(item["创建时间"], "-"),
-          expirationTime: item["过期时间"]
-            ? this.formatDate(item["过期时间"], "-")
-            : "",
-          isRecommend:
-            item["是否推荐"] === "是" ? "是" : "否",
-          position: item["工作地点"] ? item["工作地点"] : "",
-          companyName: item["公司名称"],
-          companyNature: item["公司性质"] ? item["公司性质"] : "",
-          jobName: item["职务名称"],
-          jobNature: item["职务性质"] ? item["职务性质"] : "",
-          eduBackground: item["教育背景"] ? item["教育背景"] : "",
-          url: item["链接地址"]
+          title: item["title"] ? item["title"] : "",
+          type: parseInt(item["type"])? parseInt(item["type"]) : "",
+          category:  item["category"] ? item["category"] : "",
+          current:
+            item["current"]?  item["current"] : "",
+          answerA: item["answerA"] ? item["answerA"] : "",
+          answerB: item["answerB"]? item["answerB"] : "",
+          answerC: item["answerC"] ? item["answerC"] : "",
+          answerD: item["answerD"] ? item["answerD"] : "",
+          openId: item["openId"] ? item["openId"] : "",
+          id: null,
         });
       });
       console.log(this.listFinal);
       let bool = true;
-      this.listFinal.forEach(item => {
-        uploadUrl(item)
+      
+      // this.listFinal.forEach(item => {
+        let data={
+          questionList: this.listFinal
+        }
+        uploadQuestion(data)
           .then(res => {
             console.log(res);
           })
@@ -116,7 +117,7 @@ export default {
             bool = false;
             throw err;
           });
-      });
+      // });
       if (bool) {
         this.$message({
           message: "上传成功",

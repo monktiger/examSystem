@@ -31,7 +31,7 @@ export function getGroup(query) {
 // 删除得组
 export function deleteGroup(query) {
     return reqApi({
-        url: '/admin/group/'+query,
+        url: '/admin/group/' + query,
         method: 'delete',
     });
 }
@@ -39,15 +39,15 @@ export function deleteGroup(query) {
 //编辑组
 export function editeGroup(data) {
     let newData = {
-        name:data.name
+        name: data.name
     }
     console.log(newData);
     console.log(qs.stringify(newData));
-    
+
     return reqApi({
-        url: '/admin/group/'+data.groupid,
+        url: '/admin/group/' + data.groupid,
         method: 'patch',
-        data:  qs.stringify(newData),
+        data: qs.stringify(newData),
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         }
@@ -65,10 +65,10 @@ export function getExam(query) {
 export function editeExam(data) {
     console.log(data);
     let newData = {
-        name : data.examName
+        name: data.examName
     }
     return reqApi({
-        url: '/admin/exam/'+data.examId,
+        url: '/admin/exam/' + data.examId,
         method: 'patch',
         data: JSON.stringify(newData),
         headers: {
@@ -81,7 +81,7 @@ export function editeExam(data) {
 //删除试卷
 export function deleteExam(query) {
     console.log(query);
-    
+
     return reqApi({
         url: '/admin/exam/' + query,
         method: 'delete',
@@ -102,12 +102,12 @@ export function getUser(query) {
 //修改学生资料
 export const editeUser = (data) => {
     let newData = {
-        name:data.name
+        name: data.name
     }
     return reqApi({
-        url: '/admin/user/'+data.openId,
+        url: '/admin/user/' + data.openId,
         method: 'patch',
-        data:  qs.stringify(newData),
+        data: qs.stringify(newData),
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         }
@@ -117,7 +117,7 @@ export const editeUser = (data) => {
 //禁用学生
 export function deleteUser(query) {
     return reqApi({
-        url: '/admin/user/'+query,
+        url: '/admin/user/' + query,
         method: 'delete',
         // headers: {"Content-Type": "multipart/form-data"},
         params: query,
@@ -132,20 +132,48 @@ export function getQuestion(query) {
 }
 
 //修改试题
-export function editeQuestion(query) {
+export function editeQuestion(data) {
+    console.log(data);
+    let newData = {
+        title: data.title,
+        type: data.type,
+        category: data.category,
+        current: data.current,
+        answerA: data.answerA,
+        answerB: data.answerB,
+        answerC: data.answerC,
+        answerD: data.answerD,
+    }
     return reqApi({
-        url: '/admin/question',
-        method: 'get',
-        // headers: {"Content-Type": "multipart/form-data"},
-        params: query,
+        url: '/admin/question/' + data.id,
+        method: 'patch',
+        data: JSON.stringify(newData),
+        headers: {
+            'token': JSON.parse(sessionStorage.getItem('token')),
+            "Content-Type": "application/json"
+        }
     });
 }
 
 //删除试题
 export function deleteQuestion(query) {
     return reqApi({
-        url: '/admin/question/'+query,
+        url: '/admin/question/' + query,
         method: 'delete',
         // headers: {"Content-Type": "multipart/form-data"},
     });
 }
+
+    //上传试题
+    export function uploadQuestion(data) {
+        console.log(JSON.stringify(data));
+        return reqApi({
+            url: '/admin/question',
+            method: 'post',
+            data: JSON.stringify(data),
+            headers: {
+                'token': JSON.parse(sessionStorage.getItem('token')),
+                "Content-Type": "application/json"
+            }
+        });
+    }

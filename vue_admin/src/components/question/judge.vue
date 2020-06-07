@@ -39,6 +39,7 @@ export default {
       correct: "憨憨顶顶顶顶顶顶顶顶顶顶"
     };
   },
+  props: ["quetion"],
   created() {},
   methods: {
     select: function(e) {
@@ -54,6 +55,9 @@ export default {
         this.curD = false;
       }
     }
+  },
+  back() {
+    this.$emit("back");
   }
 };
 </script>

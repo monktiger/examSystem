@@ -2,23 +2,23 @@
   <div class="urlRevise">
     <el-form>
       <el-tag style="margin-right:20px;margin-bottom:20px">多选题</el-tag>
-      <el-input type="textarea" class="question" :rows="5" placeholder="请输入内容" v-model="title"></el-input>
+      <el-input type="textarea" class="question" :rows="5" placeholder="请输入内容" v-model="question.title"></el-input>
       <ul class="option">
         <li @click="select(A)">
           <div :class="curA?'cur icon ':'icon'">A</div>
-          <el-input :class="curA?'cur':''" v-model="answerA" placeholder="请输入内容"></el-input>
+          <el-input :class="curA?'cur':''" v-model="quetion.answerA" placeholder="请输入内容"></el-input>
         </li>
         <li @click="select(B)">
           <div :class="curB?'cur icon ':'icon'">B</div>
-          <el-input :class="curB?'cur':''" v-model="answerA" placeholder="请输入内容"></el-input>
+          <el-input :class="curB?'cur':''" v-model="quetion.answerB" placeholder="请输入内容"></el-input>
         </li>
         <li @click="select(C)">
           <div :class="curC?'cur icon ':'icon'">C</div>
-          <el-input :class="curC?'cur':''" v-model="answerA" placeholder="请输入内容"></el-input>
+          <el-input :class="curC?'cur':''" v-model="quetion.answerC" placeholder="请输入内容"></el-input>
         </li>
         <li @click="select(D)">
           <div :class="curD?'cur icon ':'icon'">D</div>
-          <el-input :class="curD?'cur':''" v-model="answerA" placeholder="请输入内容"></el-input>
+          <el-input :class="curD?'cur':''" v-model="quetion.answerD" placeholder="请输入内容"></el-input>
         </li>
       </ul>
       <el-form-item style="display:flex;justify-content:center">
@@ -51,6 +51,7 @@ export default {
       correct: "憨憨顶顶顶顶顶顶顶顶顶顶"
     };
   },
+  props: ["quetion"],
   created() {},
   methods: {
     select: function(e) {
@@ -76,6 +77,9 @@ export default {
         this.curD = true;
       }
     }
+  },
+  back() {
+    this.$emit("back");
   }
 };
 </script>

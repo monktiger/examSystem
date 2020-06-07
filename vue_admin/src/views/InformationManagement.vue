@@ -1,30 +1,19 @@
 <template>
   <div class="informationmanagement">
     <el-tabs v-model="activeName">
-      <el-tab-pane label="信息修改" name="first">
-        <urlRevise v-if="bool" @urlEdit="urlEdit"></urlRevise>
-        <editForm v-else :ruleForm="activeUrl" @back="back"></editForm>
+      <el-tab-pane label="试题管理" name="first">
+        <urlRevise v-if="isQuestion" @questionType="questionType"></urlRevise>
+        <singleAnswer v-else-if="isSingleAnswer" @back="back" :question="question"></singleAnswer>
+        <multipleChoice  v-else-if="isMultipleChoice" @back="back" :question="question"></multipleChoice>
+        <subjective  v-else-if="isSubjective" @back="back" :question="question"></subjective>
+        <judge  v-else-if="isJudge" @back="back" :question="question"></judge>
+         <fill  v-else-if="isJudge" @back="back" :question="question"></fill>
       </el-tab-pane>
       <el-tab-pane label="增加" name="second">
         <informationform></informationform>
       </el-tab-pane>
       <el-tab-pane label="上传Excel" name="third">
         <upload></upload>
-      </el-tab-pane>
-      <el-tab-pane label="单选" name="fourth">
-        <singleAnswer></singleAnswer>
-      </el-tab-pane>
-      <el-tab-pane label="多选题" name="fifth">
-        <multipleChoice></multipleChoice>
-      </el-tab-pane>
-	   <el-tab-pane label="判断题" name="six">
-        <judge></judge>
-      </el-tab-pane>
-	  	   <el-tab-pane label="填空题" name="seven">
-        <fill></fill>
-      </el-tab-pane>
-	  	   <el-tab-pane label="主观题" name="eight">
-        <subjective></subjective>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -34,7 +23,6 @@
 import informationform from "../components/informationform";
 import upload from "../components/upload";
 import urlRevise from "./urlRevise";
-import editForm from "./editForm";
 import singleAnswer from "../components/question/singleAnswer";
 import multipleChoice from "../components/question/multipleChoice";
 import judge from "../components/question/judge";
@@ -44,28 +32,73 @@ export default {
   data() {
     return {
       activeName: "first",
-      bool: true,
-      activeUrl: {}
+      isSingleAnswer: false,
+      isMultipleChoice: false,
+      isJudge: false,
+      isFill: false,
+      isSubjective: false,
+      isQuestion: true,
+      question: {}
     };
   },
   components: {
     informationform,
     upload,
     urlRevise,
-    editForm,
     singleAnswer,
-	multipleChoice,
-	judge,
-	fill,
-	subjective
+    multipleChoice,
+    judge,
+    fill,
+    subjective
   },
   methods: {
-    urlEdit(row) {
-      this.bool = false;
-      this.activeUrl = row;
+    questionType(row) {
+      this.question = row;
+      if (row.type == 1) {
+        this.isSingleAnswer = true;
+        this.isMultipleChoice = false;
+        this.isJudge = false;
+        this.isFill = false;
+        this.isSubjective = false;
+        this.isQuestion = false;
+      } else if (row.type == 2) {
+        this.isSingleAnswer = false;
+        this.isMultipleChoice = true;
+        this.isJudge = false;
+        this.isFill = false;
+        this.isSubjective = false;
+        this.isQuestion = false;
+      } else if (row.type == 3) {
+        this.isSingleAnswer = false;
+        this.isMultipleChoice = false;
+        this.isJudge = false;
+        this.isFill = true;
+        this.isSubjective = false;
+        this.isQuestion = false;
+      } else if (row.type == 4) {
+        this.isSingleAnswer = false;
+        this.isMultipleChoice = false;
+        this.isJudge = true;
+        this.isFill = false;
+        this.isSubjective = false;
+        this.isQuestion = false;
+      } else if (row.type == 5) {
+        this.isSingleAnswer = false;
+        this.isMultipleChoice = false;
+        this.isJudge = false;
+        this.isFill = false;
+        this.isSubjective = true;
+        this.isQuestion = false;
+      }
     },
+
     back() {
-      this.bool = true;
+      this.isSingleAnswer = false;
+      this.isMultipleChoice = false;
+      this.isJudge = false;
+      this.isFill = true;
+      this.isSubjective = false;
+      this.isQuestion = false;
     }
   }
 };
