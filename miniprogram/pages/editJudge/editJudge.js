@@ -32,18 +32,18 @@ Page({
         if (editQueNum || editQueNum == 0) {
             var editques = wx.getStorageSync('judge_ques');
             var editData = editques[editQueNum].data;
-            var currentIdx = editData.currentIdx;
+            var current = editData.current;
             var score = editData.score;
             var queId = editData.id;
             wx.setStorageSync("title", editData.title);
             var checkedArr = [];
-            for (var i = 0; i < 2; i++) {
-                if (i == currentIdx) {
-                    checkedArr.push(true)
-                } else {
-                    checkedArr.push(false)
-                }
-            };
+            if (current == 'A') {
+                checkedArr.push(true)
+                checkedArr.push(false)
+            } else {
+                checkedArr.push(false)
+                checkedArr.push(true)
+            }
             this.setData({
                 checked: checkedArr,
                 index: parseInt(score) - 1,
@@ -57,8 +57,8 @@ Page({
 
     //返回
     back: function (e) {
-        wx.redirectTo({
-            url: "/pages/editPaper/editPaper"
+        wx.navigateBack({
+            delta: 1
         })
     },
 

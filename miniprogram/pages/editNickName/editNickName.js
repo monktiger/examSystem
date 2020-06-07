@@ -48,7 +48,7 @@ Page({
           wx.hideLoading();
           app.globalData.nickname = that.data.nickname;
           // 跳转
-          wx.navigateTo({
+          wx.redirectTo({
             url: '/pages/myInfo/myInfo',
           })
           // 弹窗成功

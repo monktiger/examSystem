@@ -20,12 +20,15 @@ Page({
     },
 
     back: function (e) {
-        wx.redirectTo({
-            url: "../manageGroup/manageGroup"
+        wx.navigateBack({
+            delta: 1
         })
     },
 
     createPaper: function (e) {
+        wx.showLoading({
+            title: '加载中...',
+          })
         var that = this;
         var groupId = [this.data.groupId];
         var examId = this.data.examId;
@@ -58,11 +61,12 @@ Page({
                 success: function (res) {
                     console.log(res);
                     if (res.data.status == 1) {
+                        wx.hideLoading();
                         app.globalData.examName = name;
                         app.globalData.beginTime = beginTime;
                         app.globalData.endTime = endTime;
                         app.globalData.examId = res.data.examId;
-                        wx.navigateTo({
+                        wx.redirectTo({
                             url: "../editPaper/editPaper"
                         })
                     } else if (res.data.status == -1) {

@@ -56,7 +56,7 @@ Page({
   },
 
   onLoad: function (options) {
-
+    
     app.pageScrollToBottom("#view"); // 默认停留在页面底部 方便添加题目
     var addQuestionUrl = app.globalData.url + "exam/addQuestion";
     this.setData({
@@ -100,7 +100,7 @@ Page({
       }
     })
     wx.redirectTo({
-      url: "../manageGroup/manageGroup"
+      url:'../manageGroup/manageGroup'
     })
     wx.showToast({
       title: '创建成功！', // 标题
@@ -115,7 +115,7 @@ Page({
   // 修改试卷信息
   setPaperMsg: function (e) {
     wx.redirectTo({
-      url: "../paperCreate/paperCreate"
+      url:'../paperCreate/paperCreate'
     })
   },
   // showModal(e) {

@@ -10,12 +10,12 @@
   <view>
     <view class="flex bg-white padding solid" catchtap="nickname">
       <view class="flex-sub">昵称</view>
-      <view class="flex-treble" data-nickname="{{nickname}}">{{nickname}}</view>
+      <view class="flex-treble">{{nickname?nickname:'请输入'}}</view>
       <view class="cuIcon-right lg text-gray flex-sub text-right"></view>
     </view>
     <view class="flex bg-white padding" catchtap="name">
       <view class="flex-sub">姓名</view>
-      <view class="flex-treble" data-name="{{name}}">{{name}}</view>
+      <view class="flex-treble">{{name}}</view>
       <view class="cuIcon-right lg text-gray flex-sub text-right"></view>
     </view>
   </view>

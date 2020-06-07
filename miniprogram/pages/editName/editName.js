@@ -42,8 +42,9 @@ Page({
       },
       success: function (res) {
         if (res.data.status == 1) {
+          app.globalData.name=that.data.name
           // 跳转
-          wx.navigateTo({
+          wx.redirectTo({
             url: '/pages/myInfo/myInfo',
           })
           // 弹窗成功

@@ -17,6 +17,9 @@ Component({
     elements: [],
   },
   attached: function () {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     this.setData({
       token: app.globalData.token
@@ -34,6 +37,7 @@ Component({
         "token": that.data.token
       },
       success: function (result) {
+        wx.hideLoading();
         // console.log(result);
         let elements = result.data.groups;
         let color = that.data.color;
@@ -131,6 +135,9 @@ Component({
     },
     // 创建组
     create(e) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       let that = this;
       console.log(this.data.creatInput);
       wx.request({
@@ -155,6 +162,7 @@ Component({
               "token": that.data.token
             },
             success: function (result) {
+              wx.hideLoading();
               console.log(result);
               let elements = result.data.groups;
               let color = that.data.color;
@@ -183,6 +191,9 @@ Component({
     },
     // 加入组
     add(e) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       let that = this;
       console.log(this.data.addInput);
 
@@ -212,6 +223,7 @@ Component({
               "token": that.data.token
             },
             success: function (result) {
+              wx.hideLoading();
               console.log(result);
               let elements = result.data.groups;
               let color = that.data.color;
@@ -238,6 +250,9 @@ Component({
     },
     // 解散组
     delete(e) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       let that = this;
       console.log(e.detail.groupid);
       wx.request({
@@ -251,6 +266,7 @@ Component({
           "token": that.data.token
         },
         success: function (result) {
+          wx.hideLoading();
           // console.log(result);
           let elements = that.data.elements;
           elements.splice(e.detail.index, 1);

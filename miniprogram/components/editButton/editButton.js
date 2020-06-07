@@ -57,7 +57,7 @@ Component({
     edit: function (e) {
       var quesType = this.data.quesType;
       if (quesType == 1) {
-        var typeUrl = "/pages/editSingle/editSingle";
+        var typeUrl = "../../pages/editSingle/editSingle";
       } else if (quesType == 2) {
         var typeUrl = "../../pages/editMulti/editMulti";
       } else if (quesType == 3) {
@@ -96,6 +96,9 @@ Component({
 
     // 添加到试题库
     toStore(e) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       var that=this;
       var storage = this.data.storage;
       var quesIdx = this.data.quesIdx;
@@ -126,7 +129,8 @@ Component({
         success: function (res) {
           console.log(res)
           if (res.data.status == 1) {
-            this.setData({
+            wx.hideLoading();
+            that.setData({
               majorVal:""
             })
             that.hideModal();
@@ -152,6 +156,9 @@ Component({
         content: '确认要删除该题目吗？',
         success: function (result) {
           if (result.confirm) {
+            wx.showLoading({
+              title: '加载中...',
+            })
             var quesIdx = that.data.quesIdx;
             wx.request({
               url: app.globalData.url + "exam/deleteQuestion",
@@ -167,6 +174,7 @@ Component({
               success: function (res) {
                 console.log("res:", res);
                 if (res.data.status == 1) {
+                  wx.hideLoading();
                   // 设置题目缓存
                   var storage = that.data.storage;
                   console.log("storage", storage);
@@ -193,6 +201,11 @@ Component({
                   that.triggerEvent("toNewStorage", newStorage)
 
                 } else {
+                  wx.hideLoading();
+                  wx.showToast({
+                    title: '删除失败',
+                    icon:'none'
+                  })
                   console.log("errorMsg:" + res.msg);
                 }
               },

@@ -54,6 +54,9 @@ Component({
       })
     },
     deleteExam(e){
+      wx.showLoading({
+        title: '加载中...',
+      })
       let that = this
       wx.request({
         url: 'http://monktiger.natapp1.cc/exam/deleteExam',
@@ -65,6 +68,7 @@ Component({
           "token": app.globalData.token
         },
         success: function (result) {
+          wx.hideLoading();
           console.log(result);
           let paperList = that.data.paperList;
           paperList.splice(that.data.index,1);

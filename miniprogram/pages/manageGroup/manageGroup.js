@@ -9,9 +9,10 @@ Page({
     paperList: []
   },
   back: function (e) {
-    wx.redirectTo({
-      url: "../nav/nav"
+    wx.navigateBack({
+      delta: 1
     })
+    app.globalData.examName="";
   },
   // 去管理人员界面
   goManagePeople(e) {
@@ -125,6 +126,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     wx.request({
       url: 'http://monktiger.natapp1.cc/exam/getExam',
@@ -137,6 +141,7 @@ Page({
         "token": app.globalData.token
       },
       success: function (result) {
+        wx.hideLoading();
         console.log(result);
         let paperList = result.data.examList;
         let i;

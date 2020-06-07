@@ -15,6 +15,9 @@ Page({
 
   // 获得成绩列表
   getScoreList: function (url) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     // 发起网络请求
     wx.request({
@@ -28,6 +31,7 @@ Page({
         groupId: app.globalData.groupId,
       },
       success: function (res) {
+        wx.hideLoading();
         console.log("getScoreList", res);
         // that.processScore(res.scoreList);
         that.setData({

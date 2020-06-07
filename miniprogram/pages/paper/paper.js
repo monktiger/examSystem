@@ -107,6 +107,9 @@ Page({
   },
   // 提交答案
   submitAnwer(e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     console.log(e.detail.id, e.detail.answer);
     wx.request({
@@ -121,6 +124,7 @@ Page({
         "token": app.globalData.token
       },
       success: function (result) {
+        wx.hideLoading();
         console.log(result)
       }, fail(e) {
         console.log(e);
@@ -131,13 +135,13 @@ Page({
   goPaperCreate(e) {
     let that = this;
     // app.globalData.examId = this.data.examId;
-    console.log("app.globalData.examId",app.globalData.examId)
+    console.log("app.globalData.examId", app.globalData.examId)
     app.globalData.displayQuestion = that.data.displayQuestion
     app.globalData.isEdit = 1;
     // 判断跳转的页面
     var typeUrl = this.getType().typeUrl;
-    app.globalData.editQueNum=this.getType().quesIdx;
-    wx.redirectTo({
+    app.globalData.editQueNum = this.getType().quesIdx;
+    wx.navigateTo({
       url: typeUrl,
     })
   },
@@ -160,6 +164,9 @@ Page({
   },
   // 判断是否进行成绩上传并上传
   judgeScore(e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     if (that.data.status == '10004' && that.data.isScore == false && that.data.displayQuestion.type == 5) {
       wx.request({
@@ -174,6 +181,7 @@ Page({
           "token": app.globalData.token
         },
         success: function (result) {
+          wx.hideLoading();
           console.log(result)
         }, fail(e) {
           console.log(e);
@@ -202,6 +210,9 @@ Page({
   },
   // 提交评价
   submitJudge(e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     wx.request({
       url: 'http://monktiger.natapp1.cc/judge/judge',
@@ -214,6 +225,7 @@ Page({
         "token": app.globalData.token
       },
       success: function (result) {
+        wx.hideLoading();
         console.log(result)
         wx.navigateBack({
           delta: 2
@@ -240,6 +252,9 @@ Page({
 
   // 删除题目
   delete: function (e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     console.log("app.globalData.examId", app.globalData.examId)
     wx.request({
@@ -256,6 +271,7 @@ Page({
       success: function (res) {
         console.log("res:", res);
         if (res.data.status == 1) {
+          wx.hideLoading();
           // 确定本题在该题型中是第几题，更新缓存内容
           var quesIdx = that.getType().quesIdx;
           var storage = that.getType().storage;
@@ -286,7 +302,7 @@ Page({
             success(res) {
               if (res.confirm) {
                 console.log('编辑试卷')
-                wx.redirectTo({
+                wx.navigateTo({
                   url: '/pages/paperDetails/paperDetails',
                 })
               } else if (res.cancel) {
@@ -306,8 +322,8 @@ Page({
                       title: '删除成功',
                       icon: "none"
                     })
-                    wx.redirectTo({
-                      url: '/pages/manageGroup/manageGroup',
+                    wx.navigateBack({
+                      delta: 1
                     })
                   },
                   fail: function (error) {

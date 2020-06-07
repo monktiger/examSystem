@@ -14,7 +14,7 @@
   <view class="title">题目分值</view>
   <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
     <view class="picker">
-      {{index+1?picker[index]:'请选择'}}
+      {{index?picker[index]:'请选择'}}
     </view>
   </picker>
 </view>

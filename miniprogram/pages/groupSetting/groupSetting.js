@@ -33,6 +33,9 @@ Page({
 
   // 获得组成员人数
   getMemberCount: function (e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     // 发起网络请求
     wx.request({
@@ -46,6 +49,7 @@ Page({
       },
       success: function (res) {
         if (res.data.status == 1) {
+          wx.hideLoading();
           var count = res.memberList.length;
           this.setData({
             count: count
@@ -71,6 +75,9 @@ Page({
 
   // 设置组名
   setGroupName(e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     // 发起网络请求
     wx.request({
@@ -86,6 +93,7 @@ Page({
       success: function (res) {
         console.log("editGroup",res)
         if (res.data.status == 1) {
+          wx.hideLoading();
           // 隐藏modal
           that.setData({
             modalName: null

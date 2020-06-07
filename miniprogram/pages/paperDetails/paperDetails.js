@@ -13,15 +13,23 @@ Page({
   },
   // 去试卷界面
   goPaper(e) {
-    app.globalData.copyId = this.data.paperDetails.copyId;
-    app.globalData.questionList = this.data.paperDetails.questionList;
-    wx.redirectTo({
-      url: '/pages/paper/paper',
-    })
+    let paperLen = paperDetails.questionList.length;
+    if (paperLen == 0) {
+      wx.showToast({
+        title: '暂无试题', 
+        icon: 'none'
+      })
+    } else {
+      app.globalData.copyId = this.data.paperDetails.copyId;
+      app.globalData.questionList = this.data.paperDetails.questionList;
+      wx.navigateTo({
+        url: '/pages/paper/paper',
+      })
+    }
   },
   // 去添加试题界面
   goPaperCreate(e) {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/editPaper/editPaper',
     });
   },

@@ -72,9 +72,9 @@ Page({
 
     //返回
     back: function (e) {
-        wx.redirectTo({
-            url: "/pages/editPaper/editPaper"
-        })
+        wx.navigateBack({
+            delta: 1
+          })
     },
 
     // 提交多选题

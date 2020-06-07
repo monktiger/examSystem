@@ -91,15 +91,16 @@ Page({
   },
 
   toCopy(e) {
-    // let question = e.detail.question
-    // app.globalData.question = question;
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     var question = e.currentTarget.dataset.question;
     console.log(question);
     // var data={
     //   data:question
     // }
-    question.examId=app.globalData.examId;
+    question.examId = app.globalData.examId;
     //添加到后台
     // 发起网络请求
     wx.request({
@@ -113,6 +114,7 @@ Page({
       success: function (res) {
         console.log("res:", res);
         if (res.data.status == 1) {
+          wx.hideLoading();
           question.id = res.data.id;
           question.type = res.data.type;
           var storage = that.getType(res.data.type);
@@ -137,8 +139,8 @@ Page({
           wx.setStorageSync(storage, arr);
           wx.setStorageSync('title', "");
           app.globalData.editQueNum = "";
-          wx.redirectTo({
-            url: "../editPaper/editPaper"
+          wx.navigateBack({
+            delta: 1
           })
         } else {
           console.log("errorMsg:" + res.msg);
@@ -151,6 +153,9 @@ Page({
   },
   // 获得列表
   getQuestionList(data) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     wx.request({
       url: 'http://monktiger.natapp1.cc/question/getQuestionList',
@@ -160,6 +165,7 @@ Page({
         "token": app.globalData.token
       },
       success: function (result) {
+        wx.hideLoading();
         console.log(result);
         let paperDetails = result.data;
         that.setData({
@@ -224,6 +230,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    wx.showLoading({
+      title: '加载中...',
+    })
     console.log("ddd");
     let that = this
     that.setData({
@@ -250,6 +259,7 @@ Page({
         "token": app.globalData.token
       },
       success: function (result) {
+        wx.hideLoading();
         console.log(result);
         let paperDetails = result.data;
         that.setData({
