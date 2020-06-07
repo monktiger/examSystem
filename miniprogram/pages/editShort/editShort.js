@@ -15,9 +15,12 @@ Page({
 
   //返回
   back: function (e) {
-    wx.redirectTo({
-      url: "/pages/editPaper/editPaper"
-    })
+    // wx.redirectTo({
+    //   url: "/pages/editPaper/editPaper"
+    // })
+    wx.navigateBack({
+      delta:1
+  })
   },
 
   //获取答案
@@ -96,14 +99,20 @@ Page({
             wx.setStorageSync('title', "");
             app.globalData.editQueNum = "";
             if (app.globalData.isEdit) {
-              wx.redirectTo({
-                url: "../paper/paper"
-              })
+              // wx.redirectTo({
+              //   url: "../paper/paper"
+              // })
+              wx.navigateBack({
+                delta:1
+            })
               app.globalData.isEdit = 0
             } else {
-              wx.redirectTo({
-                url: "../editPaper/editPaper"
-              })
+              // wx.redirectTo({
+              //   url: "../editPaper/editPaper"
+              // })
+              wx.navigateBack({
+                delta:1
+            })
             }
           } else {
             console.log("errorMsg:" + res.msg);

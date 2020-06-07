@@ -76,7 +76,7 @@
 
 <view class="bottom text-lg">
   <!-- 第一个状态 -->
-  <view class="flex justify-center one-btn" wx:if="{{questionIndex == 0?true:false}}" bind:tap="nextQuestion">
+  <view class="flex justify-center one-btn" wx:if="{{questionIndex == 0&&length!=1 ?true:false}}" bind:tap="nextQuestion">
     下一题
   </view>
   <!-- 第二个状态 -->
@@ -102,6 +102,7 @@
     wx:else
     class="flex justify-center two-btn" bind:tap="lastQuestion">{{btn}}</view>
   </view>
+  <!-- 第四个状态 -->
 </view>
 <!-- 删除提示模态框 -->
 <view class="cu-modal  {{modalName=='deleteTipsModal'?'show':''}}" catchtouchmove>

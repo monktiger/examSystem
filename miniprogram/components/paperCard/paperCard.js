@@ -45,8 +45,7 @@ Component({
       })
     },
     showbottomModal(e){
-      console.log(e.currentTarget.dataset.examid);
-      
+      // console.log(e.currentTarget.dataset.examid);
       this.setData({
         examId:e.currentTarget.dataset.examid,
         index:e.currentTarget.dataset.index,
@@ -65,13 +64,20 @@ Component({
           "token": app.globalData.token
         },
         success: function (result) {
-          console.log(result);
-          let paperList = that.data.paperList;
-          paperList.splice(that.data.index,1);
-          that.setData({
-            paperList:paperList,   
-          })
-          that.hideModal()
+          // console.log(result.data.status);
+          if(result.data.status==-3){
+            that.setData({
+              modalName:'tipsMarkModal'
+            })
+          }else{
+            let paperList = that.data.paperList;
+            paperList.splice(that.data.index,1);
+            that.setData({
+              paperList:paperList,   
+            })
+            that.hideModal()
+          }
+          
         }, fail(e) {
           console.log(e);
   

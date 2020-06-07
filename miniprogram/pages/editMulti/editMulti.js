@@ -72,8 +72,11 @@ Page({
 
     //返回
     back: function (e) {
-        wx.redirectTo({
-            url: "/pages/editPaper/editPaper"
+        // wx.redirectTo({
+        //     url: "/pages/editPaper/editPaper"
+        // })
+        wx.navigateBack({
+            delta:1
         })
     },
 
@@ -168,13 +171,19 @@ Page({
                         wx.setStorageSync('multi_ques', arr);
                         wx.setStorageSync('title', "");
                         if (app.globalData.isEdit) {
-                            wx.redirectTo({
-                                url: "../paper/paper"
+                            // wx.redirectTo({
+                            //     url: "../paper/paper"
+                            // })
+                            wx.navigateBack({
+                                delta:1
                             })
                             app.globalData.isEdit = 1
                         } else {
-                            wx.redirectTo({
-                                url: "../editPaper/editPaper"
+                            // wx.redirectTo({
+                            //     url: "../editPaper/editPaper"
+                            // })
+                            wx.navigateBack({
+                                delta:1
                             })
                         }
                     } else {

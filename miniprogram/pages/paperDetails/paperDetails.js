@@ -15,13 +15,13 @@ Page({
   goPaper(e) {
     app.globalData.copyId = this.data.paperDetails.copyId;
     app.globalData.questionList = this.data.paperDetails.questionList;
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/paper/paper',
     })
   },
   // 去添加试题界面
   goPaperCreate(e) {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/editPaper/editPaper',
     });
   },

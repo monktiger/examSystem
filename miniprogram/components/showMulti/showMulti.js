@@ -17,24 +17,24 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    getStorage:function(e){
+    getStorage: function (e) {
       this.setData({
-        multiQues:e.detail.newStorage
+        multiQues: e.detail.newStorage
       })
-      console.log("newStorage",e.detail)
+      console.log("newStorage", e.detail)
     },
   },
-  lifetimes: {
-    attached: function (e) {
+  pageLifetimes: {
+    show: function () {
       // 获取多选题缓存
       var multiQues = wx.getStorageSync('multi_ques');
       var SingleQus = wx.getStorageSync('single_ques');
-      var SingleQusLen=SingleQus.length
+      var SingleQusLen = SingleQus.length
       this.setData({
         multiQues: multiQues,
-        SingleQusLen:SingleQusLen
+        SingleQusLen: SingleQusLen
       })
-      console.log("multiQues",multiQues)
-    }
+      console.log("multiQues", multiQues)
+    },
   },
 })

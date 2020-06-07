@@ -137,7 +137,7 @@ Page({
     // 判断跳转的页面
     var typeUrl = this.getType().typeUrl;
     app.globalData.editQueNum=this.getType().quesIdx;
-    wx.redirectTo({
+    wx.navigateTo({
       url: typeUrl,
     })
   },
@@ -286,8 +286,11 @@ Page({
             success(res) {
               if (res.confirm) {
                 console.log('编辑试卷')
-                wx.redirectTo({
-                  url: '/pages/paperDetails/paperDetails',
+                // wx.redirectTo({
+                //   url: '/pages/paperDetails/paperDetails',
+                // })
+                wx.navigateBack({
+                  delta:1
                 })
               } else if (res.cancel) {
                 console.log('删除试卷')
@@ -306,8 +309,11 @@ Page({
                       title: '删除成功',
                       icon: "none"
                     })
-                    wx.redirectTo({
-                      url: '/pages/manageGroup/manageGroup',
+                    // wx.redirectTo({
+                    //   url: '/pages/manageGroup/manageGroup',
+                    // })
+                    wx.navigateBack({
+                      delta:2
                     })
                   },
                   fail: function (error) {

@@ -68,3 +68,21 @@
         </view>
     </view>
 </view>
+<!-- 不能删除 -->
+<view class="cu-modal  {{modalName=='tipsMarkModal'?'show':''}}" catchtouchmove>
+  <view style="border-radius: 50rpx;" class="cu-dialog middle-modal">
+    <view class="box padding " hover-class="none" hover-stop-propagation="false">
+      <view class="flex align-center justify-end ">
+        <view class="cuIcon-close " style="font-size:40rpx" catchtap="hideModal"></view>
+      </view>
+      <view style="letter-spacing: 1rpx;font-size: 30rpx;line-height: 60rpx;">
+        <view>
+          此考卷已经开始发放
+          <view>
+            故 <text class="text-blue text-lg text-bold">不能删除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

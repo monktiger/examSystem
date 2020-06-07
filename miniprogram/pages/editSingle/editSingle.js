@@ -58,8 +58,11 @@ Page({
 
     //返回
     back: function (e) {
-        wx.redirectTo({
-            url: "/pages/editPaper/editPaper"
+        // wx.redirectTo({
+        //     url: "/pages/editPaper/editPaper"
+        // })
+        wx.navigateBack({
+            delta:1
         })
     },
 
@@ -141,7 +144,7 @@ Page({
                         data.currentIdx = currentIdx;
                         // 如果是修改，则先把storage对应的题删掉 再重新push
                         console.log("editQueNum", app.globalData.editQueNum)
-                        if (app.globalData.editQueNum) {
+                        if (app.globalData.editQueNum!=undefined&&app.globalData.editQueNum!="") {
                             var editQueNum = that.data.editQueNum;
                             _UTIL.arrRemoveObj(arr, arr[editQueNum]);
                         }
@@ -158,13 +161,20 @@ Page({
                         wx.setStorageSync('single_ques', arr);
                         wx.setStorageSync('title', "");
                         if (app.globalData.isEdit) {
-                            wx.redirectTo({
-                                url: "../paper/paper"
-                            })
+                            // wx.redirectTo({
+                            //     url: "../paper/paper"
+                            // })
+                            wx.navigateBack({
+                                delta:1,
+                            }
+                            )
                             app.globalData.isEdit = 0
                         } else {
-                            wx.redirectTo({
-                                url: "../editPaper/editPaper"
+                            // wx.redirectTo({
+                            //     url: "../editPaper/editPaper"
+                            // })
+                            wx.navigateBack({
+                                delta:1
                             })
                         }
                     } else {

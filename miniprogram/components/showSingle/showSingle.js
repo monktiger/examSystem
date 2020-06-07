@@ -29,15 +29,14 @@ Component({
       console.log("newStorage",e.detail)
     },
   },
-  lifetimes: {
-    attached: function (e) {
-      // 获取单选题缓存
+  pageLifetimes: {
+    show: function() {
       var singleQues = wx.getStorageSync('single_ques');
       this.setData({
         singleQues: singleQues
       })
       console.log("singleQues",singleQues)
-    }
-  },
+    },
+  }
 
 })

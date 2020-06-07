@@ -4,7 +4,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    
+
   },
 
   /**
@@ -18,28 +18,28 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    getStorage:function(e){
+    getStorage: function (e) {
       this.setData({
-        shortQues:e.detail.newStorage
+        shortQues: e.detail.newStorage
       })
-      console.log("newStorage",e.detail)
+      console.log("newStorage", e.detail)
     },
   },
-
-  lifetimes: {
-    attached: function (e) {
+  pageLifetimes: {
+    show: function () {
       // 获取简答题缓存
       var shortQues = wx.getStorageSync('short_ques');
       var multiQues = wx.getStorageSync('multi_ques');
       var SingleQus = wx.getStorageSync('single_ques');
       var fillQues = wx.getStorageSync('fill_ques');
       var judgeQues = wx.getStorageSync('judge_ques');
-      var quesLen=SingleQus.length+multiQues.length+fillQues.length+judgeQues.length;
+      var quesLen = SingleQus.length + multiQues.length + fillQues.length + judgeQues.length;
       this.setData({
         shortQues: shortQues,
-        quesLen:quesLen
+        quesLen: quesLen
       })
-    }
-  },
+    },
+  }
+
 
 })

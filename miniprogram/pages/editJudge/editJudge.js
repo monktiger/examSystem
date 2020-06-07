@@ -57,9 +57,9 @@ Page({
 
     //返回
     back: function (e) {
-        wx.redirectTo({
-            url: "/pages/editPaper/editPaper"
-        })
+  wx.navigateBack({
+      delta: 1
+  });
     },
 
     // 提交判断题
@@ -130,13 +130,13 @@ Page({
                         wx.setStorageSync('judge_ques', arr);
                         wx.setStorageSync('title', "");
                         if (app.globalData.isEdit) {
-                            wx.redirectTo({
-                                url: "../paper/paper"
+                            wx.navigateBack({
+                                delta:1
                             })
                             app.globalData.isEdit = 0
                         } else {
-                            wx.redirectTo({
-                                url: "../editPaper/editPaper"
+                            wx.navigateBack({
+                                delta:1
                             })
                         }
                     } else {

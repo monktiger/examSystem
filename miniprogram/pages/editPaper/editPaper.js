@@ -8,38 +8,75 @@ Page({
   },
 
   single(e) {
-    wx.redirectTo({
-      url: "/pages/editSingle/editSingle"
+    let that = this
+    wx.navigateTo({
+      url: "/pages/editSingle/editSingle",
+      success: function () {
+        that.setData({
+          show: false
+        })
+      }
     })
+
   },
 
   multi(e) {
-    wx.redirectTo({
-      url: "/pages/editMulti/editMulti"
+    let that = this
+    wx.navigateTo({
+      url: "/pages/editMulti/editMulti",
+      success: function () {
+        that.setData({
+          show: false
+        })
+      }
     })
   },
 
   short(e) {
-    wx.redirectTo({
-      url: "/pages/editShort/editShort"
+    let that = this
+    wx.navigateTo({
+      url: "/pages/editShort/editShort",
+      success: function () {
+        that.setData({
+          show: false
+        })
+      }
     })
   },
 
-  judge(e){
-    wx.redirectTo({
-      url: "/pages/editJudge/editJudge"
+  judge(e) {
+    let that = this
+    wx.navigateTo({
+      url: "/pages/editJudge/editJudge",
+      success: function () {
+        that.setData({
+          show: false
+        })
+      }
     })
   },
 
-  fill(e){
-    wx.redirectTo({
-      url: "/pages/editFill/editFill"
+  fill(e) {
+    let that = this
+    wx.navigateTo({
+      url: "/pages/editFill/editFill",
+      success: function () {
+        that.setData({
+          show: false
+        })
+      }
     })
   },
 
-  toStore(e){
-    wx.redirectTo({
-      url: "/pages/questionStorage/questionStorage"
+  toStore(e) {
+    let that = this
+    wx.navigateTo({
+      url: "/pages/questionStorage/questionStorage",
+      success: function () {
+        that.setData({
+          show: false
+        })
+      }
     })
   },
 
@@ -54,9 +91,17 @@ Page({
       show: false
     })
   },
-
+  back() {
+    console.log("ddd");
+    
+    wx.navigateBack({
+      delta: 2
+    });
+  },
   onLoad: function (options) {
 
+  },
+  onShow: function () {
     app.pageScrollToBottom("#view"); // 默认停留在页面底部 方便添加题目
     var addQuestionUrl = app.globalData.url + "exam/addQuestion";
     this.setData({
@@ -65,8 +110,8 @@ Page({
       beginTime: app.globalData.beginTime,
       endTime: app.globalData.endTime,
     });
-  },
 
+  },
   // 创建试卷
   create: function (e) {
     wx.removeStorage({
@@ -99,23 +144,27 @@ Page({
         console.log(res)
       }
     })
-    wx.redirectTo({
-      url: "../manageGroup/manageGroup"
+    wx.navigateBack({
+      delta: 2
+      // url: "../manageGroup/manageGroup"
     })
     wx.showToast({
       title: '创建成功！', // 标题
       icon: 'success', // 图标类型，默认success
       duration: 1500 // 提示窗停留时间，默认1500ms
     });
-    app.globalData.examName="";
-    app.globalData.startDate="";
-    app.globalData.endDate="";
+    app.globalData.examName = "";
+    app.globalData.startDate = "";
+    app.globalData.endDate = "";
   },
 
   // 修改试卷信息
   setPaperMsg: function (e) {
-    wx.redirectTo({
-      url: "../paperCreate/paperCreate"
+    // wx.redirectTo({
+    //   url: "../paperCreate/paperCreate"
+    // })
+    wx.navigateBack({
+      delta: 1
     })
   },
   // showModal(e) {

@@ -20,9 +20,9 @@ Page({
     },
 
     back: function (e) {
-        wx.redirectTo({
-            url: "../manageGroup/manageGroup"
-        })
+        wx.wx.navigateBack({
+            delta: 1
+        });
     },
 
     createPaper: function (e) {
@@ -46,6 +46,8 @@ Page({
                 endTime: endTime,
                 examId: examId || "",
             };
+            console.log(data);
+            
             // 发起网络请求
             wx.request({
                 url: that.data.createExamUrl,
