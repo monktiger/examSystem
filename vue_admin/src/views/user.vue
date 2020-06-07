@@ -7,8 +7,6 @@
     <el-table :data="tableData" style="width: 100%" border>
       <el-table-column prop="name" label="名字"></el-table-column>
       <el-table-column prop="nickname" label="昵称"></el-table-column>
-      <el-table-column prop="open_id" label="微信openid"></el-table-column>
-      <el-table-column prop="isUser" label="是否被禁用"></el-table-column>
       <el-table-column label="操作" width="200" align="center" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -32,8 +30,15 @@
     <!-- 表单弹出窗 -->
     <el-dialog title="修改" :visible.sync="dialogFormVisible" center width="350px">
       <el-form :model="form">
-        <el-form-item label="组名">
+        <el-form-item label="名字">
           <el-input v-model="form.name" auto-complete="off" style="margin-left:10px;width:200px"></el-input>
+        </el-form-item>
+        <el-form-item label="昵称">
+          <el-input
+            v-model="form.nickname"
+            auto-complete="off"
+            style="margin-left:10px;width:200px"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -43,7 +48,7 @@
     </el-dialog>
     <div class="block pagination">
       <el-pagination
-      background
+        background
         @prev-click="prevClick"
         @next-click="nextClick"
         :current-page="pageNum"
@@ -72,65 +77,65 @@ export default {
       total: 1, //总共多少条
       form: {
         name: "", //组名
-        openId: "" //管理员的id
+        openId: "", //管理员的id
+        nickname: ""
       }
     };
   },
   //页面开始之前网络请求
   created: function() {
-          let data = {
-        pageNum: this.pageNum
-      };
+    let data = {
+      pageNum: this.pageNum
+    };
     this.getUser(data);
   },
   methods: {
     // 分页
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    prevClick() {
+      this.pageNum = this.pageNum - 1;
+      let data = {
+        search: this.searchData,
+        pageNum: this.pageNum
+      };
+      this.getUser(data);
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    nextClick() {
+      this.pageNum = this.pageNum + 1;
+      let data = {
+        search: this.searchData,
+        pageNum: this.pageNum
+      };
+      this.getUser(data);
     },
-    prevClick(){
-
-    },
-    nextClick(){
-
-    },
-    handlePageChange(){
-
+    handlePageChange(val) {
+      console.log(val);
+      this.pageNum = val;
+      let data = {
+        search: this.searchData,
+        pageNum: this.pageNum
+      };
+      this.getUser(data);
     },
     // 获取组
     getUser(data) {
-
       getUser(data).then(res => {
         console.log(res);
-         for (let i = 0; i < res.data.userList.length; i++) {
-           if(res.data.userList[i].available){
-             res.data.userList[i].isUser="正常"
-           }else{
-             res.data.userList[i].isUser="被禁用"
-           }
-        }
-        this.tableData = res.data.userList;
+        this.tableData = res.data.userList.filter(
+          item => item.available != false
+        );
+        console.log(this.tableData);
+
         this.pages = res.data.pages;
         this.total = res.data.total;
         this.pageNum = res.data.pageNum;
-        console.log(res.data.groupList);
       });
     },
     search() {
       let tag = {
-        search:this.searchData,
-        pageNum:1
+        search: this.searchData,
+        pageNum: 1
       };
-      this.getUser(tag)
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
+      this.getUser(tag);
     },
     //文件上传之前的钩子函数，上传前对其文件的大小和类型进行判断
     beforeUpload(file) {
@@ -145,10 +150,11 @@ export default {
       return isSize;
     },
     // 编辑按钮
-    handleEdit(index,row) {
+    handleEdit(index, row) {
       console.log(row);
       this.form.name = row.name;
       this.form.openId = row.openId;
+      this.form.nickname = row.nickname;
       this.dialogFormVisible = true;
     },
     //确定按钮
@@ -157,10 +163,11 @@ export default {
       //网络请求，传递后端
       let data = {
         name: this.form.name,
+        nickname: this.form.nickname,
         openId: this.form.openId
       };
       console.log(data);
-      
+
       editeUser(data)
         .then(res => {
           console.log("dd");
@@ -197,6 +204,11 @@ export default {
           deleteUser(row.openId)
             .then(res => {
               console.log(res);
+              let tag = {
+                search: this.searchData,
+                pageNum: this.pageNum
+              };
+              this.getUser(tag);
               this.$message({
                 message: "删除成功",
                 type: "success"

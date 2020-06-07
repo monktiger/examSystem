@@ -26,28 +26,28 @@ export const defaultRouterMap = [
 	{
 		path: "/index",
 		component: () => import("../components/Home"),
-		redirect: "/introduction",
+		redirect: "/exam",
 		children: [
 			{
-				path: "/introduction",
+				path: "/exam",
 				meta: { name: "管理试卷", icon: "el-icon-menu"},
-				component: () => import("../views/index")
+				component: () => import("../views/exam")
 			},
 			{
-				path: "/InformationManagement",
+				path: "/question",
 				meta: { name: "管理试题", icon: "el-icon-tickets"},
-				component: () => import("../views/InformationManagement")
+				component: () => import("../views/question")
 		
 			},
 			{
-				path: "/carouselPictures",
+				path: "/group",
 				meta: { name: "管理组", icon: "el-icon-setting"},
-				component: () => import("../views/CarouselPictures")
+				component: () => import("../views/group")
 			},
 			{
-				path: "/reviewSharedURL",
+				path: "/user",
 				meta: { name: "管理人员", icon: "el-icon-view" },
-				component: () => import("../views/ReviewSharedURL")
+				component: () => import("../views/user")
 			},
 		],
 	}, 

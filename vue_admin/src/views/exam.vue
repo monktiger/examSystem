@@ -1,21 +1,13 @@
 <template>
   <span class="pic">
     <div class="search">
-      <el-select v-model="searchValue" placeholder="请选择" size="mini">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
       <el-input v-model="searchData" placeholder="请输入内容" size="mini"></el-input>
       <i class="el-icon-search" @click="search"></i>
     </div>
     <el-table :data="tableData" style="width: 100%" border>
       <el-table-column prop="name" label="名字"></el-table-column>
-      <el-table-column prop="groupId" label="组ID"></el-table-column>
-      <el-table-column prop="openId" label="管理者ID"></el-table-column>
+      <el-table-column prop="beginTime" label="开始时间"></el-table-column>
+      <el-table-column prop="endTime" label="结束时间"></el-table-column>
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button
@@ -37,10 +29,28 @@
       </el-table-column>
     </el-table>
     <!-- 表单弹出窗 -->
-    <el-dialog title="修改" :visible.sync="dialogFormVisible" center width="350px">
+    <el-dialog title="修改" :visible.sync="dialogFormVisible" center>
       <el-form :model="form">
-        <el-form-item label="组名">
+        <el-form-item label="试卷名">
           <el-input v-model="form.name" auto-complete="off" style="margin-left:10px;width:200px"></el-input>
+        </el-form-item>
+        <el-form-item label="开始时间">
+          <el-time-picker arrow-control v-model="form.beginTime" placeholder="任意时间点"></el-time-picker>
+          <el-date-picker
+            v-model="form.beginDate"
+            type="date"
+            placeholder="选择日期"
+            style="margin-left:10px;width:200px"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="结束时间">
+          <el-time-picker arrow-control v-model="form.endTime" placeholder="任意时间点"></el-time-picker>
+          <el-date-picker
+            v-model="form.endDate"
+            type="date"
+            placeholder="选择日期"
+            style="margin-left:10px;width:200px"
+          ></el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -48,6 +58,7 @@
         <el-button type="primary" @click="confirm">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- 分页 -->
     <div class="block pagination">
       <el-pagination
         background
@@ -64,8 +75,7 @@
   </span>
 </template>
 <script>
-import axios from "axios";
-import { getGroup, deleteGroup, editeGroup } from "../api/temp"; //写调用的接口
+import { getExam, deleteExam, editeExam } from "../api/temp"; //写调用的接口
 export default {
   data() {
     return {
@@ -103,8 +113,11 @@ export default {
       ],
       form: {
         name: "", //组名
-        groupid: "", //组id
-        openid: "" //管理员的id
+        examId: "", //试卷id
+        beginTime: "", //开始时间
+        beginDate: "",
+        endTime: "", //结束时间
+        endDate: ""
       }
     };
   },
@@ -113,63 +126,112 @@ export default {
     let data = {
       pageNum: this.pageNum
     };
-    this.getGroup(data);
+    this.getExam(data);
   },
+
   methods: {
     // 分页
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    prevClick() {
+      this.pageNum = this.pageNum - 1;
+      let data = {
+        search: this.searchData,
+        pageNum: this.pageNum
+      };
+      this.getExam(data);
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    nextClick() {
+      this.pageNum = this.pageNum + 1;
+      let data = {
+        search: this.searchData,
+        pageNum: this.pageNum
+      };
+      this.getExam(data);
     },
-    prevClick() {},
-    nextClick() {},
-    handlePageChange() {},
+    handlePageChange(val) {
+      console.log(val);
+      this.pageNum = val;
+      let data = {
+        search: this.searchData,
+        pageNum: this.pageNum
+      };
+      this.getExam(data);
+    },
     // 获取组
-    getGroup(data) {
-      getGroup(data).then(res => {
-        console.log(res);
-        this.tableData = res.data.groupList;
+    getExam(data) {
+      getExam(data).then(res => {
+        console.log(res.data);
+        for (let i = 0; i < res.data.examList.length; i++) {
+          res.data.examList[i].beginTime = this.formatDate(
+            res.data.examList[i].beginTime
+          );
+          res.data.examList[i].endTime = this.formatDate(
+            res.data.examList[i].endTime
+          );
+        }
+        this.tableData = res.data.examList;
         this.pages = res.data.pages;
         this.total = res.data.total;
         this.pageNum = res.data.pageNum;
         this.length = this.tableData.length;
-        console.log(res.data.groupList);
       });
+    },
+    formatDate: function(value) {
+      // var val = parseInt(value);
+      let date = new Date(value);
+      let y = date.getFullYear();
+      this.y = y;
+      let MM = date.getMonth() + 1;
+      this.m = MM;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      this.d = d;
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      this.h = h;
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      this.m = m;
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
     },
     search() {
       let data = {
-        search:this.searchData,
-        pageNum:1
-      }
-      this.getGroup(data)
+        search: this.searchData,
+        pageNum: 1
+      };
+      this.getExam(data);
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
-
     // 编辑按钮
     handleEdit(index, row) {
       console.log(row);
       this.form.name = row.name;
-      this.form.groupid = row.groupId;
+      this.form.examId = row.id;
       this.dialogFormVisible = true;
     },
+    // 将中国标准时间转换成
     //确定按钮
     confirm() {
       this.centerDialogVisible = false;
       //网络请求，传递后端
+      this.form.beginTime = this.formatDate(this.form.beginTime);
+      this.form.beginDate = this.formatDate(this.form.beginDate);
+      this.form.endTime = this.formatDate(this.form.endTime);
+      this.form.endDate = this.formatDate(this.form.endDate);
+      let beginTime = this.form.beginTime.split(" ")[1];
+      let beginDate = this.form.beginDate.split(" ")[0];
+      let endTime = this.form.endTime.split(" ")[1];
+      let endDate = this.form.endDate.split(" ")[0];
       let data = {
-        name: this.form.name,
-        groupid: this.form.groupid
+        examName: this.form.name,
+        beginTime: beginDate + " " + beginTime,
+        endTime: endDate + " " + endTime,
+        examId: this.form.examId
       };
       console.log(data);
-      
-      editeGroup(data)
+
+      editeExam(data)
         .then(res => {
           console.log("dd");
           this.dialogFormVisible = false;
@@ -184,7 +246,7 @@ export default {
           if (this.searchData != "") {
             data.search = this.searchData;
           }
-          this.getGroup(data);
+          this.getExam(data);
         })
         .catch(err => {
           console.log(err);
@@ -201,10 +263,15 @@ export default {
         type: "warning"
       })
         .then(() => {
-          console.log(row);
-          deleteGroup(row.groupId)
+          console.log();
+          deleteExam(row.id)
             .then(res => {
               console.log(res);
+              let tag = {
+                search: this.searchData,
+                pageNum: this.pageNum
+              };
+              this.getExam(tag);
               this.$message({
                 message: "删除成功",
                 type: "success"
@@ -246,22 +313,27 @@ export default {
 }
 .search {
   padding-bottom: 15px;
+  display: flex;
+  align-items: center;
 }
 .el-select {
   float: right;
   width: 150px;
 }
 .el-input {
-  float: right;
-  margin: 0px 5px 15px;
+  float: left;
+  margin-top: 5px;
   display: inline-block !important;
-  width: 150px;
+  line-height: 50px;
+  height: 50px;
+  width: 250px;
 }
 i {
-  float: right;
+  float: left;
+  left: -30px;
+  top: 2px;
   line-height: 28px;
   position: relative;
-  left: 150px;
   cursor: pointer;
 }
 .pagination {

@@ -1,7 +1,14 @@
 <template>
   <div class="urlRevise">
     <el-form>
-      <el-tag style="margin-right:20px;margin-bottom:20px" @click="back">多选题</el-tag>
+      <div style="display:flex">
+        <div
+          class="el-icon-back"
+          @click="back"
+          style="font-size:30px;color:teal;  cursor: pointer;"
+        ></div>
+        <el-tag style="margin-right:20px;margin-bottom:20px;margin-left:20px">判断题</el-tag>
+      </div>
       <el-input
         type="textarea"
         class="question"
@@ -12,19 +19,19 @@
       <ul class="option">
         <li>
           <div :class="curA?'cur icon ':'icon'" @click="select(A)">A</div>
-          <el-input :class="curA?'cur':''" v-model="question.answerA" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerA" placeholder="请输入内容"></el-input>
         </li>
         <li>
           <div :class="curB?'cur icon ':'icon'" @click="select(B)">B</div>
-          <el-input :class="curB?'cur':''" v-model="question.answerB" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerB" placeholder="请输入内容"></el-input>
         </li>
         <li>
           <div :class="curC?'cur icon ':'icon'" @click="select(C)">C</div>
-          <el-input :class="curC?'cur':''" v-model="question.answerC" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerC" placeholder="请输入内容"></el-input>
         </li>
         <li>
           <div :class="curD?'cur icon ':'icon'" @click="select(D)">D</div>
-          <el-input :class="curD?'cur':''" v-model="question.answerD" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerD" placeholder="请输入内容"></el-input>
         </li>
       </ul>
       <el-form-item style="display:flex;justify-content:center">
@@ -53,6 +60,25 @@ export default {
   props: ["question"],
   created() {
     console.log(this.question);
+    let current;
+    current = this.question.current.split("");
+    for (let i = 0; i < current.length; i++) {
+      if (current[i] == "/") {
+        continue;
+      }
+      if (current[i] == "A") {
+        this.curA = true;
+      }
+      if (current[i] == "B") {
+        this.curB = true;
+      }
+      if (current[i] == "C") {
+        this.curC = true;
+      }
+      if (current[i] == "D") {
+        this.curD = true;
+      }
+    }
   },
   methods: {
     select: function(e) {
@@ -68,10 +94,28 @@ export default {
     },
     submit(e) {
       console.log(this.question);
+      let current = "";
+      if (this.curA == true) {
+        current = current + "A";
+      }
+      if (this.curB == true) {
+        current = current + "B";
+      }
+      if (this.curC == true) {
+        current = current + "C";
+      }
+      if (this.curD == true) {
+        current = current + "D";
+      }
+      this.question.current = current;
       editeQuestion(this.question)
         .then(res => {
-          console.log("dd");
           console.log(res);
+          this.$message({
+            message: "修改成功！",
+            type: "success"
+          });
+          this.back();
         })
         .catch(err => {
           console.log(err);
@@ -79,8 +123,6 @@ export default {
         });
     },
     back() {
-      console.log("ddd");
-
       this.$emit("back");
     }
   }

@@ -1,14 +1,6 @@
 <template>
   <span class="pic">
     <div class="search">
-      <el-select v-model="searchValue" placeholder="请选择" size="mini">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
       <el-input v-model="searchData" placeholder="请输入内容" size="mini"></el-input>
       <i class="el-icon-search" @click="search"></i>
     </div>
@@ -37,39 +29,6 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- 表单弹出窗 -->
-    <el-dialog title="修改" :visible.sync="dialogFormVisible" center>
-      <el-form :model="form">
-        <el-form-item label="试卷名">
-          <el-input v-model="form.name" auto-complete="off" style="margin-left:10px;width:200px"></el-input>
-        </el-form-item>
-        <el-form-item label="组ID">
-          <el-input v-model="form.groupId" auto-complete="off" style="margin-left:10px;width:200px"></el-input>
-        </el-form-item>
-        <el-form-item label="开始时间">
-          <el-time-picker arrow-control v-model="form.beginTime" placeholder="任意时间点"></el-time-picker>
-          <el-date-picker
-            v-model="form.beginDate"
-            type="date"
-            placeholder="选择日期"
-            style="margin-left:10px;width:200px"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="结束时间">
-          <el-time-picker arrow-control v-model="form.endTime" placeholder="任意时间点"></el-time-picker>
-          <el-date-picker
-            v-model="form.endDate"
-            type="date"
-            placeholder="选择日期"
-            style="margin-left:10px;width:200px"
-          ></el-date-picker>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirm">确 定</el-button>
-      </div>
-    </el-dialog>
     <!-- 分页 -->
     <div class="block pagination">
       <el-pagination
@@ -135,27 +94,43 @@ export default {
   },
   //页面开始之前网络请求
   created: function() {
-    this.getQuestion();
+    let data = {
+      pageNum: this.pageNum
+    };
+    this.getQuestion(data);
   },
 
   methods: {
     // 分页
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    },
-    prevClick() {},
-    nextClick() {},
-    handlePageChange() {},
-    // 获取组
-    getQuestion() {
+    prevClick() {
+      this.pageNum = this.pageNum - 1;
       let data = {
+        search: this.searchData,
         pageNum: this.pageNum
       };
+      this.getQuestion(data);
+    },
+    nextClick() {
+      this.pageNum = this.pageNum + 1;
+      let data = {
+        search: this.searchData,
+        pageNum: this.pageNum
+      };
+      this.getQuestion(data);
+    },
+    handlePageChange(val) {
+      console.log(val);
+      this.pageNum = val;
+      let data = {
+        search: this.searchData,
+        pageNum: this.pageNum
+      };
+      this.getQuestion(data);
+    },
+    // 获取组
+    getQuestion(data) {
       getQuestion(data).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         this.tableData = res.data.questionList;
         this.pages = res.data.pages;
         this.total = res.data.total;
@@ -185,54 +160,19 @@ export default {
       return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
     },
     search() {
-      let tag = {};
-      tag[this.searchValue] = this.searchData;
-      console.log(tag);
+      this.pageNum = 1;
+      let tag = {
+        search: this.searchData,
+        pageNum: 1
+      };
+      this.getQuestion(tag);
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
+
     // 编辑按钮
     handleEdit(index, row) {
       console.log(row);
-       this.$emit("questionType", row);
+      this.$emit("questionType", row);
     },
-    //确定按钮
-    confirm() {
-      this.centerDialogVisible = false;
-      //网络请求，传递后端
-      let data = {
-        examName: this.form.name,
-        examId: this.form.examId
-      };
-      console.log(this.form);
-
-      editeQuestion(data)
-        .then(res => {
-          console.log("dd");
-          this.dialogFormVisible = false;
-          console.log(res);
-          this.$message({
-            message: "修改成功",
-            type: "success"
-          });
-          let data = {
-            pageNum: this.pageNum
-          };
-          if (this.searchData != "") {
-            data.search = this.searchData;
-          }
-          this.getQuestion(data);
-        })
-        .catch(err => {
-          console.log(err);
-          this.$message.error("上传失败");
-        });
-    },
-
     //删除按钮
     // 传给后端id
     handleDelete(index, row) {
@@ -246,6 +186,11 @@ export default {
           deleteQuestion(row.id)
             .then(res => {
               console.log(res);
+              let tag = {
+                search: this.searchData,
+                pageNum: this.pageNum
+              };
+              this.getQuestion(tag);
               this.$message({
                 message: "删除成功",
                 type: "success"
@@ -287,22 +232,27 @@ export default {
 }
 .search {
   padding-bottom: 15px;
+  display: flex;
+  align-items: center;
 }
 .el-select {
   float: right;
   width: 150px;
 }
 .el-input {
-  float: right;
-  margin: 0px 5px 15px;
+  float: left;
+  margin-top: 5px;
   display: inline-block !important;
-  width: 150px;
+  line-height: 50px;
+  height: 50px;
+  width: 250px;
 }
 i {
-  float: right;
+  float: left;
+  left: -30px;
+  top: 2px;
   line-height: 28px;
   position: relative;
-  left: 150px;
   cursor: pointer;
 }
 .pagination {

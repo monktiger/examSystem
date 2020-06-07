@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <div class="ms-title">E招汇后台管理系统</div>
+    <div class="ms-title">随测后台管理系统</div>
     <div class="ms-login">
       <el-form
         :model="param"

@@ -1,35 +1,48 @@
 <template>
   <div class="urlRevise">
     <el-form>
-      <el-tag style="margin-right:20px;margin-bottom:20px">多选题</el-tag>
-      <el-input type="textarea" class="question" :rows="5" placeholder="请输入内容" v-model="question.title"></el-input>
+      <div style="display:flex">
+        <div
+          class="el-icon-back"
+          @click="back"
+          style="font-size:30px;color:teal;  cursor: pointer;"
+        ></div>
+        <el-tag style="margin-right:20px;margin-bottom:20px;margin-left:20px">判断题</el-tag>
+      </div>
+      <el-input
+        type="textarea"
+        class="question"
+        :rows="5"
+        placeholder="请输入内容"
+        v-model="question.title"
+      ></el-input>
       <ul class="option">
         <li @click="select(A)">
           <div :class="curA?'cur icon ':'icon'">A</div>
-          <el-input :class="curA?'cur':''" v-model="quetion.answerA" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerA" placeholder="请输入内容"></el-input>
         </li>
         <li @click="select(B)">
           <div :class="curB?'cur icon ':'icon'">B</div>
-          <el-input :class="curB?'cur':''" v-model="quetion.answerB" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerB" placeholder="请输入内容"></el-input>
         </li>
         <li @click="select(C)">
           <div :class="curC?'cur icon ':'icon'">C</div>
-          <el-input :class="curC?'cur':''" v-model="quetion.answerC" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerC" placeholder="请输入内容"></el-input>
         </li>
         <li @click="select(D)">
           <div :class="curD?'cur icon ':'icon'">D</div>
-          <el-input :class="curD?'cur':''" v-model="quetion.answerD" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerD" placeholder="请输入内容"></el-input>
         </li>
       </ul>
       <el-form-item style="display:flex;justify-content:center">
-        <el-button type="primary" @click="submitForm('ruleForm')" style="width:150px;">保存</el-button>
+        <el-button type="primary" @click="submit" style="width:150px;">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-// import { allInfo, deleteInfo, searchInfo } from "../api/index";
+import { editeQuestion } from "../../api/temp";
 export default {
   data() {
     return {
@@ -41,18 +54,23 @@ export default {
       curA: false,
       curB: false,
       curC: false,
-      curD: false,
-      title:
-        "dkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkk",
-      answerA: "憨憨顶顶顶顶顶顶顶顶顶顶",
-      answerB: "憨憨顶顶顶顶顶顶顶顶顶顶",
-      answerC: "憨憨顶顶顶顶顶顶顶顶顶顶",
-      answerD: "憨憨顶顶顶顶顶顶顶顶顶顶",
-      correct: "憨憨顶顶顶顶顶顶顶顶顶顶"
+      curD: false
     };
   },
-  props: ["quetion"],
-  created() {},
+  props: ["question"],
+  created() {
+    console.log(this.question);
+    let current = this.question.current;
+    if (current == "A") {
+      this.curA = true;
+    } else if (current == "B") {
+      this.curB = true;
+    } else if (current == "C") {
+      this.curC = true;
+    } else if (current == "D") {
+      this.curD = true;
+    }
+  },
   methods: {
     select: function(e) {
       if (e == "A") {
@@ -76,10 +94,37 @@ export default {
         this.curC = false;
         this.curD = true;
       }
+    },
+    submit(e) {
+      console.log(this.question);
+      let current = "";
+      if (this.curA == true) {
+        current = "A";
+      } else if (this.curB == true) {
+        current = "B";
+      } else if (this.curC == true) {
+        current = "C";
+      } else if (this.curD == true) {
+        current = "D";
+      }
+      this.question.current = current;
+      editeQuestion(this.question)
+        .then(res => {
+          console.log(res);
+          this.$message({
+            message: "修改成功！",
+            type: "success"
+          });
+          this.back();
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message.error("上传失败");
+        });
+    },
+    back() {
+      this.$emit("back");
     }
-  },
-  back() {
-    this.$emit("back");
   }
 };
 </script>

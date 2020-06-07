@@ -7,10 +7,7 @@
         <multipleChoice  v-else-if="isMultipleChoice" @back="back" :question="question"></multipleChoice>
         <subjective  v-else-if="isSubjective" @back="back" :question="question"></subjective>
         <judge  v-else-if="isJudge" @back="back" :question="question"></judge>
-         <fill  v-else-if="isJudge" @back="back" :question="question"></fill>
-      </el-tab-pane>
-      <el-tab-pane label="增加" name="second">
-        <informationform></informationform>
+         <fill  v-else-if="isFill" @back="back" :question="question"></fill>
       </el-tab-pane>
       <el-tab-pane label="上传Excel" name="third">
         <upload></upload>
@@ -20,7 +17,7 @@
 </template>
 <script>
 // import {A} from "../api/InE" //写调用的接口
-import informationform from "../components/informationform";
+// import informationform from "../components/informationform";
 import upload from "../components/upload";
 import urlRevise from "./urlRevise";
 import singleAnswer from "../components/question/singleAnswer";
@@ -42,7 +39,7 @@ export default {
     };
   },
   components: {
-    informationform,
+    // informationform,
     upload,
     urlRevise,
     singleAnswer,
@@ -96,9 +93,9 @@ export default {
       this.isSingleAnswer = false;
       this.isMultipleChoice = false;
       this.isJudge = false;
-      this.isFill = true;
+      this.isFill = false;
       this.isSubjective = false;
-      this.isQuestion = false;
+      this.isQuestion = true;
     }
   }
 };

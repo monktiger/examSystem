@@ -1,16 +1,25 @@
 <template>
   <div class="urlRevise">
     <el-form>
-      <el-tag style="margin-right:20px;margin-bottom:20px">判断题</el-tag>
-      <el-input type="textarea" class="question" :rows="5" placeholder="请输入内容" v-model="title"></el-input>
+      <div style="display:flex">
+        <div class="el-icon-back" @click="back" style="font-size:30px;color:teal;  cursor: pointer;"></div>
+        <el-tag style="margin-right:20px;margin-bottom:20px;margin-left:20px">判断题</el-tag>
+      </div>
+      <el-input
+        type="textarea"
+        class="question"
+        :rows="5"
+        placeholder="请输入内容"
+        v-model="question.title"
+      ></el-input>
       <ul class="option">
         <li @click="select(A)">
           <div :class="curA?'cur icon el-icon-check':'icon el-icon-check'"></div>
-          <el-input :class="curA?'cur':''" v-model="answerA" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerA" placeholder="请输入内容"></el-input>
         </li>
         <li @click="select(B)">
           <div :class="curB?'cur icon el-icon-close':'icon el-icon-close'"></div>
-          <el-input :class="curB?'cur':''" v-model="answerA" placeholder="请输入内容"></el-input>
+          <el-input v-model="question.answerB" placeholder="请输入内容"></el-input>
         </li>
       </ul>
       <el-form-item style="display:flex;justify-content:center">
@@ -21,7 +30,7 @@
 </template>
 
 <script>
-// import { allInfo, deleteInfo, searchInfo } from "../api/index";
+import { editeQuestion } from "../../api/temp";
 export default {
   data() {
     return {
@@ -29,18 +38,19 @@ export default {
       B: "B",
       cur: "",
       curA: false,
-      curB: false,
-      title:
-        "dkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkkdkkkkkkk憨憨顶顶顶顶顶顶顶顶顶顶kkkkkkkkkkk",
-      answerA: "憨憨顶顶顶顶顶顶顶顶顶顶",
-      answerB: "憨憨顶顶顶顶顶顶顶顶顶顶",
-      answerC: "憨憨顶顶顶顶顶顶顶顶顶顶",
-      answerD: "憨憨顶顶顶顶顶顶顶顶顶顶",
-      correct: "憨憨顶顶顶顶顶顶顶顶顶顶"
+      curB: false
     };
   },
-  props: ["quetion"],
-  created() {},
+  props: ["question"],
+  created() {
+    console.log(this.question);
+    let current = this.question.current;
+    if (current == "A") {
+      this.curA = true;
+    } else if (current == "B") {
+      this.curB = true;
+    }
+  },
   methods: {
     select: function(e) {
       if (e == "A") {
@@ -54,10 +64,33 @@ export default {
         this.curC = false;
         this.curD = false;
       }
+    },
+    submit(e) {
+      console.log(this.question);
+      let current = "";
+      if (this.curA == true) {
+        current = "A";
+      } else if (this.curB == true) {
+        current = "B";
+      }
+      this.question.current = current;
+      editeQuestion(this.question)
+        .then(res => {
+          console.log(res);
+          this.$message({
+            message: "修改成功！",
+            type: "success"
+          });
+          this.back();
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message.error("上传失败");
+        });
+    },
+    back() {
+      this.$emit("back");
     }
-  },
-  back() {
-    this.$emit("back");
   }
 };
 </script>

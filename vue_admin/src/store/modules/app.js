@@ -1,4 +1,4 @@
-import { Login } from "../../api/temp"
+import { Login } from "../../api/index"
 import {  setLoginStatus, getLoginStatus, removeLoginStatus } from "../../utils/app"
 const state = {
     isCollapse: JSON.parse(sessionStorage.getItem('isCollapse')) || false,
