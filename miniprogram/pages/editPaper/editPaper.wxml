@@ -1,6 +1,6 @@
 <!--pages/editPaper/editPaper.wxml-->
 <view>
-	<cu-custom bgColor="bg-gradual-pink" >
+	<cu-custom bgColor="bg-gradual-blue" >
 		<view slot="backText" catchtap="back">返回</view>
 		<view slot="content" >编辑试卷</view>
 	</cu-custom>

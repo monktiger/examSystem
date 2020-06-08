@@ -29,7 +29,7 @@ Page({
       title: '加载中...',
     })
     var that = this;
-    var groupId = JSON.stringify(this.data.groupId);
+    var groupId = this.data.groupId;
     console.log(this.data.groupId)
     // 发起网络请求
     wx.request({
@@ -51,7 +51,13 @@ Page({
             memberList: res.data.memberList
           });
           wx.setStorageSync('memberList', res.data.memberList);
-        } else {
+        } else if(res.data.state == -1){
+          wx.hideLoading();
+          wx.showToast({
+            title: '小组暂无成员',
+            icon: 'none'
+          })
+        }else {
           console.log(res.msg);
         }
       },
@@ -156,7 +162,7 @@ Page({
 
   // 删除组成员
   delete(e) {
-    var openId = e.currentTarget.dataset.openid;
+    var openId =e.currentTarget.dataset.openid;
     var groupId = this.data.groupId;
     var that = this;
     wx.showModal({
@@ -180,7 +186,8 @@ Page({
               openId: openId
             },
             success: function (res) {
-              if (res.data.status == 1) {
+              console.log(res);
+              if (res.data.state == 1) {
                 wx.hideLoading();
                 // 弹窗成功
                 wx.showToast({

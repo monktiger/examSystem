@@ -22,4 +22,13 @@ Component({
       });
     }
   },
+  pageLifetimes: {
+    show: function() {
+      // 页面被展示
+      this.setData({
+        name:app.globalData.name,
+        avatarUrl:app.globalData.avatarUrl
+      });
+    },
+  }
 })

@@ -1,5 +1,5 @@
 <!--pages/managePeople/managePeople.wxml-->
-<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
 	<view slot="backText">返回</view>
 	<view slot="content">成员管理</view>
 </cu-custom>
@@ -33,7 +33,7 @@
 	<view class="cu-list menu-avatar">
 		<block wx:for="{{memberList}}" wx:for-index="idx">
 			<view class="cu-item {{modalName=='move-box-'+ idx?'move-cur':''}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{idx}}">
-				<view class="cu-avatar round lg" style="background-image:url({{memberList[idx].avatarUrl}});"></view>
+				<view class="cu-avatar round lg" style="background-image:url({{item.avatarurl}});"></view>
 				<view class="content">
 					<view class="text-grey">{{memberList[idx].name}}</view>
 					<!-- <view class="text-gray text-sm">{{openId}}</view> -->
