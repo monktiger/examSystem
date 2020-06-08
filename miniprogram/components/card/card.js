@@ -52,6 +52,7 @@ Component({
     },
     // 退出组
     quit(e) {
+      let that = this
       this.setData({
         modalName: null
       })

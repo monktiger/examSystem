@@ -24,23 +24,23 @@ Component({
       // console.log(that.data.question.answer);
       if (that.data.question.current) {
         let that = this;
-        let b = that.data.question.current.split('/');
+        let b = that.data.question.current;
         let curA = that.data.curA
         let curB = that.data.curB
         let curC = that.data.curC
         let curD = that.data.curD
         console.log(b);
         for (let i = 0; i < b.length; i++) {
-          if (b[i] == 'A') {
+          if (b.indexOf('A')!=-1 ) {
             curA = true
           }
-          if (b[i] == 'B') {
+          if (b.indexOf('B')!=-1 ) {
             curB = true
           }
-          if (b[i] == 'C') {
+          if (b.indexOf('C')!=-1 ) {
             curC = true
           }
-          if (b[i] == 'D') {
+          if (b.indexOf('D')!=-1){
             curD = true
           }
         }

@@ -145,6 +145,42 @@ Page({
       url: typeUrl,
     })
   },
+    //由type获得本题在该题型中是第几题,跳转相应的修改页面url,缓存名称
+    getType: function (e) {
+      var quesType = this.data.displayQuestion.type;
+      var quesIdx;
+      if (quesType == 1) {
+        var storage = "single_ques";
+        quesIdx = this.data.questionIndex;//题号
+        var typeUrl = "/pages/editSingle/editSingle"
+      } else if (quesType == 2) {
+        var storage = "multi_ques";
+        var arrLen = this.toArr("single_ques").length;
+        quesIdx = this.data.questionIndex;
+        var typeUrl = "/pages/editMulti/editMulti"
+      } else if (quesType == 3) {
+        var storage = "fill_ques";
+        var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length + this.toArr("judge_ques").length;
+        quesIdx = this.data.questionIndex;
+        var typeUrl = "/pages/editFill/editFill"
+      } else if (quesType == 4) {
+        var storage = "judge_ques";
+        var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length;
+        quesIdx = this.data.questionIndex;
+        var typeUrl = "/pages/editJudge/editJudge"
+      } else if (quesType == 5) {
+        var storage = "short_ques";
+        var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length + this.toArr("judge_ques").length + this.toArr("fill_ques").length;
+        quesIdx = this.data.questionIndex;
+        var typeUrl = "/pages/editShort/editShort"
+      }
+      var info = {
+        storage: storage,
+        quesIdx: quesIdx,
+        typeUrl: typeUrl,
+      }
+      return info;
+    },
   // 模态窗
   showModal(e) {
     this.setData({
@@ -390,42 +426,7 @@ Page({
     })
   },
 
-  //由type获得本题在该题型中是第几题,跳转相应的修改页面url,缓存名称
-  getType: function (e) {
-    var quesType = this.data.displayQuestion.type;
-    var quesIdx;
-    if (quesType == 1) {
-      var storage = "single_ques";
-      quesIdx = this.data.questionIndex;//题号
-      var typeUrl = "/pages/editSingle/editSingle"
-    } else if (quesType == 2) {
-      var storage = "multi_ques";
-      var arrLen = this.toArr("single_ques").length;
-      quesIdx = this.data.questionIndex - arrLen;
-      var typeUrl = "/pages/editMulti/editMulti"
-    } else if (quesType == 3) {
-      var storage = "fill_ques";
-      var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length + this.toArr("judge_ques").length;
-      quesIdx = this.data.questionIndex - arrLen;
-      var typeUrl = "/pages/editFill/editFill"
-    } else if (quesType == 4) {
-      var storage = "judge_ques";
-      var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length;
-      quesIdx = this.data.questionIndex - arrLen;
-      var typeUrl = "/pages/editJudge/editJudge"
-    } else if (quesType == 5) {
-      var storage = "short_ques";
-      var arrLen = this.toArr("single_ques").length + this.toArr("multi_ques").length + this.toArr("judge_ques").length + this.toArr("fill_ques").length;
-      quesIdx = this.data.questionIndex - arrLen;
-      var typeUrl = "/pages/editShort/editShort"
-    }
-    var info = {
-      storage: storage,
-      quesIdx: quesIdx,
-      typeUrl: typeUrl,
-    }
-    return info;
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

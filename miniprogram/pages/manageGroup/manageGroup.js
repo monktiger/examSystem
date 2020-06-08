@@ -146,17 +146,18 @@ Page({
         let paperList = result.data.examList;
         let i;
         // console.log(elements.length);
-        if (paperList) {
+        if (paperList &&paperList.length!=0) {
           for (i = 0; i < paperList.length; i++) {
             let beginTime = new Date(paperList[i].beginTime);
             paperList[i].beginTime = that.formatDate(beginTime);
             let endTime = new Date(paperList[i].endTime);
             paperList[i].endTime = that.formatDate(endTime);
           }
+          
+          that.setData({
+            paperList: paperList.reverse(),
+          })
         }
-        that.setData({
-          paperList: paperList.reverse(),
-        })
       }, fail(e) {
         console.log(e);
 

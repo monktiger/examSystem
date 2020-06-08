@@ -4,9 +4,9 @@
   <view slot="content">设置</view>
 </cu-custom>
 <view class="shadow margin padding bg-white radius">
-  <view class="flex justify-between text-xl">
+  <view class="flex justify-between text-xl" bindtap="showModal">
     <view class="text-bold">{{groupName?groupName:"请设置组名"}}</view>
-    <view class="cuIcon-write lg text-gray" bindtap="showModal" data-target="bottomModal"></view>
+    <view class="cuIcon-write lg text-gray"  data-target="bottomModal"></view>
   </view>
   <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
     <view class="cu-dialog">

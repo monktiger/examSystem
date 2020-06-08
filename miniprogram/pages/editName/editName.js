@@ -10,6 +10,9 @@ Page({
   },
 
   onLoad: function (options) {
+
+  },
+  onShow: function () {
     var editNameUrl = app.globalData.url + "user/nodify";
     this.setData({
       token: app.globalData.token,
@@ -42,9 +45,9 @@ Page({
       },
       success: function (res) {
         if (res.data.status == 1) {
-          app.globalData.name=that.data.name
+          app.globalData.name = that.data.name
           // 跳转
-          wx.wx.navigateBack({
+          wx.navigateBack({
             delta: 1
           });
           // 弹窗成功

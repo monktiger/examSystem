@@ -5,7 +5,10 @@
 </cu-custom>
 <!-- <text class="text-xl">我加入的组页面</text>
 <navigator url="/pages/paperDetails/paperDetails">试卷详情页面</navigator> -->
-<paperCard style="width:100%" bind:changePage="goPaperDetails" paperList="{{paperList}}"></paperCard>
+<view class="padding-bottom" hover-class="none" hover-stop-propagation="false">
+  <paperCard style="width:100%" bind:changePage="goPaperDetails" paperList="{{paperList}}" bind:quit="quit"></paperCard>
+</view>
+
 
 <!-- // 试卷还未开放，请耐心等待 -->
 <view class="cu-modal  {{modalName=='tipsModal'?'show':''}}" catchtouchmove>

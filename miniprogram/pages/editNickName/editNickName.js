@@ -10,6 +10,9 @@ Page({
   },
 
   onLoad: function (options) {
+
+  },
+  onShow: function () {
     var editNickNameUrl = app.globalData.url + "user/nodify";
     this.setData({
       token: app.globalData.token,
@@ -31,13 +34,14 @@ Page({
       title: '加载中...',
     })
     var that = this;
+    console.log(that.data.nickname);
+    
     // 发起网络请求
     wx.request({
       url: that.data.editNickNameUrl,
       method: "get",
       header: {
         "token": app.globalData.token,
-        "Content-Type": "application/json"
       },
       data: {
         nickname: that.data.nickname
@@ -48,7 +52,7 @@ Page({
           wx.hideLoading();
           app.globalData.nickname = that.data.nickname;
           // 跳转
-          wx.wx.navigateBack({
+          wx.navigateBack({
             delta: 1
           });
           // ({

@@ -104,14 +104,16 @@ Page({
     console.log(question);
     // question.examId =
     var data = {
-      "title": question.title,
-      "type": question.type,
-      "current": question.current,
-      "answerA": question.answerA,
-      "answerB": question.answerB,
-      "answerC": question.answerC,
-      "answerD": question.answerD,
-      "examId": question.examId,
+      id:null,
+      title: question.title,
+      type: question.type,
+      current: question.current,
+      answerA: question.answerA,
+      answerB: question.answerB,
+      answerC: question.answerC,
+      answerD: question.answerD,
+      examId: question.examId,
+      score:10
   };
   console.log(data);
   

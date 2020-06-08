@@ -30,8 +30,11 @@ Page({
         // 如果有editQueNum则是修改题目：先取出原数据，赋值
         var editQueNum = app.globalData.editQueNum;
         var editData;
+       
+        
         if (editQueNum || editQueNum == 0) {
             var editques = wx.getStorageSync('multi_ques');
+            console.log(editQueNum,editques);
             for(let i=0;i<editques.length;i++){
                 if(editQueNum == editques[i].data.index){
                      editData = editques[i].data;

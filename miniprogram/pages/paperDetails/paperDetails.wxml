@@ -4,9 +4,9 @@
   <view slot="content">试卷详情</view>
 </cu-custom>
 <!-- 总分 -->
-<view class="total text-xl margin-top padding-lr-xl text-black">
+<view class="total text-xl margin-top-xl padding-lr-xl text-black ">
   {{paperDetails.examName}}
-  <text class="text-df margin-left">(总分{{score}}分)</text>
+  <text class="text-df margin-left">(总分{{score}})</text>
 </view>
 <view class="box">
 <!-- 题目的数量 -->

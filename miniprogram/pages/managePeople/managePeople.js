@@ -42,9 +42,10 @@ Page({
         groupId: groupId
       },
       success: function (res) {
+        wx.hideLoading();
         console.log("getMemberListData",res);
         if (res.data.state == 1) {
-          wx.hideLoading();
+ 
           // that.processMemberData(res.memberList,memberName);
           that.setData({
             memberList: res.data.memberList
@@ -55,6 +56,7 @@ Page({
         }
       },
       fail: function (error) {
+        wx.hideLoading();
         console.log(error);
       }
     })

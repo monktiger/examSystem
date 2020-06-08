@@ -16,7 +16,6 @@ Page({
       groupName: app.globalData.groupName,
       groupId: app.globalData.groupId
     });
-    this.getMemberCount();
   },
 
   showModal(e) {

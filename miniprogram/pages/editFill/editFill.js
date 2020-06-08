@@ -48,7 +48,7 @@ Page({
       "examId": this.data.examId,
     }
     console.log(data);
-    
+
     if (!title || !score || !current) {
       wx.showToast({
         title: '请填写所有题目信息！', // 标题
@@ -106,12 +106,12 @@ Page({
               // wx.redirectTo({
               //   url: "../paper/paper"
               // })
-              app.globalData.isAlreadyEdit=true;
+              app.globalData.isAlreadyEdit = true;
               app.globalData.isEdit = 0
               wx.navigateBack({
                 delta: 1
               })
-           
+
             } else {
               // wx.redirectTo({
               //   url: "../editPaper/editPaper"
@@ -141,9 +141,18 @@ Page({
     console.log("editQueNum", editQueNum)
     if (editQueNum != undefined) {
       if (editQueNum || editQueNum == 0) {
-        var editques = wx.getStorageSync('fill_ques');
-        console.log("editques", editques);
-        var editData = editques[editQueNum].data;
+        var editData;
+        if (editQueNum || editQueNum == 0) {
+          var editques = wx.getStorageSync('fill_ques');
+          console.log(editQueNum, editques);
+          for (let i = 0; i < editques.length; i++) {
+            if (editQueNum == editques[i].data.index) {
+              editData = editques[i].data;
+            } else {
+              continue;
+            }
+          }
+        }
         var score = editData.score;
         var queId = editData.id;
         wx.setStorageSync("title", editData.title);
