@@ -12,6 +12,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onGotUserInfo(e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     console.log("DDD");
 
@@ -37,6 +40,7 @@ Page({
             "Content-Type": "application/x-www-form-urlencoded"
           },
           success: function (result) {
+            wx.hideLoading();
             // 保存openid
             console.log(result);
             app.globalData.token = result.data.token;

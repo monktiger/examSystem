@@ -48,9 +48,12 @@ Page({
           wx.hideLoading();
           app.globalData.nickname = that.data.nickname;
           // 跳转
-          wx.navigateTo({
-            url: '/pages/myInfo/myInfo',
-          })
+          wx.wx.navigateBack({
+            delta: 1
+          });
+          // ({
+          //   url: '/pages/myInfo/myInfo',
+          // })
           // 弹窗成功
           wx.showToast({
             title: '修改成功！', // 标题

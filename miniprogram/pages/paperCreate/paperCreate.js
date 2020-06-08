@@ -20,12 +20,15 @@ Page({
     },
 
     back: function (e) {
-        wx.wx.navigateBack({
+        wx.navigateBack({
             delta: 1
-        });
+        })
     },
 
     createPaper: function (e) {
+        wx.showLoading({
+            title: '加载中...',
+        })
         var that = this;
         var groupId = [this.data.groupId];
         var examId = this.data.examId;
@@ -47,7 +50,7 @@ Page({
                 examId: examId || "",
             };
             console.log(data);
-            
+
             // 发起网络请求
             wx.request({
                 url: that.data.createExamUrl,
@@ -60,6 +63,7 @@ Page({
                 success: function (res) {
                     console.log(res);
                     if (res.data.status == 1) {
+                        wx.hideLoading();
                         app.globalData.examName = name;
                         app.globalData.beginTime = beginTime;
                         app.globalData.endTime = endTime;
@@ -92,8 +96,46 @@ Page({
             examId: app.globalData.examId,
             examName: app.globalData.examName,
         });
+
     },
 
-
+    onShow: function () {
+        wx.removeStorage({
+            key: 'single_ques',
+            success(res) {
+                console.log(res)
+            }
+        })
+        wx.removeStorage({
+            key: 'multi_ques',
+            success(res) {
+                console.log(res)
+            }
+        })
+        wx.removeStorage({
+            key: 'judge_ques',
+            success(res) {
+                console.log(res)
+            }
+        })
+        wx.removeStorage({
+            key: 'fill_ques',
+            success(res) {
+                console.log(res)
+            }
+        })
+        wx.removeStorage({
+            key: 'short_ques',
+            success(res) {
+                console.log(res)
+            }
+        })
+        wx.removeStorage({
+            key: 'title',
+            success(res) {
+                console.log(res)
+            }
+        })
+    }
 
 })

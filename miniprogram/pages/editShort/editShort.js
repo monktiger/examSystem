@@ -102,10 +102,12 @@ Page({
               // wx.redirectTo({
               //   url: "../paper/paper"
               // })
+              app.globalData.isAlreadyEdit=true;
+              app.globalData.isEdit = 0
               wx.navigateBack({
                 delta:1
             })
-              app.globalData.isEdit = 0
+             
             } else {
               // wx.redirectTo({
               //   url: "../editPaper/editPaper"

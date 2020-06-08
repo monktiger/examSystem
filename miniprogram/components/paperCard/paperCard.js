@@ -5,7 +5,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    paperList:Object
+    paperList: Object
   },
 
   /**
@@ -24,17 +24,17 @@ Component({
    */
   methods: {
     changePage(e) {
-      let data={
-        examId:e.currentTarget.dataset.examid,
-        beginTime:e.currentTarget.dataset.begintime,
-        endTime:e.currentTarget.dataset.endtime,
+      let data = {
+        examId: e.currentTarget.dataset.examid,
+        beginTime: e.currentTarget.dataset.begintime,
+        endTime: e.currentTarget.dataset.endtime,
       }
       console.log(data);
-      
-      this.triggerEvent('changePage',data)
+
+      this.triggerEvent('changePage', data)
       // console.log("examId",app.globalData.examId)
     },
-    showModal(e){
+    showModal(e) {
       this.setData({
         modalName: e.currentTarget.dataset.target,
       })
@@ -44,15 +44,18 @@ Component({
         modalName: null
       })
     },
-    showbottomModal(e){
+    showbottomModal(e) {
       // console.log(e.currentTarget.dataset.examid);
       this.setData({
-        examId:e.currentTarget.dataset.examid,
-        index:e.currentTarget.dataset.index,
+        examId: e.currentTarget.dataset.examid,
+        index: e.currentTarget.dataset.index,
         modalName: e.currentTarget.dataset.target,
       })
     },
-    deleteExam(e){
+    deleteExam(e) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       let that = this
       wx.request({
         url: 'http://monktiger.natapp1.cc/exam/deleteExam',
@@ -64,25 +67,26 @@ Component({
           "token": app.globalData.token
         },
         success: function (result) {
+          wx.hideLoading();
           // console.log(result.data.status);
-          if(result.data.status==-3){
+          if (result.data.status == -3) {
             that.setData({
-              modalName:'tipsMarkModal'
+              modalName: 'tipsMarkModal'
             })
-          }else{
+          } else {
             let paperList = that.data.paperList;
-            paperList.splice(that.data.index,1);
+            paperList.splice(that.data.index, 1);
             that.setData({
-              paperList:paperList,   
+              paperList: paperList,
             })
             that.hideModal()
           }
-          
+
         }, fail(e) {
           console.log(e);
-  
+
         }
       })
     }
-    }
+  }
 })

@@ -13,11 +13,19 @@ Page({
   },
   // 去试卷界面
   goPaper(e) {
-    app.globalData.copyId = this.data.paperDetails.copyId;
-    app.globalData.questionList = this.data.paperDetails.questionList;
-    wx.navigateTo({
-      url: '/pages/paper/paper',
-    })
+    let that = this
+    if (that.length == 0) {
+      wx.showToast({
+        title: '暂无试题', 
+        icon: 'none'
+      })
+    } else {
+      app.globalData.copyId = this.data.paperDetails.copyId;
+      app.globalData.questionList = this.data.paperDetails.questionList;
+      wx.navigateTo({
+        url: '/pages/paper/paper',
+      })
+    }
   },
   // 去添加试题界面
   goPaperCreate(e) {
@@ -231,37 +239,26 @@ Page({
                 score: questionList[i].score,
                 title: questionList[i].title,
                 type: questionList[i].type,
+                index:parseInt(i)
               }
               arr.push({
                 data: data
               })
             }
             for (let i in arr) {
+              // arr[i]
+              // idx_single指的是第几题
+              // 
               if (arr[i].data.type == 1) {
-                var idx_single = idx_single + 1;
-                var o_single = {};
-                o_single[idx_single] = arr[i];
-                arr_single.push(o_single[idx_single])
+                arr_single.push(arr[i])
               } else if (arr[i].data.type == 2) {
-                var idx_multi = idx_multi + 1;
-                var o = {};
-                o[idx_multi] = arr[i];
-                arr_multi.push(o[idx_multi])
+                arr_multi.push(arr[i])
               } else if (arr[i].data.type == 4) {
-                var idx_judge = idx_judge + 1;
-                var o = {};
-                o[idx_judge] = arr[i];
-                arr_judge.push(o[idx_judge])
+                arr_judge.push(arr[i])
               } else if (arr[i].data.type == 3) {
-                var idx_fill = idx_fill + 1;
-                var o = {};
-                o[idx_fill] = arr[i];
-                arr_fill.push(o[idx_fill])
+                arr_fill.push(arr[i])
               } else if (arr[i].data.type == 5) {
-                var idx_short = idx_short + 1;
-                var o = {};
-                o[idx_short] = arr[i];
-                arr_short.push(o[idx_short])
+                arr_short.push(arr[i])
               }
               wx.setStorageSync('single_ques', arr_single);
               wx.setStorageSync('multi_ques', arr_multi);

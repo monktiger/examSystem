@@ -29,9 +29,18 @@ Page({
 
         // 如果有editQueNum则是修改题目：先取出原数据，赋值
         var editQueNum = app.globalData.editQueNum;
+        var editData;
         if (editQueNum || editQueNum == 0) {
             var editques = wx.getStorageSync('multi_ques');
-            var editData = editques[editQueNum].data;
+            for(let i=0;i<editques.length;i++){
+                if(editQueNum == editques[i].data.index){
+                     editData = editques[i].data;
+                }else{
+                    continue;
+                }
+            }
+            console.log(editData);
+            
             var current = editData.current;
             var score = editData.score;
             var queId = editData.id;
@@ -174,10 +183,12 @@ Page({
                             // wx.redirectTo({
                             //     url: "../paper/paper"
                             // })
+                            app.globalData.isAlreadyEdit=true;
+                            app.globalData.isEdit = 0
                             wx.navigateBack({
                                 delta:1
                             })
-                            app.globalData.isEdit = 1
+                            
                         } else {
                             // wx.redirectTo({
                             //     url: "../editPaper/editPaper"

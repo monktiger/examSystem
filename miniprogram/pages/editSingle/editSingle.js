@@ -31,7 +31,14 @@ Page({
         var editQueNum = app.globalData.editQueNum;
         if (editQueNum || editQueNum == 0) {
             var editques = wx.getStorageSync('single_ques');
-            var editData = editques[editQueNum].data;
+            var editData;
+            for(let i=0;i<editques.length;i++){
+                if(editQueNum == editques[i].data.index){
+                     editData = editques[i].data;
+                }else{
+                    continue;
+                }
+            }
             var currentIdx = editData.currentIdx;
             var score = editData.score;
             var queId = editData.id;
@@ -164,11 +171,15 @@ Page({
                             // wx.redirectTo({
                             //     url: "../paper/paper"
                             // })
+                            console.log(app.globalData.isAlreadyEdit);
+                            
+                            app.globalData.isAlreadyEdit=true;
+                            app.globalData.isEdit = 0
                             wx.navigateBack({
                                 delta:1,
                             }
                             )
-                            app.globalData.isEdit = 0
+                        
                         } else {
                             // wx.redirectTo({
                             //     url: "../editPaper/editPaper"

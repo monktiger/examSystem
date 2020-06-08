@@ -107,6 +107,9 @@ Page({
   },
   // 提交答案
   submitAnwer(e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     console.log(e.detail.id, e.detail.answer);
     wx.request({
@@ -121,6 +124,7 @@ Page({
         "token": app.globalData.token
       },
       success: function (result) {
+        wx.hideLoading();
         console.log(result)
       }, fail(e) {
         console.log(e);
@@ -131,12 +135,12 @@ Page({
   goPaperCreate(e) {
     let that = this;
     // app.globalData.examId = this.data.examId;
-    console.log("app.globalData.examId",app.globalData.examId)
+    console.log("app.globalData.examId", app.globalData.examId)
     app.globalData.displayQuestion = that.data.displayQuestion
     app.globalData.isEdit = 1;
     // 判断跳转的页面
     var typeUrl = this.getType().typeUrl;
-    app.globalData.editQueNum=this.getType().quesIdx;
+    app.globalData.editQueNum = this.getType().quesIdx;
     wx.navigateTo({
       url: typeUrl,
     })
@@ -160,8 +164,12 @@ Page({
   },
   // 判断是否进行成绩上传并上传
   judgeScore(e) {
+
     let that = this
     if (that.data.status == '10004' && that.data.isScore == false && that.data.displayQuestion.type == 5) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       wx.request({
         url: 'http://monktiger.natapp1.cc/judge/score',
         method: 'GET',
@@ -174,6 +182,7 @@ Page({
           "token": app.globalData.token
         },
         success: function (result) {
+          wx.hideLoading();
           console.log(result)
         }, fail(e) {
           console.log(e);
@@ -202,6 +211,9 @@ Page({
   },
   // 提交评价
   submitJudge(e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this
     wx.request({
       url: 'http://monktiger.natapp1.cc/judge/judge',
@@ -214,6 +226,7 @@ Page({
         "token": app.globalData.token
       },
       success: function (result) {
+        wx.hideLoading();
         console.log(result)
         wx.navigateBack({
           delta: 2
@@ -240,6 +253,9 @@ Page({
 
   // 删除题目
   delete: function (e) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     console.log("app.globalData.examId", app.globalData.examId)
     wx.request({
@@ -254,8 +270,11 @@ Page({
         id: e.currentTarget.dataset.idx,
       },
       success: function (res) {
+
         console.log("res:", res);
+
         if (res.data.status == 1) {
+          wx.hideLoading();
           // 确定本题在该题型中是第几题，更新缓存内容
           var quesIdx = that.getType().quesIdx;
           var storage = that.getType().storage;
@@ -273,60 +292,93 @@ Page({
 
           that.hideModal();
           // 刷新页面
-          var questionList = app.globalData.questionList;
           var questionIndex = that.data.questionIndex;
-          _UTIL.arrRemoveObj(questionList, questionList[questionIndex]);
-          app.globalData.questionList = questionList;
-          // 如果没有题目，用户选择删除试卷或继续编辑
-          wx.showModal({
-            title: '提示',
-            content: '已无剩余题目',
-            cancelText: '删除试卷',
-            confirmText: "编辑试卷",
-            success(res) {
-              if (res.confirm) {
-                console.log('编辑试卷')
-                // wx.redirectTo({
-                //   url: '/pages/paperDetails/paperDetails',
-                // })
-                wx.navigateBack({
-                  delta:1
-                })
-              } else if (res.cancel) {
-                console.log('删除试卷')
-                wx.request({
-                  url: app.globalData.url + "exam/deleteExam",
-                  method: "get",
-                  header: {
-                    "token": app.globalData.token,
-                    "Content-Type": "application/x-www-form-urlencoded"
-                  },
-                  data: {
-                    examId: app.globalData.examId
-                  },
-                  success: function (res) {
-                    wx.showToast({
-                      title: '删除成功',
-                      icon: "none"
-                    })
-                    // wx.redirectTo({
-                    //   url: '/pages/manageGroup/manageGroup',
-                    // })
-                    wx.navigateBack({
-                      delta:2
-                    })
-                  },
-                  fail: function (error) {
-                    wx.showToast({
-                      title: '删除失败',
-                      icon: "none"
-                    })
-                    console.log("errorMsg:" + error);
+
+          wx.request({
+            url: 'http://monktiger.natapp1.cc/in/toAdminShow',
+            method: 'GET',
+            data: {
+              examId: app.globalData.examId
+            },
+            header: {
+              "token": app.globalData.token
+            },
+            success: function (result) {
+              console.log(result);
+              app.globalData.questionList = result.data.questionList;
+              let questionList = result.data.questionList;
+              let status = app.globalData.stuStatus;
+              if (questionList.length == 0) {
+                wx.showModal({
+                  title: '提示',
+                  content: '已无剩余题目',
+                  cancelText: '删除试卷',
+                  confirmText: "编辑试卷",
+                  success(res) {
+                    if (res.confirm) {
+                      console.log('编辑试卷')
+                      // wx.redirectTo({
+                      //   url: '/pages/paperDetails/paperDetails',
+                      // })
+                      wx.navigateBack({
+                        delta: 2
+                      })
+                    } else if (res.cancel) {
+                      console.log('删除试卷')
+                      wx.request({
+                        url: app.globalData.url + "exam/deleteExam",
+                        method: "get",
+                        header: {
+                          "token": app.globalData.token,
+                          "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        data: {
+                          examId: app.globalData.examId
+                        },
+                        success: function (res) {
+                          wx.showToast({
+                            title: '删除成功',
+                            icon: "none"
+                          })
+                          // wx.redirectTo({
+                          //   url: '/pages/manageGroup/manageGroup',
+                          // })
+                          wx.navigateBack({
+                            delta: 2
+                          })
+                        },
+                        fail: function (error) {
+                          wx.showToast({
+                            title: '删除失败',
+                            icon: "none"
+                          })
+                          console.log("errorMsg:" + error);
+                        }
+                      })
+                    }
                   }
                 })
+
+              } else {
+                that.setData({
+                  status: status,
+                  length: questionList.length - 1,
+                  questionList: questionList,
+                  displayQuestion: questionList[questionIndex],
+                  questionIndex: questionIndex,
+                  btn: "保存"
+                })
               }
+
+            }, fail(e) {
+              console.log(e);
             }
           })
+
+
+          // 如果没有题目，用户选择删除试卷或继续编辑
+
+
           that.onLoad();
         } else {
           console.log("errorMsg:" + res.msg);
@@ -378,53 +430,77 @@ Page({
    * 生命周期函数--监听页面加载
    */
 
-  onLoad: function (options) {
-    wx.request({
-      url: 'http://monktiger.natapp1.cc/in/toAdminShow',
-      method: 'GET',
-      data: {
-        examId: app.globalData.examId
-      },
-      header: {
-        "token": app.globalData.token
-      },
-      success: function (result) {
-        console.log(result);
-        app.globalData.questionList = result.data.questionList;
-      }, fail(e) {
-        console.log(e);
-      }
+  onShow: function (options) {
+    // console.log(app.globalData.isJudge);
+    let that = this
+    this.setData({
+      isJudge: app.globalData.isJudge,
+      isScore: app.globalData.isScore,
+      isAlreayEdit: app.globalData.isAlreadyEdit,
+      inputJudge: '',
+      score: 0
     })
-    console.log("app.globalData.questionList", app.globalData.questionList);
-    let that = this;
-    let btn = that.data.btn;
-    let status = app.globalData.stuStatus;
-    let questionList = app.globalData.questionList;
-    let i;
-    for (i = 0; i < questionList.length; i++) {
-      if (questionList[i].answer != questionList[i].correct) {
-        questionList[i].judge = false
-      } else {
-        questionList[i].judge = true
+    // 是否未编辑状态返回
+    if (app.globalData.isAlreadyEdit) {
+      app.globalData.isAlreadyEdit = false;
+      wx.request({
+        url: 'http://monktiger.natapp1.cc/in/toAdminShow',
+        method: 'GET',
+        data: {
+          examId: app.globalData.examId
+        },
+        header: {
+          "token": app.globalData.token
+        },
+        success: function (result) {
+          console.log(result);
+          app.globalData.questionList = result.data.questionList;
+          let questionList = result.data.questionList;
+          let status = app.globalData.stuStatus;
+          that.setData({
+            status: status,
+            length: questionList.length - 1,
+            questionList: questionList,
+            displayQuestion: questionList[app.globalData.editQueNum],
+            questionIndex: app.globalData.editQueNum,
+            btn: "保存"
+          })
+        }, fail(e) {
+          console.log(e);
+        }
+      })
+    } else {
+      console.log("app.globalData.questionList", app.globalData.questionList);
+      let that = this;
+      let btn = that.data.btn;
+      let status = app.globalData.stuStatus;
+      let questionList = app.globalData.questionList;
+      let i;
+      for (i = 0; i < questionList.length; i++) {
+        if (questionList[i].answer != questionList[i].correct) {
+          questionList[i].judge = false
+        } else {
+          questionList[i].judge = true
+        }
       }
+      // 10004审核之前为提交 审核时候为返回
+      // 还没完善
+      if (status == '20003' || status == '10003' || status == '10002') {
+        btn = '返回'
+      } else if (status == '10004' || status == "20002") {
+        btn = "提交"
+      }
+      else if (status == '10001') {
+        btn = "保存"
+      }
+      that.setData({
+        status: status,
+        length: questionList.length - 1,
+        questionList: questionList,
+        displayQuestion: questionList[0],
+        btn: btn
+      })
     }
-    // 10004审核之前为提交 审核时候为返回
-    // 还没完善
-    if (status == '20003' || status == '10003' || status == '10002') {
-      btn = '返回'
-    } else if (status == '10004' || status == "20002") {
-      btn = "提交"
-    }
-    else if (status == '10001') {
-      btn = "保存"
-    }
-    that.setData({
-      status: status,
-      length: questionList.length - 1,
-      questionList: questionList,
-      displayQuestion: questionList[0],
-      btn: btn
-    })
   },
 
   /**
@@ -437,17 +513,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    console.log(app.globalData.isJudge);
 
-    this.setData({
-      isJudge: app.globalData.isJudge,
-      isScore: app.globalData.isScore,
-      inputJudge: '',
-      score: 0
-    })
-
-  },
 
   /**
    * 生命周期函数--监听页面隐藏

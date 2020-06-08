@@ -25,6 +25,9 @@ Page({
 
   // 获得组成员列表
   getMemberListData: function (showMemberUrl) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     var groupId = JSON.stringify(this.data.groupId);
     console.log(this.data.groupId)
@@ -41,6 +44,7 @@ Page({
       success: function (res) {
         console.log("getMemberListData",res);
         if (res.data.state == 1) {
+          wx.hideLoading();
           // that.processMemberData(res.memberList,memberName);
           that.setData({
             memberList: res.data.memberList
@@ -117,23 +121,57 @@ Page({
     })
   },
 
+  // 邀请组成员 复制邀请码
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+
+  copyText: function (e) {
+    console.log(e)
+    var that=this;
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.text,
+      success: function (res) {
+        wx.getClipboardData({
+          success: function (res) {
+            wx.showToast({
+              title: '复制成功'
+            })
+            that.hideModal();
+          }
+        })
+      }
+    })
+  },
+
   // 删除组成员
   delete(e) {
-    var openId = e.currentTarget.dataset.openId;
-    var groupId = JSON.stringify(this.data.groupId);
+    var openId = e.currentTarget.dataset.openid;
+    var groupId = this.data.groupId;
     var that = this;
     wx.showModal({
       title: '',
       content: '确认要删除该成员吗？',
       success: function (result) {
         if (result.confirm) {
+          wx.showLoading({
+            title: '加载中...',
+          })
           console.log('点击确认回调')
           // 发起网络请求
           wx.request({
             url: that.data.deleteMemberUrl,
             method: "get",
             header: {
-              "token": that.data.token
+              "token": app.globalData.token
             },
             data: {
               groupId: groupId,
@@ -141,6 +179,7 @@ Page({
             },
             success: function (res) {
               if (res.data.status == 1) {
+                wx.hideLoading();
                 // 弹窗成功
                 wx.showToast({
                   title: '删除成功！',

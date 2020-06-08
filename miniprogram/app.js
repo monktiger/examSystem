@@ -57,6 +57,7 @@ App({
   },
   globalData: {
     userInfo: null,
+    isAlreadyEdit:false,
     url: "http://monktiger.natapp1.cc/",
     pageId: 0,
   }

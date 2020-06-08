@@ -42,10 +42,11 @@ Page({
       },
       success: function (res) {
         if (res.data.status == 1) {
+          app.globalData.name=that.data.name
           // 跳转
-          wx.navigateTo({
-            url: '/pages/myInfo/myInfo',
-          })
+          wx.wx.navigateBack({
+            delta: 1
+          });
           // 弹窗成功
           wx.showToast({
             title: '修改成功！', // 标题

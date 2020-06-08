@@ -76,19 +76,20 @@
 
 <view class="bottom text-lg">
   <!-- 第一个状态 -->
-  <view class="flex justify-center one-btn" wx:if="{{questionIndex == 0&&length!=1 ?true:false}}" bind:tap="nextQuestion">
+  <view class="flex justify-center one-btn" wx:if="{{questionIndex == 0&&length!=0 ?true:false}}" bind:tap="nextQuestion">
     下一题
   </view>
   <!-- 第二个状态 -->
-  <view wx:elif="{{questionIndex < length}}" style="width:100%" class="flex">
+  <view wx:elif="{{questionIndex < length&&length!=0}}" style="width:100%" class="flex">
     <view class="flex justify-center border two-btn" bind:tap="preQuestion">上一题</view>
     <view class="flex justify-center two-btn" bind:tap="nextQuestion">下一题</view>
   </view>
   <!-- 第三个状态 -->
-  <view wx:elif="{{questionIndex == length}}" style="width:100%" class="flex">
+
+  <view wx:elif="{{questionIndex == length&&length!=0}}" style="width:100%" class="flex">
     <view class="flex justify-center border two-btn" bind:tap="preQuestion">上一题</view>
     <!-- status:10004&&isScore=false 弹出评论框 -->
-    <view 
+  <view 
     wx:if="{{status==10004&&isJudge==false?true:false}}"
     class="flex justify-center two-btn" 
     data-target="showJudgeModal"
@@ -102,7 +103,25 @@
     wx:else
     class="flex justify-center two-btn" bind:tap="lastQuestion">{{btn}}</view>
   </view>
-  <!-- 第四个状态 -->
+<!-- 第四个状态 -->
+  <view wx:elif="{{length==0}}" style="width:100%" class="flex">
+    <view 
+    wx:if="{{status==10004&&isJudge==false?true:false}}"
+    class="flex justify-center " 
+    style="width:100%"
+    data-target="showJudgeModal"
+    bind:tap="showJudge">写评价</view>
+    <view 
+    wx:elif="{{status==10004&&isScore==false?true:false}}"
+    class="flex justify-center "
+    style="width:100%" 
+    data-target="showJudgeModal"
+    bind:tap="addScore">提交</view>
+    <view 
+    wx:else
+    class="flex justify-center" style="width:100%" bind:tap="lastQuestion">{{btn}}</view>
+  </view>
+
 </view>
 <!-- 删除提示模态框 -->
 <view class="cu-modal  {{modalName=='deleteTipsModal'?'show':''}}" catchtouchmove>

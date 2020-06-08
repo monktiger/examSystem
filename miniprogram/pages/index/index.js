@@ -135,6 +135,9 @@ Component({
     },
     // 创建组
     create(e) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       let that = this;
       console.log(this.data.creatInput);
       wx.request({
@@ -148,6 +151,7 @@ Component({
           "token": that.data.token
         },
         success: function (result) {
+          wx.hideLoading();
           console.log(result);
           that.getList()
         },
@@ -159,6 +163,9 @@ Component({
     },
     // 加入组
     add(e) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       let that = this;
       console.log(this.data.addInput);
 
@@ -174,6 +181,7 @@ Component({
           "token": that.data.token
         },
         success: function (result) {
+          wx.hideLoading();
           console.log(result);
           that.setData({
             modalName: null
@@ -187,6 +195,9 @@ Component({
     },
     // 解散组
     delete(e) {
+      wx.showLoading({
+        title: '加载中...',
+      })
       let that = this;
       wx.request({
         url: 'http://monktiger.natapp1.cc/group/quit',
@@ -198,6 +209,7 @@ Component({
           "token": that.data.token
         },
         success: function (result) {
+          wx.hideLoading();
           // console.log(result);
           that.getList();
         },

@@ -101,6 +101,9 @@ Page({
   onLoad: function (options) {
 
   },
+  onLoad:function(){
+
+  },
   onShow: function () {
     app.pageScrollToBottom("#view"); // 默认停留在页面底部 方便添加题目
     var addQuestionUrl = app.globalData.url + "exam/addQuestion";

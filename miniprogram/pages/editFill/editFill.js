@@ -19,8 +19,8 @@ Page({
     //   url: "/pages/editPaper/editPaper"
     // })
     wx.navigateBack({
-      delta:1
-  })
+      delta: 1
+    })
   },
 
   //获取答案
@@ -44,9 +44,11 @@ Page({
       score: score,
       type: 3,
       current: current,
-      id: this.data.queId||"",
+      id: this.data.queId || "",
       "examId": this.data.examId,
     }
+    console.log(data);
+    
     if (!title || !score || !current) {
       wx.showToast({
         title: '请填写所有题目信息！', // 标题
@@ -104,17 +106,19 @@ Page({
               // wx.redirectTo({
               //   url: "../paper/paper"
               // })
+              app.globalData.isAlreadyEdit=true;
+              app.globalData.isEdit = 0
               wx.navigateBack({
-                delta:1
-            })
-              app.globalData.isEdit=0
+                delta: 1
+              })
+           
             } else {
               // wx.redirectTo({
               //   url: "../editPaper/editPaper"
               // })
               wx.navigateBack({
-                delta:1
-            })
+                delta: 1
+              })
             }
           } else {
             console.log("errorMsg:" + res.msg);
@@ -134,21 +138,24 @@ Page({
     });
     // 如果有editQueNum则是修改题目：先取出原数据，赋值
     var editQueNum = app.globalData.editQueNum;
-    console.log("editQueNum",editQueNum)
-    if (editQueNum||editQueNum==0) {
-      var editques = wx.getStorageSync('fill_ques');
-      console.log("editques",editques);
-      var editData = editques[editQueNum].data;
-      var score = editData.score;
-      var queId = editData.id;
-      wx.setStorageSync("title", editData.title);
-      this.setData({
-        index: parseInt(score) - 1,
-        current: editData.current,
-        editQueNum: editQueNum,
-        queId: queId
-      })
-      console.log("index", this.data.index)
+    console.log("editQueNum", editQueNum)
+    if (editQueNum != undefined) {
+      if (editQueNum || editQueNum == 0) {
+        var editques = wx.getStorageSync('fill_ques');
+        console.log("editques", editques);
+        var editData = editques[editQueNum].data;
+        var score = editData.score;
+        var queId = editData.id;
+        wx.setStorageSync("title", editData.title);
+        this.setData({
+          index: parseInt(score) - 1,
+          current: editData.current,
+          editQueNum: editQueNum,
+          queId: queId
+        })
+        console.log("index", this.data.index)
+      }
     }
+
   }
 })

@@ -1,4 +1,5 @@
 // pages/myInfo/myInfo.js
+var app = getApp();
 Page({
 
   /**
@@ -21,6 +22,10 @@ Page({
   },
 
   onLoad: function (options) {
-
+    this.setData({
+      name:app.globalData.name,
+      nickname:app.globalData.nickname
+    })
+    console.log('name',this.data.name,this.data.nickname)
   }
 })

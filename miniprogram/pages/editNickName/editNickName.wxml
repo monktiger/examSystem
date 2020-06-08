@@ -8,7 +8,7 @@
 <view class="padding-tb-sm">
   <view class="padding-left-sm">2-20个字符</view>
   <view class="padding-xs bg-white">
-    <input type="text" bindinput="nickname" placeholder="{{nickname}}" />
+    <input type="text" bindinput="nickname" value="{{nickname}}" />
   </view>
 </view>
 <view class="confirm text-center" catchtap="confirm">确认修改</view>
