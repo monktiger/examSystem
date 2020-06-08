@@ -112,6 +112,7 @@ Page({
       "answerC": question.answerC,
       "answerD": question.answerD,
       "examId": question.examId,
+      "id":question.id,
   };
   console.log(data);
   
