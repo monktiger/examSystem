@@ -1,5 +1,5 @@
 <!--pages/manageScore/manageScore.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+<cu-custom bgColor="bg-gradual-blue   " isBack="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">成绩管理</view>
 </cu-custom>
@@ -11,7 +11,7 @@
 <view class="bg-white">
   <block wx:for="{{scoreList}}" wx:for-index="idx">
     <view class="solids-bottom flex">
-      <view class="flex-sub text-center padding-sm margin-xs">{{scoreList[idx].studentName}}</view>
+      <view class="flex-sub text-center padding-sm margin-xs" style="width:100rpx">{{scoreList[idx].studentName}}</view>
       <view class="flex-sub text-center padding-sm margin-xs">{{scoreList[idx].score}}</view>
       <view class="flex-sub text-center padding-sm margin-xs cu-btn line-grey" 
       catchtap="detail"

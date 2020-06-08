@@ -18,9 +18,11 @@ Component({
   observers: {
     'question': function(answer) {
       let that = this
-      if(that.data.question.current){
+      if(that.data.question.correct){
+      console.log(that.data.question.correct);
+      
         that.setData({
-          cur: that.data.question.current || ''
+          cur: that.data.question.correct || ''
         })
       }else{
         that.setData({
