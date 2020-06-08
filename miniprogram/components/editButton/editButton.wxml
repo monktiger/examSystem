@@ -1,0 +1,27 @@
+<!--components/editButton/editButton.wxml-->
+<button-cmp>
+	<view class="buttons" bindtap="getType">
+		<view bindtap="edit"><text class="cuIcon-writefill"></text>修改</view>
+		<view bindtap="showModal" data-target="DialogModal1"><text class="cuIcon-shopfill"></text>添加到试题库</view>
+		<view bindtap="delete"><text class="cuIcon-deletefill"></text>删除</view>
+	</view>
+	<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar bg-white justify-end">
+				<view class="content">请输入学科名称</view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl">
+				<input type="text" bindinput="getMajor" placeholder="学科名称" value="{{majorVal}}" class="solid-bottom"></input>
+			</view>
+			<view class="cu-bar bg-white">
+				<view class="action justify-between">
+					<button class="cu-btn line-green text-green basis-xs" bindtap="hideModal">取消</button>
+					<button class="cu-btn bg-green margin-left basis-xs" bindtap="hideModal" catchtap="toStore">确定</button>
+				</view>
+			</view>
+		</view>
+	</view>
+</button-cmp>

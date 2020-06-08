@@ -1,0 +1,35 @@
+<!--pages/editMulti/editMulti.wxml-->
+<view>
+	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+		<view slot="backText" catchtap="back">返回</view>
+		<view slot="content">编辑多选题</view>
+	</cu-custom>
+</view>
+<que-cmp />
+<view class="ans-container">
+	<text class="ans-title">答案 选项</text>
+	<view class="option-container">
+		<checkbox-group bindchange="radioChange">
+			<block wx:for="{{array}}" wx:for-index='idx'>
+				<view class="option-group">
+					<checkbox class="margin-right-sm"  data-idx="{{idx}}" value='{{inputVal[idx]}}' checked="{{checked[idx]}}"></checkbox>
+					<input class="basis-xl" placeholder="输入选项" data-idx='{{idx}}' value='{{inputVal[idx]}}' bindinput='getInputVal'></input>
+					<text class="cuIcon-roundclosefill lg text-pink"  bindtap='delInput' data-idx='{{idx}}'></text>
+				</view>
+			</block>
+		</checkbox-group>
+	</view>
+	<view class="add-option text-pink" catchtap="addInput">
+		<text class="cuIcon-roundaddfill margin-right-sm lg"></text>
+		<text>添加选项</text>
+	</view>
+</view>
+<view class="cu-form-group margin-top">
+	<view class="title">题目分值</view>
+	<picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+		<view class="picker">
+			{{index?picker[index]:'请选择'}}
+		</view>
+	</picker>
+</view>
+<button class="cu-btn block bg-pink shadow margin-tb-sm lg" catchtap="confirm">确认</button>

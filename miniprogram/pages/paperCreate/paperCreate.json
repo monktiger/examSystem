@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "timePicker-cmp": "/components/timePicker/timePicker",
+    "timePickerEnd-cmp":"/components/timePickerEnd/timePickerEnd"
+  }
+}

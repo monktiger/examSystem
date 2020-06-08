@@ -1,0 +1,108 @@
+  <cu-custom bgImage="" bgColor="bg-gradual-blue">
+  	<view slot="content" class="index-title">随测</view>
+  </cu-custom>
+  <scroll-view scroll-y class="scrollPage">
+  </scroll-view>
+  <!-- <navigator url="/pages/manageGroup/manageGroup">我创建的组</navigator>
+<navigator url="/pages/joinedGroup/joinedGroup">我加入的组</navigator> -->
+  <scroll-view scroll-x class="bg-white nav padding-left" scroll-with-animation>
+  	<view class="cu-item {{index==TabCur?'text-blue cur text-lg':'text-grey text-df'}} margin-right-xl" wx:for="{{title}}" wx:key="index" bindtap="tabSelect" data-id="{{index}}">
+  		{{item}}
+    </view>
+    <view class="add text-xl">
+      	<text class="cuIcon-add text-blue" bindtap="showModal" data-target="bottomModal"></text>
+    </view>
+  </scroll-view>
+  <scroll-view scroll-y class="scrollPage bg-white padding-top-xl">
+  
+      <card cardList="{{elements}}" TabCur="{{TabCur}}" bind:clickCard="clickCard" bind:delete="delete"></card>
+
+  </scroll-view>
+  <!-- 选择模态窗 -->
+  <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}" catchtouchmove>
+  	<view class="cu-dialog modal ">
+  		<!-- <view class="cu-bar bg-white">
+  			<view class="action text-green">确定</view>
+  			<view class="action text-blue" bindtap="hideModal">取消</view>
+  		</view> -->
+  		<view class="cu-list menu text-center ">
+  			<view class="cu-item solids-bottom">
+				  <view class="content text-lg text-gray" 
+				  bindtap="showModal"
+				  data-target="add-Modal"
+				  >
+  					加入课程
+  				</view>
+  			</view>
+  			<view class="cu-item">
+				  <view class="content text-lg text-gray"
+					bindtap="showModal"
+				  	data-target="create-Modal"
+				  >
+  					创建课程
+  				</view>
+  			</view>
+  			<view class="cu-item margin-top-sm">
+  				<view class="content text-lg text-gray" bindtap="hideModal">
+  					取消
+  				</view>
+  			</view>
+  		</view>
+  	</view>
+  </view>
+ <!-- 加入模态窗 -->
+  <view class="cu-modal bottom-modal {{modalName=='add-Modal'?'show':''}}" catchtouchmove>
+    <view class="cu-dialog bg-white comment-modal" wx:if="{{modalName=='add-Modal'?'show':''}}">
+        <view class="flex align-center justify-between margin-top-lg margin-lr-lg margin-bottom-sm">
+            <view class="cuIcon-close text-lg " bindtap="hideModal"></view>
+            <!-- <view class="text-xl">加入</view> -->
+            <view class="cu-btn bg-blue shadow-blur round m-submit"
+            bind:tap="add"
+            data-target="apply-Modal"
+            >提交</view>
+		</view>
+		<view class="box padding text-lg" hover-class="none" hover-stop-propagation="false">
+			<view class="margin-left">加入班级</view>
+			<view class="padding-bottom-sm solids-bottom margin-top-lg margin-left padding-left-sm" hover-class="none" hover-stop-propagation="false">
+				<input type="text"
+				bindinput="addInput"
+				maxlength="200" 
+				value="{{input}}"
+				placeholder="请输入班级邀请码"
+				placeholder-style="font-size:32rpx"
+				>
+				</input>
+			</view>
+				
+		</view>
+		
+    </view>
+</view>
+ <!-- 创建模态窗 -->
+  <view class="cu-modal bottom-modal {{modalName=='create-Modal'?'show':''}}" catchtouchmove>
+    <view class="cu-dialog bg-white comment-modal" wx:if="{{modalName=='create-Modal'?'show':''}}">
+        <view class="flex align-center justify-between margin-top-lg margin-lr-lg margin-bottom-sm">
+            <view class="cuIcon-close text-lg " bindtap="hideModal"></view>
+            <!-- <view class="text-xl">创建组</view> -->
+            <view class="cu-btn bg-blue shadow-blur round m-submit"
+            bind:tap="create"
+            data-target="apply-Modal"
+            >提交</view>
+		</view>
+		<view class="box padding text-lg" hover-class="none" hover-stop-propagation="false">
+			<view class="margin-left">创建组</view>
+			<view class="padding-bottom-sm solids-bottom margin-top-lg margin-left padding-left-sm" hover-class="none" hover-stop-propagation="false">
+				<input type="text"
+				bindinput="creatInput"
+				maxlength="10" 
+				value="{{input}}"
+				placeholder="请输入组名"
+				placeholder-style="font-size:32rpx"
+				>
+				</input>
+			</view>
+				
+		</view>
+		
+    </view>
+</view>

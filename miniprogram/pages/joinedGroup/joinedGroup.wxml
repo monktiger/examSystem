@@ -1,0 +1,48 @@
+<!-- pages/joinedGroup/joinedGroup.wxml -->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">一体化工程（组名）</view>
+</cu-custom>
+<!-- <text class="text-xl">我加入的组页面</text>
+<navigator url="/pages/paperDetails/paperDetails">试卷详情页面</navigator> -->
+<view class="padding-bottom" hover-class="none" hover-stop-propagation="false">
+  <paperCard style="width:100%" bind:changePage="goPaperDetails" paperList="{{paperList}}" bind:quit="quit"></paperCard>
+</view>
+
+
+<!-- // 试卷还未开放，请耐心等待 -->
+<view class="cu-modal  {{modalName=='tipsModal'?'show':''}}" catchtouchmove>
+  <view style="border-radius: 50rpx;" class="cu-dialog middle-modal">
+    <view class="box padding " hover-class="none" hover-stop-propagation="false">
+      <view class="flex align-center justify-end ">
+        <view class="cuIcon-close " style="font-size:40rpx" catchtap="hideModal"></view>
+      </view>
+      <view style="letter-spacing: 1rpx;font-size: 30rpx;line-height: 60rpx;">
+        <view>
+          亲爱的同学，
+          <text class="text-blue text-lg text-bold">试卷未开放</text>
+          <view>请耐心等待(ง •_•)ง</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!--  // 考试已经结束，等待老师批改 -->
+<view class="cu-modal  {{modalName=='tipsMarkModal'?'show':''}}" catchtouchmove>
+  <view style="border-radius: 50rpx;" class="cu-dialog middle-modal">
+    <view class="box padding " hover-class="none" hover-stop-propagation="false">
+      <view class="flex align-center justify-end ">
+        <view class="cuIcon-close " style="font-size:40rpx" catchtap="hideModal"></view>
+      </view>
+      <view style="letter-spacing: 1rpx;font-size: 30rpx;line-height: 60rpx;">
+        <view>
+          亲爱的同学，考试已经结束
+          <view>
+            老师 <text class="text-blue text-lg text-bold">正在批阅</text>
+          </view>
+          <view>请耐心等待(ง •_•)ง</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

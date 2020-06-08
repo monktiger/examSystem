@@ -1,0 +1,195 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.11.0",
+	"appid": "wx44735e1dcba5d758",
+	"projectname": "little-test",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "nav",
+					"pathName": "pages/nav/nav",
+					"query": ""
+				},
+				{
+					"id": -2,
+					"name": "my",
+					"pathName": "pages/my/my",
+					"query": ""
+				},
+				{
+					"id": -3,
+					"name": "groupSetting",
+					"pathName": "pages/groupSetting/groupSetting",
+					"query": ""
+				},
+				{
+					"id": -4,
+					"name": "joinedGroup",
+					"pathName": "pages/joinedGroup/joinedGroup",
+					"query": ""
+				},
+				{
+					"id": -5,
+					"name": "manageGroup",
+					"pathName": "pages/manageGroup/manageGroup",
+					"query": ""
+				},
+				{
+					"id": -6,
+					"name": "managePeople",
+					"pathName": "pages/managePeople/managePeople",
+					"query": ""
+				},
+				{
+					"id": -7,
+					"name": "manageScore",
+					"pathName": "pages/manageScore/manageScore",
+					"query": ""
+				},
+				{
+					"id": -8,
+					"name": "paper",
+					"pathName": "pages/paper/paper",
+					"query": ""
+				},
+				{
+					"id": -9,
+					"name": "paperCreate",
+					"pathName": "pages/paperCreate/paperCreate",
+					"query": ""
+				},
+				{
+					"id": -10,
+					"name": "paperDetails",
+					"pathName": "pages/paperDetails/paperDetails",
+					"query": ""
+				},
+				{
+					"id": -11,
+					"name": "editMulti",
+					"pathName": "pages/editMulti/editMulti",
+					"query": ""
+				},
+				{
+					"id": -12,
+					"name": "editName",
+					"pathName": "pages/editName/editName",
+					"query": ""
+				},
+				{
+					"id": -13,
+					"name": "editNickName",
+					"pathName": "pages/editNickName/editNickName",
+					"query": ""
+				},
+				{
+					"id": -14,
+					"name": "editPaper",
+					"pathName": "pages/editPaper/editPaper",
+					"query": ""
+				},
+				{
+					"id": -15,
+					"name": "editShort",
+					"pathName": "pages/editShort/editShort",
+					"query": ""
+				},
+				{
+					"id": -16,
+					"name": "editSingle",
+					"pathName": "pages/editSingle/editSingle",
+					"query": ""
+				},
+				{
+					"id": -17,
+					"name": "myInfo",
+					"pathName": "pages/myInfo/myInfo",
+					"query": ""
+				},
+				{
+					"id": -18,
+					"name": "welcome",
+					"pathName": "pages/welcome/welcome",
+					"query": ""
+				},
+				{
+					"id": -19,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -21,
+					"name": "editJudge",
+					"pathName": "pages/editJudge/editJudge",
+					"query": ""
+				},
+				{
+					"id": -22,
+					"name": "editFill",
+					"pathName": "pages/editFill/editFill",
+					"query": ""
+				},
+				{
+					"id": -20,
+					"name": "welcome",
+					"pathName": "pages/welcome/welcome",
+					"query": ""
+				},
+				{
+					"id": -21,
+					"name": "questionStorage",
+					"pathName": "pages/questionStorage/questionStorage",
+					"query": ""
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,32 @@
+<!--pages/paperCreate/paperCreate.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">新建试题</view>
+</cu-custom>
+<view>
+  <view class="bg-white padding">
+    <text>试卷名称</text>
+    <view class="padding-sm margin-top-sm text-sm solid radius">
+      <textarea id="title" placeholder="请输入名称" maxlength="80" bindinput="examName" value="{{examName}}"></textarea>
+    </view>
+  </view>
+  <view class="margin-top-sm bg-white padding">
+    <view>开始时间</view>
+    <view class="solid-bottom margin-bottom">
+      <view class="cu-form-group">
+        <view class="title">时间选择</view>
+         <timePicker-cmp />
+      </view>
+    </view>
+    <view class="margin-top-sm">结束时间</view>
+    <view>
+      <view class="cu-form-group">
+        <view class="title">时间选择</view>
+        <timePickerEnd-cmp />
+      </view>
+    </view>
+  </view>
+  <view class="justify-center padding margin-top-xs">
+    <button class="cu-btn line-mauve round shadow flex" catchtap="createPaper">创建考试</button>
+  </view>
+</view>

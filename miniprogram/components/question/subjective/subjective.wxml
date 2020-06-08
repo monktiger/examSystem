@@ -1,0 +1,25 @@
+<view class="padding box ">
+  <view class="flex align-center justify-between">
+    <view class="title flex align-center">
+      <view class="text-lg">第{{index}}题</view>
+      <text class="cu-tag line-blue radius m-post-words-ifelec margin-left" selectable="false" space="false" decode="false">主观题</text>
+    </view>
+    <view class="text-lg text-blue">({{question.score}}分)</view>
+  </view>
+  <view class="padding-tb problem">
+    <view class="text-lg">
+      {{question.title}}
+    </view>
+  </view>
+  <view class="margin-top  flex justify-center text-lg text margin-bottom">
+    <textarea maxlength="300" 
+    placeholder="请填写答案" 
+    cursor-spacing="10" 
+    class="comment-text padding answer" 
+    focus="{{focus}}" 
+    show-confirm-bar="{{false}}"
+    value="{{answerContent}}"  
+    bindinput="inputHd"></textarea>
+  </view>
+</view>
+

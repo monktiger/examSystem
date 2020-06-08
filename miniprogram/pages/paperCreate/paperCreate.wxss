@@ -1,0 +1,8 @@
+/* pages/paperCreate/paperCreate.wxss */
+#title{
+  height:60rpx;
+}
+
+#paper-detail{
+  height: 100rpx;
+}

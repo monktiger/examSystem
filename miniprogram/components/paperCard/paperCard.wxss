@@ -1,0 +1,30 @@
+/* components/card/card.wxss */
+@import "/colorui/icon.wxss";
+@import "/colorui/main.wxss";
+@import "/colorui/animation.wxss";
+.paper{
+    width: 90%;
+    position: relative;
+    /* height: 200rpx; */
+    border:0.5rpx solid #689ec2;
+    flex-direction: column;
+    border-radius: 20rpx;
+}
+.more{
+    position: absolute;
+    right: 20rpx;
+    top: 20rpx;
+}
+ /* modal */
+ .modal{
+    border-top-right-radius: 30rpx !important;
+    border-top-left-radius: 30rpx !important;
+  }
+  .middle-modal{
+    border-radius: 30rpx !important;
+  }
+  /* 按钮 */
+  .btn{
+    width: 150rpx !important;
+    background-color:#7aafd3;
+}

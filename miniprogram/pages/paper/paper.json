@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "singleAnswer":"/components/question/singleAnswer/singleAnswer",
+    "multipleChoice":"/components/question/multipleChoice/multipleChoice",
+    "judge":"/components/question/judge/judge",
+    "fill":"/components/question/fill/fill",
+    "subjective":"/components/question/subjective/subjective"
+  }
+}

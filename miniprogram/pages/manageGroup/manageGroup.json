@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "papercard":"/components/paperCard/paperCard"
+  }
+}

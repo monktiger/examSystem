@@ -1,0 +1,98 @@
+<view class='nav-list' wx:for="{{cardList}}" wx:key="index">
+    <view class="nav-li bg-{{item.color}}" 
+    catch:tap="clickCard" 
+    data-groupid="{{item.groupId}}"
+    data-groupname="{{item.name}}"
+    >
+        <view class="nav-title">{{item.name}}</view>
+        <view class="nav-name">GROUP</view>
+        <text 
+        wx:if="{{TabCur==0?true:false}}" 
+        class="cuIcon-moreandroid"
+        catch:tap="showModal1" 
+        data-target="deleteModal"
+        data-groupid="{{item.groupId}}"
+        data-index="index"
+        ></text>
+        <text wx:else class="cuIcon-moreandroid" 
+        catch:tap="showModal1"
+         data-target="quitModal" 
+         data-index="index"
+         data-groupid="{{item.groupId}}"
+         ></text>
+    </view>
+</view>
+<!-- 解散组 -->
+<view class="cu-modal bottom-modal {{modalName=='deleteModal'?'show':''}}" catchtouchmove>
+    <view class="cu-dialog modal ">
+        <view class="cu-list menu text-center ">
+            <view class="cu-item">
+                <view class="content text-lg text-gray padding-top-sm" bindtap="showModal" data-target="deleteTipsModal">
+                    解散出组
+                </view>
+            </view>
+            <view class="cu-item margin-top-sm">
+                <view class="content text-lg text-gray" catchtap="hideModal">取消</view>
+            </view>
+        </view>
+    </view>
+</view>
+<!-- 解散组 -->
+<view class="cu-modal  {{modalName=='deleteTipsModal'?'show':''}}" catchtouchmove>
+    <view class="cu-dialog middle-modal ">
+        <view class="box margin-lr margin-top padding" hover-class="none" hover-stop-propagation="false">
+            <view class="text-lg" hover-class="none" hover-stop-propagation="false">确定退出组？</view>
+            <view class="flex justify-between padding-lr btn-box margin-top" hover-class="none" hover-stop-propagation="false">
+                <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" 
+                style="letter-spacing:3rpx "
+                catch:tap="delete" 
+                >
+                    确定
+                </button>
+                <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" 
+                style="letter-spacing:3rpx" 
+                bindtap="hideModal" 
+                >
+                    取消
+                </button>
+            </view>
+        </view>
+    </view>
+</view>
+<!-- 退出组 -->
+<view class="cu-modal bottom-modal {{modalName=='quitModal'?'show':''}}" catchtouchmove>
+    <view class="cu-dialog modal ">
+        <view class="cu-list menu text-center ">
+            <view class="cu-item">
+                <view class="content text-lg text-gray padding-top-sm" bindtap="showModal" data-target="tipsModal">
+                    退出组
+                </view>
+            </view>
+            <view class="cu-item margin-top-sm">
+                <view class="content text-lg text-gray" catchtap="hideModal">取消</view>
+            </view>
+        </view>
+    </view>
+</view>
+<!-- 退出组 -->
+<view class="cu-modal  {{modalName=='tipsModal'?'show':''}}" catchtouchmove>
+    <view class="cu-dialog middle-modal ">
+        <view class="box margin-lr margin-top padding" hover-class="none" hover-stop-propagation="false">
+            <view class="text-lg" hover-class="none" hover-stop-propagation="false">确定退出组？</view>
+            <view class="flex justify-between padding-lr btn-box margin-top" hover-class="none" hover-stop-propagation="false">
+                <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" 
+                style="letter-spacing:3rpx " 
+                catch:tap="quit" 
+                >
+                    确定
+                </button>
+                <button class="cu-btn bg-blue round shadow-blur sub margin-top-sm btn" 
+                style="letter-spacing:3rpx" 
+                bindtap="hideModal" 
+                >
+                    取消
+                </button>
+            </view>
+        </view>
+    </view>
+</view>

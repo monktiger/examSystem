@@ -1,0 +1,75 @@
+<!--pages/editPaper/editPaper.wxml-->
+<view>
+	<cu-custom bgColor="bg-gradual-blue" >
+		<view slot="backText" catchtap="back">返回</view>
+		<view slot="content" >编辑试卷</view>
+	</cu-custom>
+</view>
+
+<view id="view">
+
+	<!-- 试卷说明 -->
+	<view class="bg-white padding">
+		<text class="text-black text-bold text-xl">{{examName?examName:"请设置试卷名称"}}</text>
+		<view class="text-center text-lg padding-tb">
+			<text>{{beginTime?beginTime:"请设定开始时间"}}</text>
+			<text> - </text>
+			<text>{{endTime?endTime:"请设定结束时间"}}</text>
+		</view>
+		<view class="solids-top padding-top-sm text-center" catchtap="setPaperMsg">
+			<text class="cuIcon-writefill lg text-gray"></text>
+			<text class="margin-left lg text-gray">修改</text>
+		</view>
+	</view>
+
+	<!-- 题目列表 -->
+	<optionQue-cmp />
+	<multiQue-cmp />
+	<judgeQue-cmp />
+	<showFill-cmp />
+	<showShort-cmp />
+
+	<view class="justify-center padding-tb-xl margin-bottom-xl">
+		<button class="cu-btn line-mauve round shadow flex" catchtap="showType">新增题目</button>
+	</view>
+	<view class="createButton" catchtap="create">创建试卷</view>
+
+</view>
+<!-- 选择新增题目类型 -->
+<view class="qus-type justify-center text-center {{style?'hide':'show'}}" wx:if="{{show}}" catchtap="hideType">
+	<view class="margin-xl" catchtap="single">
+		<button class="cu-btn line-mauve round shadow flex">
+			<text class="cuIcon-radiobox lg margin-right-sm"></text>
+			<text>单选题</text>
+		</button>
+	</view>
+	<view class="margin-xl" catchtap="multi">
+		<button class="cu-btn line-mauve round shadow flex">
+			<text class="cuIcon-squarecheck lg margin-right-sm"></text>
+			<text>多选题</text>
+		</button>
+	</view>
+	<view class="margin-xl" catchtap="judge">
+		<button class="cu-btn line-mauve round shadow flex">
+			<text class="cuIcon-question lg margin-right-sm"></text>
+			<text>判断题</text>
+		</button>
+	</view>
+	<view class="margin-xl" catchtap="fill">
+		<button class="cu-btn line-mauve round shadow flex">
+			<text class="cuIcon-square lg margin-right-sm"></text>
+			<text>填空题</text>
+		</button>
+	</view>
+	<view class="margin-xl" catchtap="short">
+		<button class="cu-btn line-mauve round shadow flex">
+			<text class="cuIcon-edit lg margin-right-sm"></text>
+			<text>简答题</text>
+		</button>
+	</view>
+	<view class="margin-xl" catchtap="toStore">
+		<button class="cu-btn round shadow flex bg-mauve button-hover">
+			<text>从试题库添加</text>
+		</button>
+	</view>
+</view>

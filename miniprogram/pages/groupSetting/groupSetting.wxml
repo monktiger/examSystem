@@ -1,0 +1,25 @@
+<!--pages/groupSetting/groupSetting.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">设置</view>
+</cu-custom>
+<view class="shadow margin padding bg-white radius">
+  <view class="flex justify-between text-xl" bindtap="showModal">
+    <view class="text-bold">{{groupName?groupName:"请设置组名"}}</view>
+    <view class="cuIcon-write lg text-gray"  data-target="bottomModal"></view>
+  </view>
+  <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white">
+        <view class="action text-green" bindtap="setGroupName">确定</view>
+        <view class="action text-blue" bindtap="hideModal">取消</view>
+      </view>
+      <view class="padding-xl">
+        <view>修改组名（最多10个字）</view>
+        <view class="edit_name">
+          <input maxlength="10" placeholder="{{groupName?groupName:'请设置组名'}}" bindinput="getGroupName"></input>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

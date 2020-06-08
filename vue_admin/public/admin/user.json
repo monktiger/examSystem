@@ -1,0 +1,21 @@
+{
+    "userList": [
+        {
+            "nickname": "tenforests",
+            "name": "章腾",
+            "open_id": "asdasdwqe123414werwer",
+            "available": 1
+        },
+        {
+            "nickname": "ten咔咔咔",
+            "name": "鬼东西",
+            "open_id": "asd1312333asdwqezxer",
+            "available": 0
+        }
+    ],
+    "pageNum": 1,
+    "pages": 12,
+    "total": 172,
+    "status": 1,
+    "msg": "用户列获取成功"
+}

@@ -1,0 +1,42 @@
+<!--components/optionQue/optionQue.wxml-->
+<optionQue-cmp>
+	<block wx:for="{{singleQues}}" wx:key="{{singleQues.title}}" wx:for-index="idx">
+		<view class="container" >
+			<view class="que-container">
+				<view>
+					<text>{{idx+1}}</text>
+					<text>. </text>
+					<text>{{singleQues[idx].data.title}}</text>
+				</view>
+				<view class="score-container">
+					<text>( 分值：</text>
+					<text class="score">{{singleQues[idx].data.score}}</text>
+					<text> )</text>
+				</view>
+			</view>
+			<radio-group class="radio-group">
+				<view wx:if="{{singleQues[idx].data.answerA}}">
+					<radio class="opt">
+						<view class="opt-txt">{{singleQues[idx].data.answerA}}<text wx:if="{{singleQues[idx].data.current=='A'?true:false}}" class="answer">(答案)</text></view>
+					</radio>
+				</view>
+				<view wx:if="{{singleQues[idx].data.answerB}}">
+					<radio class="opt">
+						<view class="opt-txt">{{singleQues[idx].data.answerB}}<text wx:if="{{singleQues[idx].data.current=='B'?true:false}}" class="answer">(答案)</text></view>
+					</radio>
+				</view>
+				<view wx:if="{{singleQues[idx].data.answerC}}">
+					<radio class="opt">
+						<view class="opt-txt">{{singleQues[idx].data.answerC}}<text wx:if="{{singleQues[idx].data.current=='C'?true:false}}" class="answer">(答案)</text></view>
+					</radio>
+				</view>
+				<view wx:if="{{singleQues[idx].data.answerD}}">
+					<radio class="opt">
+						<view class="opt-txt">{{singleQues[idx].data.answerD}}<text wx:if="{{singleQues[idx].data.current=='D'?true:false}}" class="answer">(答案)</text></view>
+					</radio>
+				</view>
+			</radio-group>
+		</view>
+		<button-cmp bind:toNewStorage="getStorage" quesId="{{singleQues[idx].data.id}}" examId="{{singleQues[idx].data.examId}}" quesIdx="{{idx}}" quesType="{{singleQues[idx].data.type}}"></button-cmp>
+	</block>
+</optionQue-cmp>

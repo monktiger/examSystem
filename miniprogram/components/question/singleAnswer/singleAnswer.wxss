@@ -1,0 +1,25 @@
+@import "/colorui/icon.wxss";
+@import "/colorui/main.wxss";
+@import "/colorui/animation.wxss";
+.box{
+    background-color: white;
+}
+.option{
+    line-height: 80rpx;
+}
+.option-circle{
+    height: 80rpx;
+    width: 80rpx;
+    border-radius: 40rpx;
+    /* border: 1rpx solid #4b93c4; */
+    border: 1rpx solid #aaaaaa;
+    text-align: center;
+}
+.option-circle-cur{
+    height: 80rpx;
+    width: 80rpx;
+    border-radius: 40rpx;
+    background-color:#4b93c4;
+    color:white !important;
+    text-align: center;
+}

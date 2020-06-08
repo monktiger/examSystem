@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "que-cmp": "/components/que/que"
+  }
+}
